@@ -1,0 +1,44 @@
+.sozler-dizimi {
+	width: 100%;
+	padding: 80px 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	row-gap: 40px;
+
+	h3 {
+		text-align: left;
+		font-size: 24px;
+		font-weight: 600;
+		color: #111;
+	}
+
+	ul {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		column-gap: 117px;
+		row-gap: 20px;
+		& li::before {
+			content: '\2022'; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+			color: #0059fb; /* Change the color */
+			font-weight: bold; /* If you want it to be bold */
+			display: inline-block; /* Needed to add space between the bullet and the text */
+			width: 1em; /* Also needed for space (tweak if needed) */
+			margin-left: -1em; /* Also needed for space (tweak if needed) */
+		}
+	}
+}
+
+.bg-b-big {
+	position: absolute;
+	z-index: 0;
+	top: 750px;
+	left: 20px;
+}
+.bg-a-big {
+	position: absolute;
+	z-index: 0;
+	top: 850px;
+	left: 1050px;
+}

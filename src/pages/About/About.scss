@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+.about {
+	display: flex;
+	align-items: flex-start;
+	justify-content: left;
+	flex-direction: column;
+	row-gap: 20px;
+	text-align: left;
+	margin: 0 auto;
+	padding: 80px 20%;
+
+	h2 {
+		font-size: 24px;
+		font-weight: 700;
+		color: #111;
+	}
+	p {
+		column-count: 2;
+		column-gap: 20px;
+		font-family: 'Inter', sans-serif;
+		font-size: 16px;
+		font-weight: 400;
+		color: #000;
+	}
+}

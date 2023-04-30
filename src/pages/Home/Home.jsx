@@ -1,100 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import 'boxicons'
 import './Home.scss'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
-import MainFirstSection from '../../components/MainFirstSection'
+import KunSozi from '../../components/KunSozi/KunSozi'
+import FrameDesc from '../../components/FrameDesc'
+import Alphabet from '../../components/Alphabet'
+
 const Home = () => {
+	const [kunSozi, setKunSozi] = useState({
+		title: 'KÚN SÓZI',
+		word: 'AVANS',
+		description: `Islegen is haqısınıń ushınan alıw, tolıq emes, belgili muǵdarı,
+				raschettan burınıraq alatuǵın aqsha. Al avanstı az alsań, tabelshikke
+				ókpelep keledi (B.Ismaylov). Avans aqshasın alarda tayar, Bunday
+				jalqawlarǵa zat bermew kerek (S.Nurımbetov)`,
+	})
+
 	return (
 		<>
 			<Header />
 			<main>
-				<MainFirstSection />
-				<div className='second'>
-					<div className='bg-img'>
-						<img
-							className='bg-img-b-dark'
-							src='../../../public/img/b-dark.svg'
-							alt=''
-						/>
-						<img
-							className='bg-img-c1-dark'
-							src='../../../public/img/c-dark.svg'
-							alt=''
-						/>
-						<img
-							className='bg-img-c2-dark'
-							src='../../../public/img/c-dark.svg'
-							alt=''
-						/>
-						<img
-							className='bg-img-a-dark'
-							src='../../../public/img/a-dark.svg'
-							alt=''
-						/>
-						<img
-							className='bg-img-a-big'
-							src='../../../public/img/a-big.svg'
-							alt=''
-						/>
-					</div>
-					<div className='sozler'>
-						<h3>Kópshilikke arnalǵan izlewler</h3>
-						<p>Qaraqalpaq tiliniń túsindirme sózligi</p>
-						<div>
-							<a href='#'>ABADANLASÍW</a>
-							<a href='#'>BAǴ</a>
-							<a href='#'>ABADAN</a>
-							<a href='#'>DABÍL</a>
-							<a href='#'>ABAYLAW</a>
-							<a href='#'>ABÍSÍN-AJÍN</a>
-							<a href='#'>ABAQ</a>
-							<a href='#'>ABAY</a>
-							<a href='#'>ABAJUR</a>
-							<a href='#'>ADAM</a>
-							<a href='#'>ABADANLÍQ</a>
-							<a href='#'>ABAY-SIYASAT</a>
-						</div>
-					</div>
-					<div className='alphabet'>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-						<a href='#'>A a</a>
-					</div>
+				<div className='first'>
+					<img
+						width={250}
+						height={500}
+						className='bg-a-big'
+						src='../../../public/img/A-big.svg'
+						alt=''
+					/>
+					<img
+						width={250}
+						height={500}
+						className='bg-b-big'
+						src='../../../public/img/B-big.svg'
+						alt=''
+					/>
+					<KunSozi
+						title={kunSozi.title}
+						word={kunSozi.word}
+						description={kunSozi.description}
+					/>
+					<FrameDesc />
 				</div>
+				<Alphabet />
 			</main>
 			<Footer />
 		</>
