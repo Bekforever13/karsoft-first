@@ -10,9 +10,9 @@ const FrameDesc = () => {
 					height='210'
 					src='https://www.youtube.com/embed/UT9ndxZPXxY'
 					title='Túsindirme sózlik mobil qosımshası haqqında'
-					frameborder='0'
+					frameBorder='0'
 					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-					allowfullscreen
+					allowFullScreen
 				></iframe>
 			</div>
 			<div className='frame-description'>
@@ -26,7 +26,10 @@ const FrameDesc = () => {
 					túsinip alasız. Tómendegi "tolıq" túymesin basıń.
 				</p>
 				<button>
-					<a href='https://play.google.com/store/apps/details?id=com.karsoft.tusindirmesozlik'>
+					<a
+						target={'_blank'}
+						href='https://play.google.com/store/apps/details?id=com.karsoft.tusindirmesozlik'
+					>
 						Download app
 					</a>
 				</button>

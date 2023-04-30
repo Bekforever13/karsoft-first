@@ -16,7 +16,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.0",
     "sass": "^1.62.1",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "simple-sharer": "^4.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

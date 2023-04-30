@@ -6,6 +6,7 @@ import Alphabet from '../../components/Alphabet'
 import WordDescription from './WordDescription'
 
 const Words = () => {
+	window.scrollTo({ top: 500, behavior: 'smooth' })
 	return (
 		<div>
 			<Header />
@@ -24,8 +25,8 @@ const Words = () => {
 					src='../../../public/img/B-big.svg'
 					alt=''
 				/>
-				{/* <SozlerDizimi /> */}
-				<WordDescription />
+				<SozlerDizimi />
+				{/* <WordDescription /> */}
 				<Alphabet />
 			</div>
 			<Footer />

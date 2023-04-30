@@ -1,27 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import './Header.scss'
 
 const Header = () => {
 	return (
 		<header>
 			<div className='header-wrapper'>
-				{/* LOGO */}
 				<div className='logo'>
 					<Link to='/'>
 						<img
-							width={48}
-							height={48}
+							width={35}
+							height={35}
 							src='../../../public/img/logo.svg'
 							alt=''
 						/>
 					</Link>
 				</div>
-				{/* nav */}
 				<nav>
-					<Link to='/'>Sózler</Link>
-					<Link to='/words'>Sózler dizimi</Link>
-					<Link to='/about'>Baǵdarlama haqqinda</Link>
+					<NavLink
+						className={navData => (navData.isActive ? 'active' : 'link')}
+						to='/'
+					>
+						Sózler
+					</NavLink>
+					<NavLink
+						className={navData => (navData.isActive ? 'active' : 'link')}
+						to='/words'
+					>
+						Sózler dizimi
+					</NavLink>
+					<NavLink
+						className={navData => (navData.isActive ? 'active' : 'link')}
+						to='/about'
+					>
+						Baǵdarlama haqqinda
+					</NavLink>
 				</nav>
 			</div>
 			{/* search  */}

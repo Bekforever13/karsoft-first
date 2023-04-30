@@ -32,6 +32,10 @@ header {
 				line-height: 18px;
 				color: #b8d1ff;
 				transition: 0.3s ease-in-out;
+				&.active {
+					font-weight: 700;
+					color: #fff;
+				}
 				&:hover {
 					color: #fff;
 				}

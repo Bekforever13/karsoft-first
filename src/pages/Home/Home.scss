@@ -27,6 +27,12 @@ main {
 		justify-content: center;
 		gap: 20px;
 
+		.frame {
+			iframe {
+				border-radius: 7px;
+			}
+		}
+
 		.frame-description {
 			display: flex;
 			flex-direction: column;

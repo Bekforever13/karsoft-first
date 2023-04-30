@@ -8,6 +8,7 @@ import FrameDesc from '../../components/FrameDesc'
 import Alphabet from '../../components/Alphabet'
 
 const Home = () => {
+	window.scrollTo({ top: 0, behavior: 'smooth' })
 	const [kunSozi, setKunSozi] = useState({
 		title: 'KÚN SÓZI',
 		word: 'AVANS',
