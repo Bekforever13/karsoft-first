@@ -44,7 +44,7 @@ const Header = () => {
 			<div className='search-wrapper'>
 				<div className='search'>
 					<h3>Bir sózdi izleń, onı úyreniń</h3>
-					<div>
+					<div className='circle-bg'>
 						<img
 							className='circle-img'
 							src='../../../public/img/circle.svg'
@@ -61,7 +61,7 @@ const Header = () => {
 						</button>
 					</div>
 				</div>
-				<div>
+				<div className='bg-words'>
 					<img className='img-a' src='../../../public/img/a.svg' alt='a' />
 					<img className='img-b' src='../../../public/img/b.svg' alt='b' />
 					<img className='img-c' src='../../../public/img/c.svg' alt='c' />

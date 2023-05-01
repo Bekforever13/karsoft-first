@@ -6,8 +6,6 @@ const FrameDesc = () => {
 		<div className='frame-desc'>
 			<div className='frame'>
 				<iframe
-					width='370'
-					height='210'
 					src='https://www.youtube.com/embed/UT9ndxZPXxY'
 					title='Túsindirme sózlik mobil qosımshası haqqında'
 					frameBorder='0'

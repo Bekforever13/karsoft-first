@@ -26,7 +26,7 @@ main {
 			position: absolute;
 			z-index: 0;
 			top: 18rem;
-			left: 55rem;
+			left: 57rem;
 		}
 
 		.frame-desc {
@@ -38,6 +38,9 @@ main {
 
 			.frame {
 				iframe {
+					position: relative;
+					width: 370px;
+					height: 210px;
 					border-radius: 7px;
 				}
 			}
@@ -109,7 +112,7 @@ main {
 			font-size: 1rem;
 			font-weight: 400;
 		}
-		div {
+		.soz {
 			width: 100%;
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
@@ -123,11 +126,12 @@ main {
 		}
 	}
 	.alphabet {
+		position: relative;
 		display: grid;
 		grid-template-columns: repeat(9, 1fr);
 		gap: 20px;
 		padding: 40px;
-		z-index: 999;
+		z-index: 997;
 		background: #ffffff;
 		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.14);
 		border-radius: 8px;
@@ -178,8 +182,9 @@ main {
 			font-family: 'Abril Fatface', cursive;
 			position: absolute;
 			right: 0;
-			top: 17rem;
+			top: 10rem;
 			font-size: 400px;
+			color: #0039a44d;
 		}
 	}
 }
@@ -194,8 +199,16 @@ main {
 			}
 			.bg-a-big {
 				width: 180px;
-				top: 16rem;
+				top: 14rem;
 				left: 45rem;
+			}
+		}
+		.second {
+			.bg-img {
+				.bg-img-a-big {
+					top: 15rem;
+					font-size: 250px;
+				}
 			}
 		}
 	}
@@ -204,6 +217,15 @@ main {
 @media only screen and (max-width: 1000px) {
 	main {
 		.first {
+			.frame-desc {
+				flex-direction: column;
+				.frame {
+					iframe {
+						width: 600px;
+						height: 400px;
+					}
+				}
+			}
 			.bg-b-big {
 				width: 150px;
 				top: 13rem;
@@ -211,8 +233,35 @@ main {
 			}
 			.bg-a-big {
 				width: 150px;
-				top: 16rem;
-				left: 40rem;
+				top: 12rem;
+				left: 35rem;
+			}
+		}
+		.second {
+			.container {
+				.alphabet {
+					grid-template-columns: repeat(6, 1fr);
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	main {
+		.container {
+			.first {
+				.bg-a-big {
+					left: 30rem;
+				}
+			}
+		}
+	}
+	.second {
+		.sozler {
+			.soz {
+				grid-template-columns: repeat(2, 1fr);
+				gap: 10px 100px;
 			}
 		}
 	}

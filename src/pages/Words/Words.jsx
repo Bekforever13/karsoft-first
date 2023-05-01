@@ -6,7 +6,7 @@ import Alphabet from '../../components/Alphabet'
 import WordDescription from './WordDescription'
 
 const Words = () => {
-	window.scrollTo({ top: 600, behavior: 'smooth' })
+	window.scrollTo({ top: 500, behavior: 'smooth' })
 	return (
 		<div>
 			<Header />

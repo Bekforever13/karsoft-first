@@ -14,21 +14,19 @@ const KunSozi = () => {
 		kirilCategory: '',
 	})
 	useEffect(() => {
-		axiosClassic.get('/api/words?limit=500&').then(res => console.log(res))
+		axiosClassic.get('/api/wordsday').then(res => {
+			setWordsDay({
+				id: res.data.data.id,
+				latinText: res.data.data.latin,
+				kirilText: res.data.data.kiril,
+				latinDesc: res.data.data.description_latin,
+				kirilDesc: res.data.data.description_kiril,
+				latinCategory: res.data.data.categories.latin,
+				kirilCategory: res.data.data.categories.kiril,
+			})
+		})
 	}, [])
-	// all words api naverxu
 
-	// axiosClassic.get('/api/wordsday').then(res => {
-	// 	setWordsDay({
-	// 		id: res.data.data.id,
-	// 		latinText: res.data.data.latin,
-	// 		kirilText: res.data.data.kiril,
-	// 		latinDesc: res.data.data.description_latin,
-	// 		kirilDesc: res.data.data.description_kiril,
-	// 		latinCategory: res.data.data.categories.latin,
-	// 		kirilCategory: res.data.data.categories.kiril,
-	// 	})
-	// })
 	return (
 		<div className='kun-sozi'>
 			<div>

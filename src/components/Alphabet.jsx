@@ -7,7 +7,7 @@ const Alphabet = () => {
 				<div className='sozler'>
 					<h3>Kópshilikke arnalǵan izlewler</h3>
 					<p>Qaraqalpaq tiliniń túsindirme sózligi</p>
-					<div>
+					<div className='soz'>
 						<a href='#'>ABADANLASÍW</a>
 						<a href='#'>BAǴ</a>
 						<a href='#'>ABADAN</a>

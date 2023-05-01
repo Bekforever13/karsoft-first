@@ -19,7 +19,7 @@
 		grid-template-columns: repeat(3, 1fr);
 		column-gap: 117px;
 		row-gap: 20px;
-		& li::before {
+		.listItem::before {
 			content: '\2022';
 			color: #0059fb;
 			display: inline-block;
