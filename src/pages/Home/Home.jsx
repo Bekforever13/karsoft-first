@@ -9,14 +9,6 @@ import './Home.scss'
 
 const Home = () => {
 	window.scrollTo({ top: 0, behavior: 'smooth' })
-	const [kunSozi, setKunSozi] = useState({
-		title: 'KÚN SÓZI',
-		word: 'AVANS',
-		description: `Islegen is haqısınıń ushınan alıw, tolıq emes, belgili muǵdarı,
-				raschettan burınıraq alatuǵın aqsha. Al avanstı az alsań, tabelshikke
-				ókpelep keledi (B.Ismaylov). Avans aqshasın alarda tayar, Bunday
-				jalqawlarǵa zat bermew kerek (S.Nurımbetov)`,
-	})
 
 	return (
 		<>
@@ -35,11 +27,7 @@ const Home = () => {
 							src='../../../public/img/B-big.svg'
 							alt=''
 						/>
-						<KunSozi
-							title={kunSozi.title}
-							word={kunSozi.word}
-							description={kunSozi.description}
-						/>
+						<KunSozi />
 						<FrameDesc />
 					</div>
 				</div>

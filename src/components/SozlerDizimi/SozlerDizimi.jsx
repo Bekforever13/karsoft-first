@@ -1,3 +1,4 @@
+import { Pagination } from 'antd'
 import React from 'react'
 import './SozlerDizimi.scss'
 
@@ -5,7 +6,7 @@ const SozlerDizimi = () => {
 	return (
 		<div className='sozler-dizimi'>
 			<h3>Sozler Dizimi</h3>
-			<ul>
+			<ul className='list'>
 				<li>Suspendisse</li>
 				<li>Suspendisse</li>
 				<li>Suspendisse</li>
@@ -43,6 +44,7 @@ const SozlerDizimi = () => {
 				<li>Suspendisse</li>
 				<li>Suspendisse</li>
 			</ul>
+			<Pagination defaultCurrent={1} total={50} />;
 		</div>
 	)
 }
