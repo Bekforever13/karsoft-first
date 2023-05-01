@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
 main {
 	width: 1440px;
 	max-width: 100%;
@@ -5,68 +7,76 @@ main {
 	display: flex;
 	flex-direction: column;
 	row-gap: 80px;
+	position: relative;
 
-	.bg-b-big {
-		position: absolute;
-		z-index: 0;
-		top: 750px;
-		left: 20px;
-	}
-	.bg-a-big {
-		position: absolute;
-		z-index: 0;
-		top: 850px;
-		left: 1050px;
-	}
-
-	.frame-desc {
-		margin: 0 20%;
-		z-index: 3;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 20px;
-
-		.frame {
-			iframe {
-				border-radius: 7px;
-			}
+	.first {
+		width: 1440px;
+		max-width: 100%;
+		.bg-b-big {
+			width: 270px;
+			height: 280px;
+			position: absolute;
+			z-index: 0;
+			top: 15rem;
+			left: 1rem;
+		}
+		.bg-a-big {
+			width: 270px;
+			height: 280px;
+			position: absolute;
+			z-index: 0;
+			top: 18rem;
+			left: 55rem;
 		}
 
-		.frame-description {
+		.frame-desc {
+			z-index: 3;
 			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			justify-content: start;
-			row-gap: 20px;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
 
-			h4 {
-				color: #0059fb;
-				font-size: 16px;
-				font-weight: 600;
-				background-color: #d1f2ff;
-				border-radius: 100px;
-				padding: 9px 52px;
+			.frame {
+				iframe {
+					border-radius: 7px;
+				}
 			}
-			h2 {
-				color: #111;
-				font-size: 34px;
-				font-weight: 600;
-				font-style: normal;
-			}
-			p {
-				font-size: 16px;
-				font-weight: 400;
-				font-style: normal;
-				color: #21244a;
-			}
-			button {
-				background-color: #0059fb;
-				border-radius: 8px;
-				color: #fff;
-				font-size: 1rem;
-				font-weight: 400;
-				padding: 9px 46px;
+
+			.frame-description {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: flex-start;
+				row-gap: 20px;
+
+				h4 {
+					color: #0059fb;
+					font-size: 16px;
+					font-weight: 600;
+					background-color: #d1f2ff;
+					border-radius: 100px;
+					padding: 9px 52px;
+				}
+				h2 {
+					color: #111;
+					font-size: 34px;
+					font-weight: 600;
+					font-style: normal;
+				}
+				p {
+					font-size: 16px;
+					font-weight: 400;
+					font-style: normal;
+					color: #21244a;
+				}
+				button {
+					background-color: #0059fb;
+					border-radius: 8px;
+					color: #fff;
+					font-size: 1rem;
+					font-weight: 400;
+					padding: 9px 46px;
+				}
 			}
 		}
 	}
@@ -79,37 +89,8 @@ main {
 	align-items: center;
 	justify-content: center;
 	background-color: #ddfaff;
-	padding: 80px 20%;
+	padding: 80px 0;
 	position: relative;
-
-	.bg-img {
-		.bg-img-b-dark {
-			position: absolute;
-			left: 150px;
-			top: 300px;
-		}
-		.bg-img-c1-dark {
-			position: absolute;
-			left: 1100px;
-			top: 100px;
-		}
-		.bg-img-c2-dark {
-			position: absolute;
-			left: 220px;
-			top: 450px;
-		}
-		.bg-img-a-dark {
-			position: absolute;
-			left: 500px;
-			top: 600px;
-		}
-		.bg-img-a-big {
-			position: absolute;
-			right: 0;
-			top: 300px;
-			z-index: 0;
-		}
-	}
 
 	.sozler {
 		display: flex;
@@ -144,10 +125,12 @@ main {
 	.alphabet {
 		display: grid;
 		grid-template-columns: repeat(9, 1fr);
-		background-color: #fff;
 		gap: 20px;
 		padding: 40px;
-		z-index: 1;
+		z-index: 999;
+		background: #ffffff;
+		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.14);
+		border-radius: 8px;
 
 		a {
 			white-space: nowrap;
@@ -166,6 +149,70 @@ main {
 
 			&:hover {
 				text-decoration: underline;
+			}
+		}
+	}
+
+	.bg-img {
+		.bg-img-b-dark {
+			position: absolute;
+			left: 3rem;
+			top: 16rem;
+		}
+		.bg-img-c1-dark {
+			position: absolute;
+			right: 10rem;
+			top: 6rem;
+		}
+		.bg-img-c2-dark {
+			position: absolute;
+			left: 6rem;
+			top: 28rem;
+		}
+		.bg-img-a-dark {
+			position: absolute;
+			left: 31rem;
+			top: 30rem;
+		}
+		.bg-img-a-big {
+			font-family: 'Abril Fatface', cursive;
+			position: absolute;
+			right: 0;
+			top: 17rem;
+			font-size: 400px;
+		}
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	main {
+		.first {
+			.bg-b-big {
+				width: 180px;
+				top: 13rem;
+				left: 2rem;
+			}
+			.bg-a-big {
+				width: 180px;
+				top: 16rem;
+				left: 45rem;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	main {
+		.first {
+			.bg-b-big {
+				width: 150px;
+				top: 13rem;
+				left: 1rem;
+			}
+			.bg-a-big {
+				width: 150px;
+				top: 16rem;
+				left: 40rem;
 			}
 		}
 	}

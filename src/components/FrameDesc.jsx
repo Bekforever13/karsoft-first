@@ -30,7 +30,7 @@ const FrameDesc = () => {
 						target={'_blank'}
 						href='https://play.google.com/store/apps/details?id=com.karsoft.tusindirmesozlik'
 					>
-						Download app
+						Juklew
 					</a>
 				</button>
 			</div>

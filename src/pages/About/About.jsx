@@ -5,7 +5,7 @@ import Alphabet from '../../components/Alphabet'
 import './About.scss'
 
 const About = () => {
-	window.scrollTo({ top: 500, behavior: 'smooth' })
+	window.scrollTo({ top: 600, behavior: 'smooth' })
 	return (
 		<div>
 			<Header />
