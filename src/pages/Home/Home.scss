@@ -10,7 +10,7 @@ main {
 	position: relative;
 
 	.first {
-		width: 1440px;
+		// width: 1440px;
 		max-width: 100%;
 		.bg-b-big {
 			width: 270px;
@@ -262,6 +262,47 @@ main {
 			.soz {
 				grid-template-columns: repeat(2, 1fr);
 				gap: 10px 100px;
+			}
+		}
+	}
+}
+@media only screen and (max-width: 650px) {
+	main {
+		.container {
+			.first {
+				.bg-a-big {
+					display: none;
+				}
+			}
+		}
+	}
+	.second {
+		.bg-img {
+			.bg-img-a-dark {
+				display: none;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	main {
+		.first {
+			.frame-desc {
+				.frame {
+					iframe {
+						width: 400px;
+						height: 300px;
+						margin: 0 auto;
+					}
+				}
+			}
+		}
+		.second {
+			.container {
+				.alphabet {
+					grid-template-columns: repeat(4, 1fr);
+				}
 			}
 		}
 	}

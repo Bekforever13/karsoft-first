@@ -1,25 +1,23 @@
 import React, { useState } from 'react'
-import KunSozi from '../../components/KunSozi/KunSozi'
 
 const WordDescription = () => {
-	const [kunSozi, setKunSozi] = useState({
-		title: 'KÚN SÓZI',
-		word: 'AVANS',
-		description: `Islegen is haqısınıń ushınan alıw, tolıq emes, belgili muǵdarı,
-				raschettan burınıraq alatuǵın aqsha. Al avanstı az alsań, tabelshikke
-				ókpelep keledi (B.Ismaylov). Avans aqshasın alarda tayar, Bunday
-				jalqawlarǵa zat bermew kerek (S.Nurımbetov)`,
-		typeOfWord: 'Atliq',
-	})
 	return (
-		<div>
-			<KunSozi
-				title={kunSozi.title}
-				word={kunSozi.word}
-				description={kunSozi.description}
-				typeOfWord={kunSozi.typeOfWord}
-			/>
-		</div>
+		<>
+			<div className='wordInfo'>
+				<div>
+					<span className='soz'>SÓZ MÁNISI</span>
+					<div className='share cursor-pointer'>
+						<box-icon name='share-alt'></box-icon>
+						<span>Share</span>
+					</div>
+				</div>
+				<h2>
+					<span>word</span>
+				</h2>
+				<span className='typeOfWord'>category</span>
+				<p>description</p>
+			</div>
+		</>
 	)
 }
 

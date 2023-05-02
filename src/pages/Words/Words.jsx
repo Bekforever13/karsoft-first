@@ -4,6 +4,7 @@ import Footer from '../../components/Footer/Footer'
 import SozlerDizimi from '../../components/SozlerDizimi/SozlerDizimi'
 import Alphabet from '../../components/Alphabet'
 import WordDescription from './WordDescription'
+import './Words.scss'
 
 const Words = () => {
 	window.scrollTo({ top: 500, behavior: 'smooth' })
@@ -25,8 +26,8 @@ const Words = () => {
 					src='../../../public/img/B-big.svg'
 					alt=''
 				/>
-				<SozlerDizimi />
 				{/* <WordDescription /> */}
+				<SozlerDizimi />
 				<Alphabet />
 			</div>
 			<Footer />

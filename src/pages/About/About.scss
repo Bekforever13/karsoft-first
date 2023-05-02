@@ -8,7 +8,7 @@
 	row-gap: 20px;
 	text-align: left;
 	margin: 0 auto;
-	padding: 80px 20%;
+	padding: 80px 0;
 
 	h2 {
 		font-size: 24px;
@@ -22,5 +22,50 @@
 		font-size: 16px;
 		font-weight: 400;
 		color: #000;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.second {
+		.container {
+			.alphabet {
+				grid-template-columns: repeat(6, 1fr);
+			}
+		}
+	}
+}
+@media only screen and (max-width: 800px) {
+	.about {
+		p {
+			column-count: 1;
+		}
+	}
+	.second {
+		.sozler {
+			.soz {
+				grid-template-columns: repeat(2, 1fr);
+				gap: 10px 100px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	.second {
+		.bg-img {
+			.bg-img-a-dark {
+				display: none;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.second {
+		.container {
+			.alphabet {
+				grid-template-columns: repeat(4, 1fr);
+			}
+		}
 	}
 }
