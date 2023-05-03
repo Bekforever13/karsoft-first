@@ -6,6 +6,7 @@ import NotFound from './pages/NotFound'
 import { createContext, useState, useEffect } from 'react'
 import { axiosClassic } from './api/axios'
 import SearchResult from './components/SearchResult/SearchResult'
+import WordDescription from './pages/Words/WordDescription'
 
 export const Context = createContext()
 
@@ -24,6 +25,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Home />} />
 				<Route path='/words' element={<Words />} />
+				<Route path='/words/:id' element={<WordDescription />} />
 				<Route path='/about' element={<About />} />
 				<Route path='/searchresult' element={<SearchResult />} />
 				<Route path='*' element={<NotFound />} />

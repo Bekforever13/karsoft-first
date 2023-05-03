@@ -19,6 +19,13 @@
 		grid-template-columns: repeat(3, 1fr);
 		column-gap: 117px;
 		row-gap: 20px;
+
+		.listItem {
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
 		.listItem::before {
 			content: '\2022';
 			color: #0059fb;

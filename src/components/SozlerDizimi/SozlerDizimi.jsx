@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './SozlerDizimi.scss'
 import { Context } from '../../App'
 import { axiosClassic } from '../../api/axios'
+import { Link } from 'react-router-dom'
 
 const SozlerDizimi = () => {
 	const [allWordsArray, page, setPage] = useContext(Context)
@@ -25,13 +26,13 @@ const SozlerDizimi = () => {
 				{allWordsArray.map(word => {
 					return (
 						<li key={word.id} className='listItem'>
-							{word.latin}
+							<Link to={`/words/${word.id}`}>{word.latin}</Link>
 						</li>
 					)
 				})}
 			</ul>
 			<Pagination
-				defaultCurrent={1}
+				defaultCurrent={page}
 				pageSize={30}
 				total={324}
 				defaultPageSize={20}
