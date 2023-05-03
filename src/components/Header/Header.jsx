@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Context } from '../../App'
+import SearchResult from '../SearchResult/SearchResult'
 import './Header.scss'
 
 const Header = () => {
-	const [allWordsArray, setAllWordsArray] = useContext(Context)
 	const [searchValue, setSearchValue] = useState('')
-
-	const listener = useEffect(() => {}, [searchValue])
 
 	return (
 		<header>
@@ -89,17 +87,7 @@ const Header = () => {
 				</div>
 			</div>
 			<div className='container'>
-				{/* <ul className='resultOfSearch'>
-					{searchValue
-						? allWordsArray
-								.filter(i =>
-									i.latin.toLowerCase().includes(searchValue.toLowerCase())
-								)
-								.map(res => {
-									return <li key={res.id}>{res.latin}</li>
-								})
-						: ''}
-				</ul> */}
+				{searchValue ? <SearchResult searchValue={searchValue} /> : null}
 			</div>
 		</header>
 	)

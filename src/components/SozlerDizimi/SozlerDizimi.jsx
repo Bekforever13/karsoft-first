@@ -1,10 +1,22 @@
 import { Pagination } from 'antd'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './SozlerDizimi.scss'
 import { Context } from '../../App'
+import { axiosClassic } from '../../api/axios'
 
 const SozlerDizimi = () => {
-	const [allWordsArray, setAllWordsArray] = useContext(Context)
+	const [allWordsArray, page, setPage] = useContext(Context)
+	const [totalWords, setTotalWords] = useState(0)
+
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/words?limit=500&`)
+			.then(res => {
+				setTotalWords(res.data.data.length)
+				console.log(totalWords)
+			})
+			.catch(err => console.log(err))
+	}, [page])
 
 	return (
 		<div className='sozler-dizimi'>
@@ -21,8 +33,9 @@ const SozlerDizimi = () => {
 			<Pagination
 				defaultCurrent={1}
 				pageSize={30}
-				total={500}
+				total={324}
 				defaultPageSize={20}
+				onChange={e => setPage(e)}
 			/>
 		</div>
 	)
