@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { Context } from '../../App'
 import './Header.scss'
 
 const Header = () => {
+	const [allWordsArray, setAllWordsArray] = useContext(Context)
+	const [searchValue, setSearchValue] = useState('')
+
+	const listener = useEffect(() => {}, [searchValue])
+
 	return (
 		<header>
 			<div className='header-wrapper'>
@@ -55,7 +61,11 @@ const Header = () => {
 							src='../../../public/img/circle1.svg'
 							alt='circle'
 						/>
-						<input type='text' placeholder="Sózdi izlew ushin jazin'" />
+						<input
+							type='text'
+							onChange={e => setSearchValue(e.target.value)}
+							placeholder="Sózdi jazip baslan'"
+						/>
 						<button>
 							<box-icon name='search'></box-icon>
 						</button>
@@ -77,6 +87,19 @@ const Header = () => {
 						alt='sozlar'
 					/>
 				</div>
+			</div>
+			<div className='container'>
+				{/* <ul className='resultOfSearch'>
+					{searchValue
+						? allWordsArray
+								.filter(i =>
+									i.latin.toLowerCase().includes(searchValue.toLowerCase())
+								)
+								.map(res => {
+									return <li key={res.id}>{res.latin}</li>
+								})
+						: ''}
+				</ul> */}
 			</div>
 		</header>
 	)

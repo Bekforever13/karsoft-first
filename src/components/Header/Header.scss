@@ -7,7 +7,6 @@ header {
 	background-repeat: no-repeat;
 	background-position: bottom;
 	z-index: 999;
-
 	.header-wrapper {
 		position: fixed;
 		width: 100%;
@@ -152,6 +151,25 @@ header {
 				right: 4rem;
 				z-index: 0;
 			}
+		}
+	}
+	.resultOfSearch {
+		background-color: #fff;
+		display: flex;
+		margin: 180px auto 0;
+		width: 66%;
+		height: 200px;
+		border-radius: 10px;
+		z-index: 10;
+		position: relative;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		padding: 0.5rem 2rem;
+		overflow: hidden;
+		li {
+			width: 100%;
+			border-bottom: 1px solid black;
 		}
 	}
 }

@@ -20,25 +20,13 @@ const Footer = () => {
 							<h4>Sociallıq tarmaqlar :</h4>
 							<div className='sm'>
 								<a href='#'>
-									<box-icon
-										name='youtube'
-										color='#ffffff'
-										type='logo'
-									></box-icon>
+									<i className='bx bxl-youtube'></i>
 								</a>
 								<a href='#'>
-									<box-icon
-										name='telegram'
-										color='#ffffff'
-										type='logo'
-									></box-icon>
+									<i className='bx bxl-telegram'></i>
 								</a>
 								<a href='#'>
-									<box-icon
-										name='instagram'
-										type='logo'
-										color='#ffffff'
-									></box-icon>
+									<i className='bx bxl-instagram'></i>
 								</a>
 							</div>
 						</div>

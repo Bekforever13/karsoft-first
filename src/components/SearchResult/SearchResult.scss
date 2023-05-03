@@ -1,0 +1,21 @@
+.search-result-wrapper {
+	margin: 80px 0;
+	.searchResults {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		row-gap: 20px;
+		li::before {
+			content: '\2022';
+			color: #0059fb;
+			display: inline-block;
+			width: 1em;
+			margin-left: -1em;
+		}
+	}
+	h1 {
+		margin-bottom: 40px;
+		font-size: 24px;
+		font-weight: 600;
+		color: #21244a;
+	}
+}
