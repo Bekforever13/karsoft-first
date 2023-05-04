@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'boxicons'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
@@ -6,9 +6,17 @@ import KunSozi from '../../components/KunSozi/KunSozi'
 import FrameDesc from '../../components/FrameDesc'
 import Alphabet from '../../components/Alphabet'
 import './Home.scss'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
 	window.scrollTo({ top: 0, behavior: 'smooth' })
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		localStorage.getItem('token')
+			? navigate('/', { replace: true })
+			: navigate('/login', { replace: true })
+	}, [])
 
 	return (
 		<>
