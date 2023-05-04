@@ -1,0 +1,40 @@
+.AdmHome {
+	display: flex;
+
+	main {
+		margin-top: 30px;
+		margin-left: 40px;
+		display: flex;
+		flex-direction: column;
+		gap: 50px;
+
+		.upperSection {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+
+			.soz-category {
+				display: flex;
+				align-items: center;
+				gap: 30px;
+				.soz {
+					display: flex;
+					align-items: center;
+				}
+				.category {
+					display: flex;
+					align-items: center;
+				}
+			}
+		}
+		.lowerSection {
+			display: flex;
+			align-items: center;
+
+			.firstTable {
+			}
+			.secondTable {
+			}
+		}
+	}
+}

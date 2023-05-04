@@ -20,7 +20,7 @@ const Login = () => {
 				console.log(localStorage)
 			})
 			.catch(err => console.log(err))
-			.finally(() => navigate('/', { replace: true }))
+			.finally(() => navigate('/admin', { replace: true }))
 	}
 
 	return (

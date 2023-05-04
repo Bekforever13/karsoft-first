@@ -5,7 +5,7 @@ import About from './pages/About/About'
 import NotFound from './pages/NotFound'
 import Login from './pages/AuthForm/Login/Login'
 import Register from './pages/AuthForm/Register/Register'
-import Admin from './pages/AuthForm/Admin/Admin'
+import AdminHome from './pages/AuthForm/Admin/AdminHome/AdminHome'
 import { createContext, useState, useEffect } from 'react'
 import { axiosClassic } from './api/axios'
 import SearchResult from './components/SearchResult/SearchResult'
@@ -34,7 +34,7 @@ function App() {
 				<Route path='*' element={<NotFound />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
-				<Route path='/admin' element={<Admin />} />
+				<Route path='/admin' element={<AdminHome />} />
 			</Routes>
 		</Context.Provider>
 	)

@@ -1,0 +1,44 @@
+aside {
+	display: flex;
+	flex-direction: column;
+	background-color: #16171b;
+	width: 235px;
+	height: 100vh;
+	color: #fff;
+	padding: 30px 20px;
+	row-gap: 40px;
+
+	.img {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			width: 48px;
+			height: 48px;
+		}
+	}
+	ul {
+		display: flex;
+		flex-direction: column;
+		row-gap: 40px;
+
+		li {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			gap: 1rem;
+			transition: 0.3s ease-in-out;
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			border-radius: 12px;
+
+			.sozlerAdm {
+				transform: translateX(-11px);
+			}
+
+			&:hover {
+				background-color: #282a2c;
+			}
+		}
+	}
+}
