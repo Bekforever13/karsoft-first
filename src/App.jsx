@@ -4,8 +4,10 @@ import Words from './pages/Words/Words'
 import About from './pages/About/About'
 import NotFound from './pages/NotFound'
 import Login from './pages/AuthForm/Login/Login'
-import Register from './pages/AuthForm/Register/Register'
 import AdminHome from './pages/AuthForm/Admin/AdminHome/AdminHome'
+import AdminWord from './pages/AuthForm/Admin/AdminWord/AdminWord'
+import AdminCategory from './pages/AuthForm/Admin/AdminCategory/AdminCategory'
+import Admins from './pages/AuthForm/Admin/Admins/Admins'
 import { createContext, useState, useEffect } from 'react'
 import { axiosClassic } from './api/axios'
 import SearchResult from './components/SearchResult/SearchResult'
@@ -33,8 +35,10 @@ function App() {
 				<Route path='/searchresult' element={<SearchResult />} />
 				<Route path='*' element={<NotFound />} />
 				<Route path='/login' element={<Login />} />
-				<Route path='/register' element={<Register />} />
 				<Route path='/admin' element={<AdminHome />} />
+				<Route path='/admin/words' element={<AdminWord />} />
+				<Route path='/admin/category' element={<AdminCategory />} />
+				<Route path='/admin/admins' element={<Admins />} />
 			</Routes>
 		</Context.Provider>
 	)

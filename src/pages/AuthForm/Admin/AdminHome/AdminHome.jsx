@@ -1,10 +1,38 @@
 import { Table } from 'antd'
-import React from 'react'
+import { axiosClassic } from '../../../../api/axios'
+import React, { useContext, useEffect, useState } from 'react'
 import Aside from '../AdminComponents/Aside/Aside'
 import Input from '../AdminComponents/Input/Input'
 import './AdminHome.scss'
+import { useNavigate } from 'react-router-dom'
+import { Context } from '../../../../App'
 
 const AdminHome = () => {
+	const [dataSourceFirstTable, setDataSourceFirstTable] = useState([])
+	const [firstTablePage, setFirstTablePage] = useState(null)
+	const [secondTablePage, setSecondTablePage] = useState(null)
+	const columnsFirstTable = [
+		{ title: 'Sóz', dataIndex: 'soz', key: 'soz' },
+		{ title: 'Kategoriya', dataIndex: 'kategoriya', key: 'kategoriya' },
+		{ title: 'Kún', dataIndex: 'kun', key: 'kun' },
+		{ title: 'Actions', dataIndex: 'actions', key: 'actions' },
+	]
+
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		axiosClassic
+			.get('/api/check', {
+				headers: {
+					Authorization: localStorage.getItem('token'),
+				},
+			})
+			.then(res => console.log(res))
+			.catch(err => {
+				navigate('/login', { replace: true })
+			})
+	}, [])
+
 	return (
 		<div className='AdmHome'>
 			<Aside />
@@ -33,7 +61,7 @@ const AdminHome = () => {
 						</div>
 						<div className='category'>
 							<span>
-								<i class='bx bxs-category'></i>
+								<i className='bx bxs-category'></i>
 							</span>{' '}
 							10 category
 						</div>
@@ -42,11 +70,14 @@ const AdminHome = () => {
 				<section className='lowerSection'>
 					<article className='firstTable'>
 						<h2>Sózler sáne boyınsha</h2>
-						<Table></Table>
+						<Table
+							dataSource={dataSourceFirstTable}
+							columns={columnsFirstTable}
+						/>
 					</article>
 					<article className='secondTable'>
 						<h2>Kategoriya</h2>
-						<Table></Table>
+						<Table columns={columnsFirstTable} />
 					</article>
 				</section>
 			</main>

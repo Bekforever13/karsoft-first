@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { axiosClassic } from '../../../api/axios'
+import { Context } from '../../../App'
 import './Login.scss'
 
 const Login = () => {
@@ -17,10 +18,9 @@ const Login = () => {
 			.post('/api/authenticate', currentUser)
 			.then(res => {
 				localStorage.setItem('token', 'Bearer ' + res.data.data.token)
-				console.log(localStorage)
+				navigate('/admin', { replace: true })
 			})
 			.catch(err => console.log(err))
-			.finally(() => navigate('/admin', { replace: true }))
 	}
 
 	return (

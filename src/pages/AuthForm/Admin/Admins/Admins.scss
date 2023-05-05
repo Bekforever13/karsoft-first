@@ -1,4 +1,4 @@
-.adminWords {
+.admins {
 	display: flex;
 	align-items: center;
 
@@ -9,9 +9,8 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
-
-		.adminWordsTable {
-			.adminWordsTitle {
+		.adminsTable {
+			.adminsTitle {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;

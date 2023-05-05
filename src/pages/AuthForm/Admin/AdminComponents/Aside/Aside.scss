@@ -5,7 +5,7 @@ aside {
 	width: 235px;
 	height: 100vh;
 	color: #fff;
-	padding: 30px 20px;
+	padding: 30px 30px;
 	row-gap: 40px;
 
 	.img {
@@ -25,12 +25,17 @@ aside {
 		li {
 			display: flex;
 			align-items: center;
-			justify-content: flex-start;
-			gap: 1rem;
 			transition: 0.3s ease-in-out;
 			padding: 0.5rem 1rem;
 			cursor: pointer;
 			border-radius: 12px;
+
+			.linkk {
+				gap: 1rem;
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+			}
 
 			.sozlerAdm {
 				transform: translateX(-11px);

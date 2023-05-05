@@ -1,20 +1,20 @@
 import React from 'react'
+import './Admins.scss'
 import Aside from '../AdminComponents/Aside/Aside'
 import Input from '../AdminComponents/Input/Input'
-import './AdminCategory.scss'
 import { Button, Table } from 'antd'
 
-const AdminCategory = () => {
+const Admins = () => {
 	return (
-		<div className='adminCategory'>
+		<div className='admins'>
 			<Aside />
 			<main>
 				<Input />
-				<div className='adminCategoryTable'>
-					<div className='adminCategoryTitle'>
-						<h2>Kategoriya</h2>
+				<div className='adminsTable'>
+					<div className='adminsTitle'>
+						<h2>Admins</h2>
 						<Button type='primary' size={'large'}>
-							Add Category
+							Add admin
 						</Button>
 					</div>
 					<Table></Table>
@@ -24,4 +24,4 @@ const AdminCategory = () => {
 	)
 }
 
-export default AdminCategory
+export default Admins
