@@ -26,7 +26,6 @@ const Words = () => {
 					src='../../../public/img/B-big.svg'
 					alt=''
 				/>
-				{/* <WordDescription /> */}
 				<SozlerDizimi />
 				<Alphabet />
 			</div>

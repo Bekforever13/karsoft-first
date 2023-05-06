@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { axiosClassic } from '../../api/axios'
 import Alphabet from '../../components/Alphabet'
 import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header/Header'
 import { useParams, Link } from 'react-router-dom'
 import './WordDescription.scss'
+import { Context } from '../../App'
 
 const WordDescription = id => {
+	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
 	// window.scrollTo({ top: 500, behavior: 'smooth' })
 	const params = useParams()
 	const [currentWord, setCurrentWord] = useState({
@@ -23,6 +25,7 @@ const WordDescription = id => {
 
 	useEffect(() => {
 		axiosClassic.get(`/api/words/${+params.id}`).then(res => {
+			console.log(res.data.data)
 			setCurrentWord({
 				id: res.data.data.id,
 				latinText: res.data.data.latin,
@@ -30,7 +33,7 @@ const WordDescription = id => {
 				latinDesc: res.data.data.description_latin,
 				kirilDesc: res.data.data.description_kiril,
 				latinCategory: res.data.data.categories.map(el => (el ? el.latin : '')),
-				kirilCategory: res.data.data.categories.kiril,
+				kirilCategory: res.data.data.categories.map(el => (el ? el.kiril : '')),
 				sinonim: res.data.data.synonyms,
 				antonim: res.data.data.antonyms,
 			})
@@ -42,17 +45,19 @@ const WordDescription = id => {
 			<Header />
 			<div className='wordInfo'>
 				<div>
-					<span className='soz'>SÓZ MÁNISI</span>
+					<span className='soz'>{lang ? 'SÓZ MÁNISI' : 'СӨЗ МӘНИСИ'}</span>
 					<div className='share cursor-pointer'>
 						<box-icon name='share-alt'></box-icon>
 						<span>Share</span>
 					</div>
 				</div>
 				<h2>
-					<span>{currentWord.latinText}</span>
+					<span>{lang ? currentWord.latinText : currentWord.kirilText}</span>
 				</h2>
-				<span className='typeOfWord'>{currentWord.latinCategory}</span>
-				<p>{currentWord.latinDesc}</p>
+				<span className='typeOfWord'>
+					{lang ? currentWord.latinCategory : currentWord.kirilCategory}
+				</span>
+				<p>{lang ? currentWord.latinDesc : currentWord.kirilDesc}</p>
 			</div>
 			<div className='container'>
 				<div className='wrapper-word'>
@@ -65,7 +70,9 @@ const WordDescription = id => {
 						{currentWord.sinonim.map(word => {
 							return (
 								<li key={word.id} className='Item'>
-									<Link to={`/words/${word.id}`}>{word.latin}</Link>
+									<Link to={`/words/${word.id}`}>
+										{lang ? word.latin : word.kiril}
+									</Link>
 								</li>
 							)
 						})}
@@ -81,7 +88,9 @@ const WordDescription = id => {
 						{currentWord.antonim.map(word => {
 							return (
 								<li key={word.id} className='Item'>
-									<Link to={`/words/${word.id}`}>{word.latin}</Link>
+									<Link to={`/words/${word.id}`}>
+										{lang ? word.latin : word.kiril}
+									</Link>
 								</li>
 							)
 						})}

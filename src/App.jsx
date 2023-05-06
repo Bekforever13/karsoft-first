@@ -18,6 +18,7 @@ export const Context = createContext()
 function App() {
 	const [allWordsArray, setAllWordsArray] = useState([])
 	const [page, setPage] = useState(1)
+	const [lang, setLang] = useState(true)
 
 	useEffect(() => {
 		axiosClassic
@@ -26,7 +27,7 @@ function App() {
 	}, [page])
 
 	return (
-		<Context.Provider value={[allWordsArray, page, setPage]}>
+		<Context.Provider value={[allWordsArray, page, setPage, lang, setLang]}>
 			<Routes>
 				<Route path='/' element={<Home />} />
 				<Route path='/words' element={<Words />} />

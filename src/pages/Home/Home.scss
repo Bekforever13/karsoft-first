@@ -126,33 +126,34 @@ main {
 		}
 	}
 	.alphabet {
-		position: relative;
-		display: grid;
-		grid-template-columns: repeat(9, 1fr);
-		gap: 20px;
-		padding: 40px;
-		z-index: 997;
-		background: #ffffff;
-		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.14);
-		border-radius: 8px;
-
-		a {
-			white-space: nowrap;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 57px;
-			height: 30px;
-			color: #0059fb;
-			font-size: 1rem;
-			font-weight: 700;
-			padding: 4px 16px;
+		.alphabet__list {
+			position: relative;
+			display: grid;
+			grid-template-columns: repeat(9, 1fr);
+			gap: 20px;
+			padding: 40px;
+			z-index: 997;
+			background: #ffffff;
+			box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.14);
 			border-radius: 8px;
-			background-color: #ddfaff;
-			transition: 0.3s ease-in;
+			.alphabet__item {
+				white-space: nowrap;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 57px;
+				height: 30px;
+				color: #0059fb;
+				font-size: 1rem;
+				font-weight: 700;
+				padding: 4px 16px;
+				border-radius: 8px;
+				background-color: #ddfaff;
+				transition: 0.3s ease-in;
 
-			&:hover {
-				text-decoration: underline;
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 		}
 	}

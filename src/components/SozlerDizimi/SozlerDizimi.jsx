@@ -6,7 +6,7 @@ import { axiosClassic } from '../../api/axios'
 import { Link } from 'react-router-dom'
 
 const SozlerDizimi = () => {
-	const [allWordsArray, page, setPage] = useContext(Context)
+	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
 	const [totalWords, setTotalWords] = useState(0)
 
 	useEffect(() => {
@@ -21,15 +21,23 @@ const SozlerDizimi = () => {
 
 	return (
 		<div className='sozler-dizimi'>
-			<h3>Sozler Dizimi</h3>
+			<h3>{lang ? 'Sozler Dizimi' : 'Сөзлер дизими'}</h3>
 			<ul className='list'>
-				{allWordsArray.map(word => {
-					return (
-						<li key={word.id} className='listItem'>
-							<Link to={`/words/${word.id}`}>{word.latin}</Link>
-						</li>
-					)
-				})}
+				{lang
+					? allWordsArray.map(word => {
+							return (
+								<li key={word.id} className='listItem'>
+									<Link to={`/words/${word.id}`}>{word.latin}</Link>
+								</li>
+							)
+					  })
+					: allWordsArray.map(word => {
+							return (
+								<li key={word.id} className='listItem'>
+									<Link to={`/words/${word.id}`}>{word.kiril}</Link>
+								</li>
+							)
+					  })}
 			</ul>
 			<Pagination
 				defaultCurrent={page}

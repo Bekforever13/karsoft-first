@@ -1,64 +1,146 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Context } from '../App'
+import { Link } from 'react-router-dom'
+
+export const kirilAlphabet = [
+	'А',
+	'Ә',
+	'Б',
+	'В',
+	'Г',
+	'Ғ',
+	'Д',
+	'Е',
+	'Ё',
+	'Ж',
+	'З',
+	'И',
+	'Й',
+	'К',
+	'Қ',
+	'Л',
+	'М',
+	'Н',
+	'Ң',
+	'О',
+	'Ө',
+	'П',
+	'Р',
+	'С',
+	'Т',
+	'У',
+	'Ү',
+	'Ў',
+	'Ф',
+	'Х',
+	'Ҳ',
+	'Ц',
+	'Ч',
+	'Ш',
+	'Щ',
+	'Ы',
+	'Э',
+	'Ю',
+	'Я',
+]
+export const latinAlphabet = [
+	'A',
+	'Á',
+	'B',
+	'D',
+	'E',
+	'F',
+	'G',
+	'Ǵ',
+	'H',
+	'X',
+	'Í',
+	'I',
+	'J',
+	'K',
+	'Q',
+	'L',
+	'M',
+	'N',
+	'Ń',
+	'O',
+	'Ó',
+	'P',
+	'R',
+	'S',
+	'T',
+	'U',
+	'Ú',
+	'V',
+	'W',
+	'Y',
+	'Z',
+	'Sh',
+	'C',
+	'Ch',
+]
 
 const Alphabet = () => {
+	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
+	const waqtinshaArray = [
+		'ABADANLASÍW',
+		'BAǴ',
+		'ABADAN',
+		'DABÍL',
+		'ABAYLAW',
+		'ABÍSÍN-AJÍN',
+		'ABAQ',
+		'ABAY',
+		'ABAJUR',
+		'ADAM',
+		'ABADANLÍQ',
+		'ABAY-SIYASAT',
+	]
+
 	return (
 		<div className='second'>
 			<div className='container'>
 				<div className='sozler'>
-					<h3>Kópshilikke arnalǵan izlewler</h3>
-					<p>Qaraqalpaq tiliniń túsindirme sózligi</p>
+					<h3>
+						{lang
+							? 'Kópshilikke arnalǵan izlewler'
+							: 'Көпшиликке арналған излеўлер'}
+					</h3>
+					<p>
+						{lang
+							? 'Qaraqalpaq tiliniń túsindirme sózligi'
+							: 'Қарақалпақ тилиниң түсиндирме сөзлиги'}
+					</p>
 					<div className='soz'>
-						<a href='#'>ABADANLASÍW</a>
-						<a href='#'>BAǴ</a>
-						<a href='#'>ABADAN</a>
-						<a href='#'>DABÍL</a>
-						<a href='#'>ABAYLAW</a>
-						<a href='#'>ABÍSÍN-AJÍN</a>
-						<a href='#'>ABAQ</a>
-						<a href='#'>ABAY</a>
-						<a href='#'>ABAJUR</a>
-						<a href='#'>ADAM</a>
-						<a href='#'>ABADANLÍQ</a>
-						<a href='#'>ABAY-SIYASAT</a>
+						{waqtinshaArray.map(soz => {
+							return <a href='#'>{soz}</a>
+						})}
 					</div>
 				</div>
 				<div className='alphabet'>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
-					<a href='#'>A a</a>
+					<ul className='alphabet__list'>
+						{lang
+							? latinAlphabet.map((item, i) => {
+									return (
+										<li className='alphabet__item' key={i}>
+											<Link to={'#'}>
+												{item}
+												{item.toLowerCase()}
+											</Link>
+										</li>
+									)
+							  })
+							: kirilAlphabet.map((item, i) => {
+									return (
+										<li className='alphabet__item' key={i}>
+											<Link to={'#'}>
+												{item}
+												{item.toLowerCase()}
+											</Link>
+										</li>
+									)
+							  })}
+					</ul>
 				</div>
 			</div>
 			<div className='bg-img'>

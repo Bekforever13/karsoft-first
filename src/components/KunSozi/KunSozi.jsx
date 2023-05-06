@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import 'boxicons'
 import './KunSozi.scss'
 import { axiosClassic } from '../../api/axios'
+import { Context } from '../../App'
 
 const KunSozi = () => {
+	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
 	const [wordsDay, setWordsDay] = useState({
 		id: null,
 		latinText: '',
@@ -30,18 +32,20 @@ const KunSozi = () => {
 	return (
 		<div className='kun-sozi'>
 			<div>
-				<span className='soz'>{'KÚN SÓZI'}</span>
+				<span className='soz'>{lang ? 'KÚN SÓZI' : 'КҮН СӨЗИ'}</span>
 				<div className='share cursor-pointer'>
 					<box-icon name='share-alt'></box-icon>
 					<span>Share</span>
 				</div>
 			</div>
 			<h2>
-				<span>{wordsDay.latinText}</span>
+				<span>{lang ? wordsDay.latinText : wordsDay.kirilText}</span>
 				{/* <box-icon name='volume-full'></box-icon> */}
 			</h2>
-			<span className='typeOfWord'>{wordsDay.latinCategory}</span>
-			<p>{wordsDay.latinDesc}</p>
+			<span className='typeOfWord'>
+				{lang ? wordsDay.latinCategory : wordsDay.kirilCategory}
+			</span>
+			<p>{lang ? wordsDay.latinDesc : wordsDay.kirilDesc}</p>
 		</div>
 	)
 }

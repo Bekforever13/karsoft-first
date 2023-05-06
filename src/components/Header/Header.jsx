@@ -6,6 +6,7 @@ import './Header.scss'
 
 const Header = () => {
 	const [searchValue, setSearchValue] = useState('')
+	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
 
 	return (
 		<header>
@@ -27,27 +28,34 @@ const Header = () => {
 								className={navData => (navData.isActive ? 'active' : 'link')}
 								to='/'
 							>
-								Sózler
+								{lang ? 'Sózler' : 'Сөзлер'}
 							</NavLink>
 							<NavLink
 								className={navData => (navData.isActive ? 'active' : 'link')}
 								to='/words'
 							>
-								Sózler dizimi
+								{lang ? 'Sózler dizimi' : 'Сөзлер дизими'}
 							</NavLink>
 							<NavLink
 								className={navData => (navData.isActive ? 'active' : 'link')}
 								to='/about'
 							>
-								Baǵdarlama haqqinda
+								{lang ? 'Baǵdarlama haqqinda' : 'Бағдарлама ҳаққында'}
 							</NavLink>
+							<div className='langIcon' onClick={() => setLang(!lang)}>
+								{lang ? 'Qq' : 'Ққ'}
+							</div>
 						</nav>
 					</div>
 				</div>
 			</div>
 			<div className='search-wrapper'>
 				<div className='search'>
-					<h3>Bir sózdi izleń, onı úyreniń</h3>
+					<h3>
+						{lang
+							? 'Bir sózdi izleń, onı úyreniń'
+							: 'Бир сөзди излең, оны үйрениң'}
+					</h3>
 					<div className='circle-bg'>
 						<img
 							className='circle-img'
@@ -62,7 +70,11 @@ const Header = () => {
 						<input
 							type='text'
 							onChange={e => setSearchValue(e.target.value)}
-							placeholder="Sózdi jazip baslan'"
+							placeholder={
+								lang
+									? 'sózdi izlew ushın jazıń...'
+									: 'сөзди излеў ушын жазың...'
+							}
 						/>
 						<button>
 							<box-icon name='search'></box-icon>

@@ -1,8 +1,12 @@
 import React from 'react'
 import './Footer.scss'
 import 'boxicons'
+import { useContext } from 'react'
+import { Context } from '../../App'
 
 const Footer = () => {
+	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
+
 	return (
 		<footer>
 			<div className='container'>
@@ -17,7 +21,9 @@ const Footer = () => {
 							/>
 						</div>
 						<div className='footer-social-media'>
-							<h4>Sociallıq tarmaqlar :</h4>
+							<h4>
+								{lang ? 'Sociallıq tarmaqlar :' : 'Социаллық тармақлар :'}
+							</h4>
 							<div className='sm'>
 								<a href='#'>
 									<i className='bx bxl-youtube'></i>
@@ -32,19 +38,20 @@ const Footer = () => {
 						</div>
 					</div>
 					<div className='footer-about'>
-						<h3>Baǵdarlama haqqında</h3>
+						<h3>{lang ? 'Baǵdarlama haqqında' : 'Бағдарлама ҳаққында'}</h3>
 						<div className='footer-nav'>
-							<a href='#'>Kún sózi</a>
-							<a href='#'>Jańa sózler</a>
-							<a href='#'>Sózler dizimi</a>
+							<a href='#'>{lang ? 'Kún sózi' : 'Күн сөзи'}</a>
+							<a href='#'>{lang ? 'Jańa sózler' : 'Жаңа сөзлер'}</a>
+							<a href='#'>{lang ? 'Sózler dizimi' : 'Сөзлер дизими'}</a>
 						</div>
 					</div>
 					<div className='footer-mobile-app'>
-						<h3>Android</h3>
+						<h3>{lang ? 'Android' : 'Андроид'}</h3>
 						<div>
 							<h4>
-								Android baǵdarlamasın júklep alıń hám offlayn tárizde
-								paydalanıń.
+								{lang
+									? 'Android baǵdarlamasın júklep alıń hám offlayn tárizde paydalanıń.'
+									: 'Андроид бағдарламасын жүклеп алың ҳәм оффлайн тәризде пайдаланың.'}
 							</h4>
 							<a
 								href='https://play.google.com/store/apps/details?id=com.karsoft.tusindirmesozlik'
