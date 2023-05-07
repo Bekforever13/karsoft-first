@@ -13,8 +13,7 @@ const SozlerDizimi = () => {
 		axiosClassic
 			.get(`/api/words?limit=500&`)
 			.then(res => {
-				setTotalWords(res.data.data.length)
-				console.log(totalWords)
+				setTotalWords(res.data.total)
 			})
 			.catch(err => console.log(err))
 	}, [page])
@@ -42,7 +41,7 @@ const SozlerDizimi = () => {
 			<Pagination
 				defaultCurrent={page}
 				pageSize={30}
-				total={324}
+				total={totalWords}
 				defaultPageSize={20}
 				onChange={e => setPage(e)}
 			/>

@@ -112,8 +112,12 @@ const Alphabet = () => {
 							: 'Қарақалпақ тилиниң түсиндирме сөзлиги'}
 					</p>
 					<div className='soz'>
-						{waqtinshaArray.map(soz => {
-							return <a href='#'>{soz}</a>
+						{waqtinshaArray.map((soz, index) => {
+							return (
+								<a key={index} href='#'>
+									{soz}
+								</a>
+							)
 						})}
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './Table.scss'
+import './TableSozler.scss'
 import { axiosClassic } from '../../../../../../api/axios'
 import moment from 'moment'
 import { Pagination } from 'antd'
@@ -26,6 +26,10 @@ const Table = () => {
 				<thead className='thead'>
 					<tr className='thead__tr'>
 						<th className='thead__tr__th'>Sóz</th>
+						<th className='thead__tr__th'>Сөз</th>
+						<th className='thead__tr__th'>Audio</th>
+						<th className='thead__tr__th'>Desc__kiril</th>
+						<th className='thead__tr__th'>Desc_Latin</th>
 						<th className='thead__tr__th'>Kategoriya</th>
 						<th className='thead__tr__th'>Kún</th>
 						<th className='thead__tr__th'>Actions</th>

@@ -5,10 +5,11 @@ import { Pagination } from 'antd'
 
 const Table2 = () => {
 	const [dataTable, setDataTable] = useState([])
+	const [currentPage, setCurrentPage] = useState(1)
 
 	useEffect(() => {
 		axiosClassic
-			.get('/api/categoriesdate?page=1', {
+			.get(`/api/categoriesdate?page=${currentPage}`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
@@ -16,7 +17,7 @@ const Table2 = () => {
 			.then(res => {
 				setDataTable(res.data.data.map(e => e))
 			})
-	}, [])
+	}, [currentPage])
 
 	return (
 		<>
@@ -40,8 +41,12 @@ const Table2 = () => {
 								</th>
 								<th className='tbody__tr__th'>
 									<div className='table__actions'>
-										<button>Delete</button>
-										<button>Edit</button>
+										<button className='editBtn'>
+											<i className='bx bx-pencil'></i>
+										</button>
+										<button className='deleteBtn'>
+											<i className='bx bx-trash'></i>
+										</button>
 									</div>
 								</th>
 							</tr>
@@ -49,7 +54,11 @@ const Table2 = () => {
 					})}
 				</tbody>
 			</table>
-			<Pagination total={324} />
+			<Pagination
+				onChange={e => setCurrentPage(e)}
+				total={16}
+				defaultPageSize={10}
+			/>
 		</>
 	)
 }

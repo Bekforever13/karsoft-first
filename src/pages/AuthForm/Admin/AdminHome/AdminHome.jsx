@@ -7,9 +7,35 @@ import { useNavigate } from 'react-router-dom'
 import { Context } from '../../../../App'
 import Table from '../AdminComponents/Table/TableHome/Table'
 import Table2 from '../AdminComponents/Table/TableHome/Table2'
+import Modal from 'antd/es/modal/Modal'
+import { Button, Select } from 'antd'
 
 const AdminHome = () => {
 	const navigate = useNavigate()
+	const [totalWords, setTotalWords] = useState(0)
+	const [totalCategory, setTotalCategory] = useState(0)
+
+	// useEffect for total words
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/wordsdate?`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setTotalWords(res.data.total))
+	}, [])
+
+	//useEffect for total categories
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/categoriesdate?`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setTotalCategory(res.data.total))
+	}, [])
 
 	// useEffect(() => {
 	// 	axiosClassic
@@ -23,6 +49,17 @@ const AdminHome = () => {
 	// 			navigate('/login', { replace: true })
 	// 		})
 	// }, [])
+
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const showModal = () => {
+		setIsModalOpen(true)
+	}
+	const handleOk = () => {
+		setIsModalOpen(false)
+	}
+	const handleCancel = () => {
+		setIsModalOpen(false)
+	}
 
 	return (
 		<div className='AdmHome'>
@@ -47,23 +84,76 @@ const AdminHome = () => {
 								/>
 							</svg>
 						</span>
-						517 sóz
+						{totalWords} sóz
 					</div>
 					<div className='category'>
 						<span>
 							<i className='bx bxs-category'></i>
 						</span>{' '}
-						10 category
+						{totalCategory} category
 					</div>
 				</article>
 				<section className='section'>
 					<div className='tables'>
 						<article className='firstTable'>
-							<h2>Sózler sáne boyınsha</h2>
+							<div className='tableTitle'>
+								<h2>Sózler sáne boyınsha</h2>
+								<button onClick={showModal}>Add word</button>
+								<Modal
+									title='Basic Modal'
+									open={isModalOpen}
+									onOk={handleOk}
+									onCancel={handleCancel}
+								>
+									<p>Some contents...</p>
+									<p>Some contents...</p>
+									<p>Some contents...</p>
+								</Modal>
+							</div>
 							<Table />
 						</article>
 						<article className='secondTable'>
-							<h2>Kategoriya</h2>
+							<div className='tableTitle'>
+								<h2>Kategoriya</h2>
+								<button onClick={showModal}>Add word</button>
+								<Modal
+									title='Basic Modal'
+									open={isModalOpen}
+									onOk={handleOk}
+									onCancel={handleCancel}
+									okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
+								>
+									<form>
+										<h1>Add new word</h1>
+										<div className='newWordForm'>
+											<label>
+												<h2>Latin</h2>
+												<input type='text' />
+											</label>
+											<label>
+												<h2>Kiril</h2>
+												<input type='text' />
+											</label>
+											<label>
+												<h2>Latin_description</h2>
+												<input type='text' />
+											</label>
+											<label>
+												<h2>Kiril_description</h2>
+												<input type='text' />
+											</label>
+											<label>
+												<h2>Category</h2>
+												<Select>
+													<Select.Option value='category'>1</Select.Option>
+													<Select.Option value='category'>2</Select.Option>
+													<Select.Option value='category'>3</Select.Option>
+												</Select>
+											</label>
+										</div>
+									</form>
+								</Modal>
+							</div>
 							<Table2 />
 						</article>
 					</div>
