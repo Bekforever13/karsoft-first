@@ -62,104 +62,106 @@ const AdminHome = () => {
 	}
 
 	return (
-		<div className='AdmHome'>
-			<Aside />
-			<main>
-				<Input />
-				<article className='soz-category'>
-					<div className='soz'>
-						<span>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								fill='none'
-								viewBox='0 0 24 24'
-								strokeWidth={1.5}
-								stroke='currentColor'
-								className='w-6 h-6'
-							>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									d='M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802'
-								/>
-							</svg>
-						</span>
-						{totalWords} sóz
-					</div>
-					<div className='category'>
-						<span>
-							<i className='bx bxs-category'></i>
-						</span>{' '}
-						{totalCategory} category
-					</div>
-				</article>
-				<section className='section'>
-					<div className='tables'>
-						<article className='firstTable'>
-							<div className='tableTitle'>
-								<h2>Sózler sáne boyınsha</h2>
-								<button onClick={showModal}>Add word</button>
-								<Modal
-									title='Basic Modal'
-									open={isModalOpen}
-									onOk={handleOk}
-									onCancel={handleCancel}
+		<>
+			<div className='AdmHome'>
+				<Aside />
+				<main>
+					<Input />
+					<article className='soz-category'>
+						<div className='soz'>
+							<span>
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 24 24'
+									strokeWidth={1.5}
+									stroke='currentColor'
+									className='w-6 h-6'
 								>
-									<p>Some contents...</p>
-									<p>Some contents...</p>
-									<p>Some contents...</p>
-								</Modal>
-							</div>
-							<Table />
-						</article>
-						<article className='secondTable'>
-							<div className='tableTitle'>
-								<h2>Kategoriya</h2>
-								<button onClick={showModal}>Add word</button>
-								<Modal
-									title='Basic Modal'
-									open={isModalOpen}
-									onOk={handleOk}
-									onCancel={handleCancel}
-									okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
-								>
-									<form>
-										<h1>Add new word</h1>
-										<div className='newWordForm'>
-											<label>
-												<h2>Latin</h2>
-												<input type='text' />
-											</label>
-											<label>
-												<h2>Kiril</h2>
-												<input type='text' />
-											</label>
-											<label>
-												<h2>Latin_description</h2>
-												<input type='text' />
-											</label>
-											<label>
-												<h2>Kiril_description</h2>
-												<input type='text' />
-											</label>
-											<label>
-												<h2>Category</h2>
-												<Select>
-													<Select.Option value='category'>1</Select.Option>
-													<Select.Option value='category'>2</Select.Option>
-													<Select.Option value='category'>3</Select.Option>
-												</Select>
-											</label>
-										</div>
-									</form>
-								</Modal>
-							</div>
-							<Table2 />
-						</article>
-					</div>
-				</section>
-			</main>
-		</div>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										d='M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802'
+									/>
+								</svg>
+							</span>
+							{totalWords} sóz
+						</div>
+						<div className='category'>
+							<span>
+								<i className='bx bxs-category'></i>
+							</span>{' '}
+							{totalCategory} category
+						</div>
+					</article>
+					<section className='section'>
+						<div className='tables'>
+							<article className='firstTable'>
+								<div className='tableTitle'>
+									<h2>Sózler sáne boyınsha</h2>
+									<button onClick={showModal}>Add word</button>
+									<Modal
+										title='Basic Modal'
+										open={isModalOpen}
+										onOk={handleOk}
+										onCancel={handleCancel}
+									>
+										<p>Some contents...</p>
+										<p>Some contents...</p>
+										<p>Some contents...</p>
+									</Modal>
+								</div>
+								<Table />
+							</article>
+							<article className='secondTable'>
+								<div className='tableTitle'>
+									<h2>Kategoriya</h2>
+									<button onClick={showModal}>Add word</button>
+									<Modal
+										title='Basic Modal'
+										open={isModalOpen}
+										onOk={handleOk}
+										onCancel={handleCancel}
+										okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
+									>
+										<form>
+											<h1>Add new word</h1>
+											<div className='newWordForm'>
+												<label>
+													<h2>Latin</h2>
+													<input type='text' />
+												</label>
+												<label>
+													<h2>Kiril</h2>
+													<input type='text' />
+												</label>
+												<label>
+													<h2>Latin_description</h2>
+													<input type='text' />
+												</label>
+												<label>
+													<h2>Kiril_description</h2>
+													<input type='text' />
+												</label>
+												<label>
+													<h2>Category</h2>
+													<Select>
+														<Select.Option value='category'>1</Select.Option>
+														<Select.Option value='category'>2</Select.Option>
+														<Select.Option value='category'>3</Select.Option>
+													</Select>
+												</label>
+											</div>
+										</form>
+									</Modal>
+								</div>
+								<Table2 />
+							</article>
+						</div>
+					</section>
+				</main>
+			</div>
+		</>
 	)
 }
 
