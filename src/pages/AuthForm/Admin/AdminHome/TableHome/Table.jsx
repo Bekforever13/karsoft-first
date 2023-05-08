@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Table.scss'
-import { axiosClassic } from '../../../../../../api/axios'
 import moment from 'moment'
+import axiosClassic from '../../../../../api/axios'
 import { Pagination } from 'antd'
 
 const Table = () => {

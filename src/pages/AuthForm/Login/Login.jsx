@@ -12,6 +12,18 @@ const Login = () => {
 
 	const navigate = useNavigate()
 
+	useEffect(() => {
+		axiosClassic
+			.get('/api/check', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				res.data.data ? navigate('/admin', { replace: true }) : ''
+			})
+	}, [])
+
 	const login = e => {
 		e.preventDefault()
 		axiosClassic

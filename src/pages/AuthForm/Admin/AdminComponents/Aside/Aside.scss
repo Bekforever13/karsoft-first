@@ -6,6 +6,7 @@ aside {
 	color: #fff;
 	padding: 30px 30px;
 	row-gap: 40px;
+	min-height: 100vh;
 
 	.img {
 		display: flex;
@@ -19,23 +20,22 @@ aside {
 	ul {
 		display: flex;
 		flex-direction: column;
-		row-gap: 40px;
+		row-gap: 30px;
 
 		li {
 			display: flex;
 			align-items: center;
 			transition: 0.3s ease-in-out;
-			padding: 0.5rem 1rem;
+			padding: 0.3rem 0.6rem;
 			cursor: pointer;
 			border-radius: 12px;
 
-			.linkk {
+			.link {
 				gap: 1rem;
 				display: flex;
 				align-items: center;
 				justify-content: flex-start;
 			}
-
 			.sozlerAdm {
 				transform: translateX(-11px);
 			}

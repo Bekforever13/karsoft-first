@@ -1,19 +1,19 @@
-import { axiosClassic } from '../../../../api/axios'
 import React, { useContext, useEffect, useState } from 'react'
+import axiosClassic from '../../../../api/axios'
 import Aside from '../AdminComponents/Aside/Aside'
 import Input from '../AdminComponents/Input/Input'
 import './AdminHome.scss'
 import { useNavigate } from 'react-router-dom'
-import { Context } from '../../../../App'
-import Table from '../AdminComponents/Table/TableHome/Table'
-import Table2 from '../AdminComponents/Table/TableHome/Table2'
-import Modal from 'antd/es/modal/Modal'
-import { Button, Select } from 'antd'
+import Table from './TableHome/Table'
+import Table2 from './TableHome/Table2'
+import AddCategory from '../AdminComponents/Modal/Home/AddCategory'
+import AddWord from '../AdminComponents/Modal/Home/AddWord'
 
 const AdminHome = () => {
 	const navigate = useNavigate()
 	const [totalWords, setTotalWords] = useState(0)
 	const [totalCategory, setTotalCategory] = useState(0)
+	const [allCategories, setAllCategories] = useState([])
 
 	// useEffect for total words
 	useEffect(() => {
@@ -29,36 +29,50 @@ const AdminHome = () => {
 	//useEffect for total categories
 	useEffect(() => {
 		axiosClassic
-			.get(`/api/categoriesdate?`, {
+			.get(`/api/categoriesdate?limit=500`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => setTotalCategory(res.data.total))
+			.then(res => {
+				setTotalCategory(res.data.total)
+				setAllCategories(res.data.data)
+			})
 	}, [])
 
-	// useEffect(() => {
-	// 	axiosClassic
-	// 		.get('/api/check', {
-	// 			headers: {
-	// 				Authorization: 'Bearer ' + localStorage.getItem('token'),
-	// 			},
-	// 		})
-	// 		.then(res => console.log(res))
-	// 		.catch(err => {
-	// 			navigate('/login', { replace: true })
-	// 		})
-	// }, [])
+	//useeffect for check have token or not
+	useEffect(() => {
+		axiosClassic
+			.get('/api/check', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => console.log(res.data))
+			.catch(err => {
+				navigate('/login', { replace: true })
+			})
+	}, [])
 
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	const showModal = () => {
-		setIsModalOpen(true)
+	const [isModalAddWordOpen, setIsModalAddWordOpen] = useState(false)
+	const [isModalAddCategoryOpen, setIsModalAddCategoryOpen] = useState(false)
+	const showModalAddWord = () => {
+		setIsModalAddWordOpen(true)
 	}
-	const handleOk = () => {
-		setIsModalOpen(false)
+	const handleOkAddWord = () => {
+		setIsModalAddWordOpen(false)
 	}
-	const handleCancel = () => {
-		setIsModalOpen(false)
+	const handleCancelAddWord = () => {
+		setIsModalAddWordOpen(false)
+	}
+	const showModalAddCategory = () => {
+		setIsModalAddCategoryOpen(true)
+	}
+	const handleOkAddCategory = () => {
+		setIsModalAddCategoryOpen(false)
+	}
+	const handleCancelAddCategory = () => {
+		setIsModalAddCategoryOpen(false)
 	}
 
 	return (
@@ -99,61 +113,27 @@ const AdminHome = () => {
 							<article className='firstTable'>
 								<div className='tableTitle'>
 									<h2>Sózler sáne boyınsha</h2>
-									<button onClick={showModal}>Add word</button>
-									<Modal
-										title='Basic Modal'
-										open={isModalOpen}
-										onOk={handleOk}
-										onCancel={handleCancel}
-									>
-										<p>Some contents...</p>
-										<p>Some contents...</p>
-										<p>Some contents...</p>
-									</Modal>
+									<button onClick={showModalAddWord}>Add word</button>
+									<AddWord
+										handleOkAddWord={handleOkAddWord}
+										handleCancelAddWord={handleCancelAddWord}
+										isModalAddWordOpen={isModalAddWordOpen}
+										setIsModalAddWordOpen={setIsModalAddWordOpen}
+										allCategories={allCategories}
+									/>
 								</div>
 								<Table />
 							</article>
 							<article className='secondTable'>
 								<div className='tableTitle'>
 									<h2>Kategoriya</h2>
-									<button onClick={showModal}>Add word</button>
-									<Modal
-										title='Basic Modal'
-										open={isModalOpen}
-										onOk={handleOk}
-										onCancel={handleCancel}
-										okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
-									>
-										<form>
-											<h1>Add new word</h1>
-											<div className='newWordForm'>
-												<label>
-													<h2>Latin</h2>
-													<input type='text' />
-												</label>
-												<label>
-													<h2>Kiril</h2>
-													<input type='text' />
-												</label>
-												<label>
-													<h2>Latin_description</h2>
-													<input type='text' />
-												</label>
-												<label>
-													<h2>Kiril_description</h2>
-													<input type='text' />
-												</label>
-												<label>
-													<h2>Category</h2>
-													<Select>
-														<Select.Option value='category'>1</Select.Option>
-														<Select.Option value='category'>2</Select.Option>
-														<Select.Option value='category'>3</Select.Option>
-													</Select>
-												</label>
-											</div>
-										</form>
-									</Modal>
+									<button onClick={showModalAddCategory}>Add word</button>
+									<AddCategory
+										handleOkAddCategory={handleOkAddCategory}
+										handleCancelAddCategory={handleCancelAddCategory}
+										setIsModalAddCategoryOpen={setIsModalAddCategoryOpen}
+										isModalAddCategoryOpen={isModalAddCategoryOpen}
+									/>
 								</div>
 								<Table2 />
 							</article>

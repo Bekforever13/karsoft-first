@@ -1,6 +1,6 @@
 import React from 'react'
 import './Aside.scss'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Aside = () => {
 	return (
@@ -10,15 +10,15 @@ const Aside = () => {
 			</div>
 			<ul>
 				<li>
-					<Link className={'linkk'} to={'/admin'}>
+					<NavLink className={'link'} to={'/admin'}>
 						<span>
 							<i className='bx bxs-home'></i>
 						</span>{' '}
 						Home
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link className={'linkk'} to={'/admin/words'}>
+					<NavLink className={'link'} to={'/admin/words'}>
 						<span>
 							<svg
 								xmlns='http://www.w3.org/2000/svg'
@@ -36,31 +36,31 @@ const Aside = () => {
 							</svg>
 						</span>
 						<span className='sozlerAdm'>Sózler</span>
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link className={'linkk'} to={'/admin/category'}>
+					<NavLink className={'link'} to={'/admin/category'}>
 						<span>
 							<i className='bx bxs-category'></i>
 						</span>{' '}
 						Kategoriya
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link className={'linkk'} to={'/admin/admins'}>
+					<NavLink className={'link'} to={'/admin/admins'}>
 						<span>
 							<i className='bx bx-user'></i>
 						</span>{' '}
 						Admins
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link className={'linkk'} to={'/login'}>
+					<NavLink className={'link'} to={'/login'}>
 						<span>
 							<i className='bx bx-log-out'></i>
 						</span>{' '}
 						Logout
-					</Link>
+					</NavLink>
 				</li>
 			</ul>
 		</aside>

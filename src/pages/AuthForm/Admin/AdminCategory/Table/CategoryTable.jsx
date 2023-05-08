@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import './TableSozler.scss'
-import { axiosClassic } from '../../../../../api/axios'
 import moment from 'moment'
+import axiosClassic from '../../../../../api/axios'
 import { Pagination } from 'antd'
+import './CategoryTable.scss'
 
-const Table = () => {
+const CategoryTable = () => {
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
 
 	useEffect(() => {
 		axiosClassic
-			.get(`/api/words?page=${currentPage}`, {
+			.get(`/api/categoriesdate?page=${currentPage}`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
@@ -22,13 +22,11 @@ const Table = () => {
 
 	return (
 		<>
-			<table className='tableSozler'>
+			<table className='category-table'>
 				<thead className='thead'>
 					<tr className='thead__tr'>
-						<th className='thead__tr__th'>Sóz</th>
-						<th className='thead__tr__th'>Сөз</th>
-						<th className='thead__tr__th'>Audio</th>
-						<th className='thead__tr__th'>Kategoriya</th>
+						<th className='thead__tr__th'>Latin</th>
+						<th className='thead__tr__th'>Kiril</th>
 						<th className='thead__tr__th'>Kún</th>
 						<th className='thead__tr__th'>Actions</th>
 					</tr>
@@ -39,12 +37,6 @@ const Table = () => {
 							<tr className='tbody__tr' key={data.id}>
 								<th className='tbody__tr__th'>{data.latin}</th>
 								<th className='tbody__tr__th'>{data.kiril}</th>
-								<th className='tbody__tr__th'>
-									<i className='bx bxs-volume-full cursor-pointer'></i>
-								</th>
-								<th className='tbody__tr__th'>
-									{data.categories.map(i => i.latin)}
-								</th>
 								<th className='tbody__tr__th'>
 									{moment(data.created_at).format('MM-D-YYYY, h:mm:ss')}
 								</th>
@@ -63,9 +55,13 @@ const Table = () => {
 					})}
 				</tbody>
 			</table>
-			<Pagination onChange={e => setCurrentPage(e)} total={324} />
+			<Pagination
+				onChange={e => setCurrentPage(e)}
+				total={16}
+				defaultPageSize={10}
+			/>
 		</>
 	)
 }
 
-export default Table
+export default CategoryTable

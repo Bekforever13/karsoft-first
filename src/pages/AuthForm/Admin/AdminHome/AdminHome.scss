@@ -3,6 +3,7 @@
 	padding: 0;
 }
 .AdmHome {
+	max-width: 100%;
 	display: flex;
 
 	main {
@@ -40,15 +41,18 @@
 				width: 100%;
 				display: flex;
 				gap: 30px;
+
 				.firstTable {
 					display: flex;
 					flex-direction: column;
 					gap: 30px;
 					width: 48%;
+
 					.tableTitle {
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
+
 						button {
 							background-color: #6d6df8;
 							border-radius: 10px;
@@ -95,6 +99,36 @@
 						}
 					}
 				}
+			}
+		}
+	}
+}
+
+.modalAddWord {
+	transform: translateY(-50px);
+	.newWordForm {
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+
+		label {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			padding: 0.5rem 1rem;
+			border-radius: 10px;
+			border: 1px solid #adadad;
+
+			.input {
+				padding: 0.2rem 0.5rem;
+				width: 100%;
+				border-bottom: none;
+				font-size: 1rem;
+				outline: none;
+			}
+			.select {
+				width: 150px;
 			}
 		}
 	}

@@ -10,7 +10,7 @@ const SearchResult = ({ searchValue }) => {
 
 	useEffect(() => {
 		axiosClassic
-			.get(`/api/words?limit=500&`)
+			.get(`/api/search?limit=500`)
 			.then(res => {
 				setSearchWords(res.data.data)
 			})
@@ -22,9 +22,7 @@ const SearchResult = ({ searchValue }) => {
 			<ul className='resultOfSearch'>
 				{searchValue
 					? searchWords
-							.filter(i =>
-								i.latin.toLowerCase().includes(searchValue.toLowerCase())
-							)
+							.filter(i => i.toLowerCase().includes(searchValue.toLowerCase()))
 							.map(res => {
 								return (
 									<li key={res.id}>
