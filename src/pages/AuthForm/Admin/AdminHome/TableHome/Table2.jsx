@@ -34,12 +34,12 @@ const Table2 = () => {
 					{dataTable.map(data => {
 						return (
 							<tr className='tbody__tr' key={data.id}>
-								<th className='tbody__tr__th'>{data.latin}</th>
-								<th className='tbody__tr__th'>{data.kiril}</th>
-								<th className='tbody__tr__th'>
+								<td className='tbody__tr__th'>{data.latin}</td>
+								<td className='tbody__tr__th'>{data.kiril}</td>
+								<td className='tbody__tr__th'>
 									{moment(data.created_at).format('MM-D-YYYY, h:mm:ss')}
-								</th>
-								<th className='tbody__tr__th'>
+								</td>
+								<td className='tbody__tr__th'>
 									<div className='table__actions'>
 										<button className='editBtn'>
 											<i className='bx bx-pencil'></i>
@@ -48,7 +48,7 @@ const Table2 = () => {
 											<i className='bx bx-trash'></i>
 										</button>
 									</div>
-								</th>
+								</td>
 							</tr>
 						)
 					})}

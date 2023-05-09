@@ -12,6 +12,8 @@ import { createContext, useState, useEffect } from 'react'
 import { axiosClassic } from './api/axios'
 import SearchResult from './components/SearchResult/SearchResult'
 import WordDescription from './pages/Words/WordDescription'
+import Copywriter from './pages/Copywriter/Copywriter'
+import Tester from './pages/Tester/Tester'
 
 export const Context = createContext()
 
@@ -40,6 +42,8 @@ function App() {
 				<Route path='/admin/words' element={<AdminWord />} />
 				<Route path='/admin/category' element={<AdminCategory />} />
 				<Route path='/admin/admins' element={<Admins />} />
+				<Route path='/copywriter' element={<Copywriter />} />
+				<Route path='/tester' element={<Tester />} />
 			</Routes>
 		</Context.Provider>
 	)

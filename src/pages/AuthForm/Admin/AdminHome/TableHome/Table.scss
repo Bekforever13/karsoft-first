@@ -55,3 +55,43 @@
 		}
 	}
 }
+
+.modalEdit {
+	transform: translateY(-50px);
+	&-wrapper {
+		background-color: #fff;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		row-gap: 20px;
+
+		label {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			flex-direction: column;
+			border-radius: 10px;
+			padding: 5px 10px;
+			border: 1px solid #adadad;
+			.textarea {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				resize: none;
+			}
+
+			.audio {
+				width: 100%;
+			}
+			.input {
+				width: 100px;
+				padding: 0.2rem 0.5rem;
+				border-bottom: none;
+				font-size: 1rem;
+				outline: none;
+			}
+			.select {
+				width: 150px;
+			}
+		}
+	}
+}

@@ -14,6 +14,7 @@ const AdminHome = () => {
 	const [totalWords, setTotalWords] = useState(0)
 	const [totalCategory, setTotalCategory] = useState(0)
 	const [allCategories, setAllCategories] = useState([])
+	const [renderTable, setRenderTable] = useState({})
 
 	// useEffect for total words
 	useEffect(() => {
@@ -48,7 +49,6 @@ const AdminHome = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => console.log(res.data))
 			.catch(err => {
 				navigate('/login', { replace: true })
 			})
@@ -59,12 +59,7 @@ const AdminHome = () => {
 	const showModalAddWord = () => {
 		setIsModalAddWordOpen(true)
 	}
-	const handleOkAddWord = () => {
-		setIsModalAddWordOpen(false)
-	}
-	const handleCancelAddWord = () => {
-		setIsModalAddWordOpen(false)
-	}
+
 	const showModalAddCategory = () => {
 		setIsModalAddCategoryOpen(true)
 	}
@@ -115,19 +110,23 @@ const AdminHome = () => {
 									<h2>Sózler sáne boyınsha</h2>
 									<button onClick={showModalAddWord}>Add word</button>
 									<AddWord
-										handleOkAddWord={handleOkAddWord}
-										handleCancelAddWord={handleCancelAddWord}
+										renderTable={renderTable}
+										setRenderTable={setRenderTable}
 										isModalAddWordOpen={isModalAddWordOpen}
 										setIsModalAddWordOpen={setIsModalAddWordOpen}
 										allCategories={allCategories}
 									/>
 								</div>
-								<Table />
+								<Table
+									allCategories={allCategories}
+									renderTable={renderTable}
+									setRenderTable={setRenderTable}
+								/>
 							</article>
 							<article className='secondTable'>
 								<div className='tableTitle'>
 									<h2>Kategoriya</h2>
-									<button onClick={showModalAddCategory}>Add word</button>
+									<button onClick={showModalAddCategory}>Add category</button>
 									<AddCategory
 										handleOkAddCategory={handleOkAddCategory}
 										handleCancelAddCategory={handleCancelAddCategory}

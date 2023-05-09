@@ -9,7 +9,7 @@ const Header = () => {
 	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
 
 	return (
-		<header>
+		<header className='header'>
 			<div className='header-wrapper'>
 				<div className='container'>
 					<div className='logo-nav'>
