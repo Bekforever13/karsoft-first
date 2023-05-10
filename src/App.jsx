@@ -33,17 +33,16 @@ function App() {
 	//all category
 	useEffect(() => {
 		axiosClassic
-			.get(`/api/categoriesdate?limit=500`, {
+			.get(`/api/categories`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
 			.then(res => {
-				setTotalCategory(res.data.total)
+				setTotalCategory(res.data.data.length)
 				setAllCategory(res.data.data)
 			})
 	}, [])
-
 	return (
 		<Context.Provider
 			value={[

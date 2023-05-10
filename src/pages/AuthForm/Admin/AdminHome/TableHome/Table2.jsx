@@ -101,7 +101,7 @@ const Table2 = () => {
 			</table>
 			<Pagination
 				onChange={e => setCurrentPage(e)}
-				total={allCategory.length}
+				total={17}
 				defaultPageSize={10}
 			/>
 			<Modal

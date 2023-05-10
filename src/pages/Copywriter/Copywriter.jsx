@@ -1,10 +1,20 @@
 import { Pagination, Modal, Select, Space } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Copywriter.scss'
 import axiosClassic from '../../api/axios'
+import { Context } from '../../App'
 
 const Copywriter = () => {
+	const [
+		allCategory,
+		allWordsArray,
+		page,
+		setPage,
+		lang,
+		setLang,
+		totalCategory,
+	] = useContext(Context)
 	const [newWord, setNewWord] = useState({
 		latin: '',
 		kiril: '',
@@ -15,7 +25,6 @@ const Copywriter = () => {
 		// antonims: [],
 		// audio: undefined,
 	})
-	const [allCategory, setAllCategory] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [currentPage, setCurrentPage] = useState(1)
 	const showModal = () => {
@@ -51,20 +60,6 @@ const Copywriter = () => {
 	const handleSinonimChange = value => {
 		console.log(value)
 	}
-
-	// all category
-	useEffect(() => {
-		axiosClassic
-			.get('/api/categories', {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => {
-				setAllCategory(res.data.data)
-			})
-			.catch(err => console.log(err))
-	}, [])
 
 	// useeffect for get all word
 	// useEffect(() => {

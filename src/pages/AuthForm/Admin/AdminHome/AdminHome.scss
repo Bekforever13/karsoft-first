@@ -46,6 +46,7 @@
 				.firstTable {
 					display: flex;
 					flex-direction: column;
+					text-align: center;
 					gap: 30px;
 					width: 48%;
 
@@ -74,7 +75,7 @@
 				}
 				.secondTable {
 					width: 48%;
-
+					text-align: center;
 					display: flex;
 					flex-direction: column;
 					gap: 30px;
