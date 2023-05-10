@@ -1,0 +1,57 @@
+.table-wrapper {
+	width: 100%;
+	padding: 0 5%;
+
+	.copywriterTable {
+		width: 100%;
+		border: 1px solid black;
+		margin: 2rem 0;
+
+		thead {
+			border: 1px solid #adadad;
+			tr {
+				th {
+					border: 1px solid #adadad;
+					padding: 10px 0;
+					font-size: 22px;
+				}
+			}
+		}
+		tbody {
+			tr {
+				td {
+					border: 1px solid #adadad;
+					text-align: center;
+					padding: 5px 7px;
+				}
+				.actions {
+					.btns-wrapper {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						color: #fff;
+						gap: 10px;
+						.editBtn {
+							background-color: #6d6df8;
+							border-radius: 10px;
+							padding: 6.5px 20px;
+							height: 30px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						}
+						.deleteBtn {
+							height: 30px;
+							border-radius: 10px;
+							padding: 6.5px 20px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							background: #fc7a7a;
+						}
+					}
+				}
+			}
+		}
+	}
+}

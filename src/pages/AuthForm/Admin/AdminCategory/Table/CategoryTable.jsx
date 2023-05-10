@@ -8,6 +8,16 @@ const CategoryTable = () => {
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
 
+	const deleteItem = id => {
+		axiosClassic
+			.delete(`/api/categories/${id}`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => console.log(res.data))
+	}
+
 	useEffect(() => {
 		axiosClassic
 			.get(`/api/categoriesdate?page=${currentPage}`, {
@@ -45,7 +55,10 @@ const CategoryTable = () => {
 										<button className='editBtn'>
 											<i className='bx bx-pencil'></i>
 										</button>
-										<button className='deleteBtn'>
+										<button
+											className='deleteBtn'
+											onClick={() => deleteItem(data.id)}
+										>
 											<i className='bx bx-trash'></i>
 										</button>
 									</div>

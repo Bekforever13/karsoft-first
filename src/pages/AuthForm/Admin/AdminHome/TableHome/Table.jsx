@@ -15,6 +15,7 @@ const Table = ({ renderTable, setRenderTable }) => {
 		lang,
 		setLang,
 		totalCategory,
+		totalWords,
 	] = useContext(Context)
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
@@ -63,7 +64,7 @@ const Table = ({ renderTable, setRenderTable }) => {
 			.then(res => {
 				setDataTable(res.data.data.map(e => e))
 			})
-	}, [currentPage, renderTable])
+	}, [currentPage, renderTable, totalWords])
 
 	const [sinonimOptions, setSinonimOptions] = useState([])
 	const [antonimOptions, setAntonimOptions] = useState([])
@@ -146,16 +147,36 @@ const Table = ({ renderTable, setRenderTable }) => {
 				<div className='modalEdit-wrapper'>
 					<label>
 						<h2>Latin:</h2>
-						<input className='input' value={dataForEdit.latin} type='text' />
+						<input
+							className='input'
+							onChange={e =>
+								setDataForEdit({ ...dataForEdit, latin: e.target.value })
+							}
+							value={dataForEdit.latin}
+							type='text'
+						/>
 					</label>
 					<label>
 						<h2>Kiril:</h2>
-						<input className='input' value={dataForEdit.kiril} type='text' />
+						<input
+							className='input'
+							onChange={e =>
+								setDataForEdit({ ...dataForEdit, kiril: e.target.value })
+							}
+							value={dataForEdit.kiril}
+							type='text'
+						/>
 					</label>
 					<label>
 						<h2>Description_latin:</h2>
 						<input
 							className='input'
+							onChange={e =>
+								setDataForEdit({
+									...dataForEdit,
+									description_latin: e.target.value,
+								})
+							}
 							value={dataForEdit.description_latin}
 							type='text'
 						/>
@@ -164,13 +185,26 @@ const Table = ({ renderTable, setRenderTable }) => {
 						<h2>Description_kiril:</h2>
 						<input
 							className='input'
+							onChange={e =>
+								setDataForEdit({
+									...dataForEdit,
+									description_kiril: e.target.value,
+								})
+							}
 							value={dataForEdit.description_latin}
 							type='text'
 						/>
 					</label>
 					<label>
 						<h2>Audio: </h2>
-						<input className='audio' value={dataForEdit.audio} type='file' />
+						<input
+							className='audio'
+							onChange={e =>
+								setDataForEdit({ ...dataForEdit, audio: e.target.files })
+							}
+							value={dataForEdit.audio}
+							type='file'
+						/>
 					</label>
 					<label>
 						<h2>Category:</h2>

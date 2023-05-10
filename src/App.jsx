@@ -23,7 +23,20 @@ function App() {
 	const [lang, setLang] = useState(true)
 	const [totalCategory, setTotalCategory] = useState(0)
 	const [allCategory, setAllCategory] = useState([])
+	const [totalWords, setTotalWords] = useState(0)
 
+	// totalWords
+	useEffect(() => {
+		axiosClassic
+			.get('/api/wordsdate?limit=1000', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setTotalWords(res.data.total))
+	}, [totalWords])
+
+	// allwordsarray
 	useEffect(() => {
 		axiosClassic
 			.get(`/api/search?page=${page}&limit=30`)
@@ -43,6 +56,7 @@ function App() {
 				setAllCategory(res.data.data)
 			})
 	}, [])
+
 	return (
 		<Context.Provider
 			value={[
@@ -53,6 +67,7 @@ function App() {
 				setLang,
 				totalCategory,
 				allCategory,
+				totalWords,
 			]}
 		>
 			<Routes>

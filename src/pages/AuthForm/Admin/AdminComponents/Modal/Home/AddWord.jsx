@@ -14,6 +14,22 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 		setLang,
 		totalCategory,
 	] = useContext(Context)
+
+	const [hammeCategory, setHammeCategory] = useState([])
+
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/categories`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setHammeCategory(res.data.data)
+			})
+	}, [])
+
+	// modal ok button
 	const handleOkAddWord = () => {
 		setIsModalAddWordOpen(false)
 		console.log(newWord)
@@ -28,9 +44,11 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 			.catch(err => console.log(err))
 	}
 
+	// modal cancel button
 	const handleCancelAddWord = () => {
 		setIsModalAddWordOpen(false)
 	}
+
 	const [newWord, setNewWord] = useState({
 		latin: '',
 		kiril: '',
@@ -131,14 +149,14 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 						className={'select'}
 						defaultValue={'select'}
 						onChange={e => {
-							allCategory.map(item =>
+							hammeCategory.map(item =>
 								item.latin === e
 									? setNewWord({ ...newWord, categories_id: item.id })
 									: ''
 							)
 						}}
 					>
-						{allCategory.map(category => {
+						{hammeCategory.map(category => {
 							return (
 								<Select.Option key={category.id} value={category.latin}>
 									{category.latin}

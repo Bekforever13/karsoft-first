@@ -8,35 +8,17 @@
 
 	main {
 		width: 100%;
-		margin-top: 20px;
 		margin-left: 40px;
 		display: flex;
 		flex-direction: column;
 		gap: 50px;
 
-		.soz-category {
-			width: fit-content;
-
-			display: flex;
-			align-items: center;
-			gap: 30px;
-			transform: translate(700px, -75px);
-			.soz {
-				display: flex;
-				align-items: center;
-			}
-			.category {
-				display: flex;
-				align-items: center;
-			}
-		}
 		.section {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
 			width: 100%;
-			transform: translateY(-100px);
 
 			.tables {
 				width: 100%;

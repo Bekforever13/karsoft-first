@@ -7,12 +7,13 @@ import { Context } from '../../App'
 
 const Copywriter = () => {
 	const [
-		allCategory,
 		allWordsArray,
+		allCategory,
 		page,
 		setPage,
 		lang,
 		setLang,
+		totalWords,
 		totalCategory,
 	] = useContext(Context)
 	const [newWord, setNewWord] = useState({
@@ -25,6 +26,31 @@ const Copywriter = () => {
 		// antonims: [],
 		// audio: undefined,
 	})
+
+	const [hammeCategory, setHammeCategory] = useState([])
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/categories`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setHammeCategory(res.data.data)
+			})
+	}, [])
+
+	const [wordsCount, setWordsCount] = useState(0)
+	useEffect(() => {
+		axiosClassic
+			.get('/api/wordsdate?limit=1000', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setWordsCount(res.data.total))
+	}, [wordsCount])
+
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [currentPage, setCurrentPage] = useState(1)
 	const showModal = () => {
@@ -33,6 +59,15 @@ const Copywriter = () => {
 	const handleOk = () => {
 		setIsModalOpen(false)
 		console.log(newWord)
+		axiosClassic
+			.post('/api/words', newWord, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+					'Content-Type': 'multipart/form-data',
+				},
+			})
+			.then(res => console.log(res))
+			.catch(err => console.log(err))
 	}
 	const handleCancel = () => {
 		setIsModalOpen(false)
@@ -83,6 +118,29 @@ const Copywriter = () => {
 	// 		.then(res => console.log(res))
 	// }, [])
 
+	const [dataTable, setDataTable] = useState([])
+	const [currPage, setCurrPage] = useState(1)
+
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setDataTable(res.data.data))
+	}, [dataTable])
+
+	const deleteItem = id => {
+		axiosClassic
+			.delete(`/api/words/${id}`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setRenderTable(res.data))
+	}
+
 	return (
 		<>
 			<header className='copywriter-header'>
@@ -109,30 +167,38 @@ const Copywriter = () => {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>lorem</td>
-							<td>лорем</td>
-							<td>Lorem ipsum dolor sit amet. Lorem ipsum, dolor sit amet</td>
-							<td>Лорем ипсум долор сит амет.</td>
-							<td>Atliq</td>
-							<td>на проверке</td>
-							<td className='actions'>
-								<div className='btns-wrapper'>
-									<button className='editBtn'>
-										<i className='bx bx-pencil'></i>
-									</button>
-									<button
-										className='deleteBtn'
-										onClick={() => deleteItem(data.id)}
-									>
-										<i className='bx bx-trash'></i>
-									</button>
-								</div>
-							</td>
-						</tr>
+						{dataTable.map(item => {
+							return (
+								<tr key={item.id}>
+									<td>{item.latin}</td>
+									<td>{item.kiril}</td>
+									<td>{item.description_latin}</td>
+									<td>{item.description_kiril}</td>
+									<td>{item.categories[0].latin}</td>
+									<td>{item.status}</td>
+									<td className='actions'>
+										<div className='btns-wrapper'>
+											<button className='editBtn'>
+												<i className='bx bx-pencil'></i>
+											</button>
+											<button
+												className='deleteBtn'
+												onClick={() => deleteItem(item.id)}
+											>
+												<i className='bx bx-trash'></i>
+											</button>
+										</div>
+									</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
-				<Pagination />
+				<Pagination
+					defaultPageSize={10}
+					onChange={e => setCurrPage(e)}
+					total={wordsCount}
+				/>
 				<Modal
 					className='copywriterModal'
 					title='Add new word'
@@ -189,8 +255,7 @@ const Copywriter = () => {
 							<input
 								className='audio'
 								onChange={e =>
-									// setNewWord({ ...newWord, audio: e.target.files })
-									console.log(e)
+									setNewWord({ ...newWord, audio: e.target.files })
 								}
 								type='file'
 							/>
@@ -201,14 +266,14 @@ const Copywriter = () => {
 								className='select'
 								defaultValue={'select'}
 								onChange={e => {
-									allCategory.map(item =>
+									hammeCategory.map(item =>
 										item.latin === e
 											? setNewWord({ ...newWord, categories_id: item.id })
 											: ''
 									)
 								}}
 							>
-								{allCategory.map(category => {
+								{hammeCategory.map(category => {
 									return (
 										<Select.Option key={category.id} value={category.latin}>
 											{category.latin}

@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Pagination } from 'antd'
+import axiosClassic from '../../api/axios'
 import { Link } from 'react-router-dom'
+import './Tester.scss'
 
 const Tester = () => {
+	const [dataTable, setDataTable] = useState([])
+	const [currPage, setCurrPage] = useState(1)
+
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => setDataTable(res.data.data))
+	}, [dataTable])
+
+	const changeStatus = item => {
+		axiosClassic
+			.put(`/api/wordconfirm/${item.id}?status=${item.status}`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => console.log(res))
+	}
+
 	return (
 		<>
 			<header className='copywriter-header'>
@@ -12,13 +37,13 @@ const Tester = () => {
 					</Link>
 				</div>
 				<div className='nav'>
-					<Link>Отклонено</Link>
-					<Link>Ожидает</Link>
-					<Link>Проверено</Link>
+					<Link to={'/admin'}>Admin</Link>
+					<Link to={'/copywriter'}>Copywriter</Link>
+					<Link to={'/tester'}>Tester</Link>
 				</div>
 			</header>
 			<div className='table-wrapper'>
-				<table className='testerTable'>
+				<table className='copywriterTable'>
 					<thead>
 						<tr>
 							<th>Latin</th>
@@ -31,27 +56,28 @@ const Tester = () => {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>lorem</td>
-							<td>лорем</td>
-							<td>Lorem ipsum dolor sit amet. Lorem ipsum, dolor sit amet</td>
-							<td>Лорем ипсум долор сит амет.</td>
-							<td>Atliq</td>
-							<td>на проверке</td>
-							<td className='actions'>
-								<div className='btns-wrapper'>
-									<button className='editBtn'>
-										<i className='bx bx-pencil'></i>
-									</button>
-									<button
-										className='deleteBtn'
-										onClick={() => deleteItem(data.id)}
-									>
-										<i className='bx bx-trash'></i>
-									</button>
-								</div>
-							</td>
-						</tr>
+						{dataTable.map(item => {
+							return (
+								<tr key={item.id}>
+									<td>{item.latin}</td>
+									<td>{item.kiril}</td>
+									<td>{item.description_latin}</td>
+									<td>{item.description_kiril}</td>
+									<td>{item.categories[0].latin}</td>
+									<td>{item.status}</td>
+									<td className='actions'>
+										<div className='btns-wrapper'>
+											<button className='likeBtn' onClick={() => changeStatus}>
+												<i className='bx bxs-like'></i>
+											</button>
+											<button className='dislikeBtn'>
+												<i className='bx bxs-dislike'></i>
+											</button>
+										</div>
+									</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
 				<Pagination />
