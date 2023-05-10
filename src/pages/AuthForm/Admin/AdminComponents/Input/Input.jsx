@@ -7,20 +7,26 @@ const Input = () => {
 	const [search, setSearch] = useState(undefined)
 	const [result, setResult] = useState([])
 
-	useEffect(() => {
+	const inputSearch = value => {
 		axiosClassic
-			.get('/api/search?limit=500', search, {
+			.get(`/api/search?search=${value}`, search, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
 			.then(res => setResult(res.data.data))
-	}, [])
+	}
 
 	return (
 		<div className='inputField'>
 			<div className='input'>
-				<input onChange={e => setSearch(e.target.value)} type='text' />
+				<input
+					onChange={e => {
+						setSearch(e.target.value)
+						inputSearch(e.target.value)
+					}}
+					type='text'
+				/>
 				<button>
 					<i className='bx bx-search'></i>
 				</button>

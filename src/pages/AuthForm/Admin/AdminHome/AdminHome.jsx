@@ -8,12 +8,12 @@ import Table from './TableHome/Table'
 import Table2 from './TableHome/Table2'
 import AddCategory from '../AdminComponents/Modal/Home/AddCategory'
 import AddWord from '../AdminComponents/Modal/Home/AddWord'
+import { Context } from '../../../../App'
 
 const AdminHome = () => {
+	const { totalCategory, allCategory } = useContext(Context)
 	const navigate = useNavigate()
 	const [totalWords, setTotalWords] = useState(0)
-	const [totalCategory, setTotalCategory] = useState(0)
-	const [allCategories, setAllCategories] = useState([])
 	const [renderTable, setRenderTable] = useState({})
 
 	// useEffect for total words
@@ -25,20 +25,6 @@ const AdminHome = () => {
 				},
 			})
 			.then(res => setTotalWords(res.data.total))
-	}, [])
-
-	//useEffect for total categories
-	useEffect(() => {
-		axiosClassic
-			.get(`/api/categoriesdate?limit=500`, {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => {
-				setTotalCategory(res.data.total)
-				setAllCategories(res.data.data)
-			})
 	}, [])
 
 	//useeffect for check have token or not
@@ -59,15 +45,8 @@ const AdminHome = () => {
 	const showModalAddWord = () => {
 		setIsModalAddWordOpen(true)
 	}
-
 	const showModalAddCategory = () => {
 		setIsModalAddCategoryOpen(true)
-	}
-	const handleOkAddCategory = () => {
-		setIsModalAddCategoryOpen(false)
-	}
-	const handleCancelAddCategory = () => {
-		setIsModalAddCategoryOpen(false)
 	}
 
 	return (
@@ -110,15 +89,11 @@ const AdminHome = () => {
 									<h2>Sózler sáne boyınsha</h2>
 									<button onClick={showModalAddWord}>Add word</button>
 									<AddWord
-										renderTable={renderTable}
-										setRenderTable={setRenderTable}
 										isModalAddWordOpen={isModalAddWordOpen}
 										setIsModalAddWordOpen={setIsModalAddWordOpen}
-										allCategories={allCategories}
 									/>
 								</div>
 								<Table
-									allCategories={allCategories}
 									renderTable={renderTable}
 									setRenderTable={setRenderTable}
 								/>
@@ -128,8 +103,6 @@ const AdminHome = () => {
 									<h2>Kategoriya</h2>
 									<button onClick={showModalAddCategory}>Add category</button>
 									<AddCategory
-										handleOkAddCategory={handleOkAddCategory}
-										handleCancelAddCategory={handleCancelAddCategory}
 										setIsModalAddCategoryOpen={setIsModalAddCategoryOpen}
 										isModalAddCategoryOpen={isModalAddCategoryOpen}
 									/>

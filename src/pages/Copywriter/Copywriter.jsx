@@ -5,6 +5,16 @@ import './Copywriter.scss'
 import axiosClassic from '../../api/axios'
 
 const Copywriter = () => {
+	const [newWord, setNewWord] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories_id: null,
+		// sinonims: [],
+		// antonims: [],
+		// audio: undefined,
+	})
 	const [allCategory, setAllCategory] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [currentPage, setCurrentPage] = useState(1)
@@ -13,6 +23,7 @@ const Copywriter = () => {
 	}
 	const handleOk = () => {
 		setIsModalOpen(false)
+		console.log(newWord)
 	}
 	const handleCancel = () => {
 		setIsModalOpen(false)
@@ -138,37 +149,78 @@ const Copywriter = () => {
 					<div className='newWordForm'>
 						<label>
 							<h2>Latin:</h2>
-							<input className='input' type='text' />
+							<input
+								className='input'
+								value={newWord.latin}
+								onChange={e =>
+									setNewWord({ ...newWord, latin: e.target.value })
+								}
+								type='text'
+							/>
 						</label>
 						<label>
 							<h2>Kiril:</h2>
-							<input className='input' type='text' />
+							<input
+								className='input'
+								value={newWord.kiril}
+								onChange={e =>
+									setNewWord({ ...newWord, kiril: e.target.value })
+								}
+								type='text'
+							/>
 						</label>
 						<label>
 							<h2>Description_latin:</h2>
-							<textarea className='textarea' />
+							<textarea
+								className='textarea'
+								value={newWord.description_latin}
+								onChange={e =>
+									setNewWord({ ...newWord, description_latin: e.target.value })
+								}
+							/>
 						</label>
 						<label>
 							<h2>Description_kiril:</h2>
-							<textarea className='textarea' />
+							<textarea
+								className='textarea'
+								value={newWord.description_kiril}
+								onChange={e =>
+									setNewWord({ ...newWord, description_kiril: e.target.value })
+								}
+							/>
 						</label>
 						<label>
 							<h2>Audio: </h2>
-							<input className='audio' type='file' />
+							<input
+								className='audio'
+								onChange={e =>
+									// setNewWord({ ...newWord, audio: e.target.files })
+									console.log(e)
+								}
+								type='file'
+							/>
 						</label>
 						<label>
 							<h2>Category:</h2>
-							<select name='category'>
-								<optgroup label='category'>
-									{allCategory.map(category => {
-										return (
-											<option key={category.id} value={category.latin}>
-												{category.latin}
-											</option>
-										)
-									})}
-								</optgroup>
-							</select>
+							<Select
+								className='select'
+								defaultValue={'select'}
+								onChange={e => {
+									allCategory.map(item =>
+										item.latin === e
+											? setNewWord({ ...newWord, categories_id: item.id })
+											: ''
+									)
+								}}
+							>
+								{allCategory.map(category => {
+									return (
+										<Select.Option key={category.id} value={category.latin}>
+											{category.latin}
+										</Select.Option>
+									)
+								})}
+							</Select>
 						</label>
 						<label>
 							<h2>Antonim</h2>

@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './Table.scss'
 import moment from 'moment'
 import axiosClassic from '../../../../../api/axios'
 import { Pagination } from 'antd'
 import { Modal, Select } from 'antd'
+import { Context } from '../../../../../App'
 
-const Table = ({ renderTable, setRenderTable, allCategories }) => {
+const Table = ({ renderTable, setRenderTable }) => {
+	const [
+		allCategory,
+		allWordsArray,
+		page,
+		setPage,
+		lang,
+		setLang,
+		totalCategory,
+	] = useContext(Context)
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
 	const [isModalEditOpen, setIsModalEditOpen] = useState(false)
@@ -20,8 +30,8 @@ const Table = ({ renderTable, setRenderTable, allCategories }) => {
 		// audio: undefined,
 	})
 
-	const showModalEdit = id => {
-		console.log(id)
+	const showModalEdit = data => {
+		console.log(data)
 		setIsModalEditOpen(true)
 	}
 	const handleOk = () => {
@@ -120,7 +130,10 @@ const Table = ({ renderTable, setRenderTable, allCategories }) => {
 					})}
 				</tbody>
 			</table>
-			<Pagination onChange={e => setCurrentPage(e)} total={324} />
+			<Pagination
+				onChange={e => setCurrentPage(e)}
+				total={allWordsArray.length}
+			/>
 			<Modal
 				className='modalEdit'
 				mask={false}
@@ -161,17 +174,25 @@ const Table = ({ renderTable, setRenderTable, allCategories }) => {
 					</label>
 					<label>
 						<h2>Category:</h2>
-						<select name='category'>
-							<optgroup label='category'>
-								{allCategories.reverse().map(category => {
-									return (
-										<option key={category.id} value={category.latin}>
-											{category.latin}
-										</option>
-									)
-								})}
-							</optgroup>
-						</select>
+						<Select
+							className={'select'}
+							defaultValue={'select'}
+							onChange={e => {
+								allCategory.map(item =>
+									item.latin === e
+										? setNewWord({ ...newWord, categories_id: item.id })
+										: ''
+								)
+							}}
+						>
+							{allCategory.map(category => {
+								return (
+									<Select.Option key={category.id} value={category.latin}>
+										{category.latin}
+									</Select.Option>
+								)
+							})}
+						</Select>
 					</label>
 					<label>
 						<h2>Antonim</h2>

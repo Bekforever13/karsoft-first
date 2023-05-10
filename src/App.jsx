@@ -21,6 +21,8 @@ function App() {
 	const [allWordsArray, setAllWordsArray] = useState([])
 	const [page, setPage] = useState(1)
 	const [lang, setLang] = useState(true)
+	const [totalCategory, setTotalCategory] = useState(0)
+	const [allCategory, setAllCategory] = useState([])
 
 	useEffect(() => {
 		axiosClassic
@@ -28,8 +30,32 @@ function App() {
 			.then(res => setAllWordsArray(res.data.data))
 	}, [page])
 
+	//all category
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/categoriesdate?limit=500`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setTotalCategory(res.data.total)
+				setAllCategory(res.data.data)
+			})
+	}, [])
+
 	return (
-		<Context.Provider value={[allWordsArray, page, setPage, lang, setLang]}>
+		<Context.Provider
+			value={[
+				allWordsArray,
+				page,
+				setPage,
+				lang,
+				setLang,
+				totalCategory,
+				allCategory,
+			]}
+		>
 			<Routes>
 				<Route path='/' element={<Home />} />
 				<Route path='/words' element={<Words />} />

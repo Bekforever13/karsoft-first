@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from 'antd/es/modal/Modal'
 import { Select } from 'antd'
 import axiosClassic from '../../../../../../api/axios'
+import { Context } from '../../../../../../App'
 
-const AddWord = ({
-	setIsModalAddWordOpen,
-	isModalAddWordOpen,
-	allCategories,
-	renderTable,
-	setRenderTable,
-}) => {
-	const [allCategory, setAllCategory] = useState([])
-
+const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
+	const [
+		allCategory,
+		allWordsArray,
+		page,
+		setPage,
+		lang,
+		setLang,
+		totalCategory,
+	] = useContext(Context)
 	const handleOkAddWord = () => {
 		setIsModalAddWordOpen(false)
+		console.log(newWord)
 		axiosClassic
 			.post('/api/words', newWord, {
 				headers: {
@@ -36,22 +39,8 @@ const AddWord = ({
 		categories_id: null,
 		// sinonims: [],
 		// antonims: [],
-		// audio: undefined,
+		audio: undefined,
 	})
-
-	// useEffect to get all categories
-	useEffect(() => {
-		axiosClassic
-			.get('/api/categories', {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => {
-				setAllCategory(res.data.data)
-			})
-			.catch(err => console.log(err))
-	}, [])
 
 	const [sinonimOptions, setSinonimOptions] = useState([])
 	const [antonimOptions, setAntonimOptions] = useState([])
@@ -130,7 +119,9 @@ const AddWord = ({
 					<h2>Audio: </h2>
 					<input
 						className='audio'
-						onChange={e => setNewWord({ ...newWord, audio: e.target.files })}
+						onChange={e => {
+							setNewWord({ ...newWord, audio: e.target.files })
+						}}
 						type='file'
 					/>
 				</label>

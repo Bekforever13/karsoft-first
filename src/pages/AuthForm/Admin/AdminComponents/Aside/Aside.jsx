@@ -1,10 +1,22 @@
 import React from 'react'
 import './Aside.scss'
 import { NavLink } from 'react-router-dom'
+// import Sidebar from './Sidebar/Sidebar'
+import axiosClassic from '../../../../../api/axios'
 
 const Aside = () => {
+	const logout = () => {
+		axiosClassic
+			.post('/api/logout', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => console.log(res))
+	}
 	return (
 		<aside>
+			{/* <Sidebar /> */}
 			<div className='img'>
 				<img src='../../../../public/img/logo.svg' alt='' />
 			</div>
@@ -55,7 +67,13 @@ const Aside = () => {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink className={'link'} to={'/login'}>
+					<NavLink
+						className={'link'}
+						onClick={() => {
+							logout, localStorage.removeItem('token')
+						}}
+						to={'/login'}
+					>
 						<span>
 							<i className='bx bx-log-out'></i>
 						</span>{' '}

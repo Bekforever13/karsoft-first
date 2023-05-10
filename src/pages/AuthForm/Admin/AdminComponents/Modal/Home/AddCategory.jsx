@@ -1,49 +1,56 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Modal from 'antd/es/modal/Modal'
-import { Select } from 'antd'
+import axiosClassic from '../../../../../../api/axios'
 
-const AddCategory = ({
-	handleCancelAddCategory,
-	handleOkAddCategory,
-	isModalAddCategoryOpen,
-	setIsModalAddCategoryOpen,
-}) => {
+const AddCategory = ({ isModalAddCategoryOpen, setIsModalAddCategoryOpen }) => {
+	const [newCategory, setNewCategory] = useState({ latin: '', kiril: '' })
+
+	const handleOkAddCategory = () => {
+		setIsModalAddCategoryOpen(false)
+		console.log(newCategory)
+		axiosClassic
+			.post('/api/categories', newCategory, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => console.log(res))
+	}
+	const handleCancelAddCategory = () => {
+		setIsModalAddCategoryOpen(false)
+	}
+
 	return (
 		<Modal
-			title='Basic Modal'
+			className={'categoryModal'}
+			title='Add new category'
 			open={isModalAddCategoryOpen}
 			onOk={handleOkAddCategory}
 			onCancel={handleCancelAddCategory}
 			okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 		>
-			<form>
-				<div className='newWordForm'>
-					<label>
-						<h2>asdasdasd</h2>
-						<input type='text' />
-					</label>
-					<label>
-						<h2>Kiril</h2>
-						<input type='text' />
-					</label>
-					<label>
-						<h2>Latin_description</h2>
-						<input type='text' />
-					</label>
-					<label>
-						<h2>Kiril_description</h2>
-						<input type='text' />
-					</label>
-					<label>
-						<h2>Category</h2>
-						<Select>
-							<Select.Option value='category'>1</Select.Option>
-							<Select.Option value='category'>2</Select.Option>
-							<Select.Option value='category'>3</Select.Option>
-						</Select>
-					</label>
-				</div>
-			</form>
+			<div className='newCategoryForm'>
+				<label className='catLabel'>
+					<h2>Latin</h2>
+					<input
+						type='text'
+						onChange={e =>
+							setNewCategory({ ...newCategory, latin: e.target.value })
+						}
+						value={newCategory.latin}
+					/>
+				</label>
+				<label className='catLabel'>
+					<h2>Kiril</h2>
+					<input
+						type='text'
+						onChange={e =>
+							setNewCategory({ ...newCategory, kiril: e.target.value })
+						}
+						value={newCategory.kiril}
+					/>
+				</label>
+			</div>
 		</Modal>
 	)
 }

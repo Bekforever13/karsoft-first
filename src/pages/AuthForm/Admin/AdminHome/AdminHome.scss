@@ -15,7 +15,8 @@
 		gap: 50px;
 
 		.soz-category {
-			width: 500px;
+			width: fit-content;
+
 			display: flex;
 			align-items: center;
 			gap: 30px;
@@ -104,6 +105,33 @@
 	}
 }
 
+.categoryModal {
+	width: 100%;
+	.newCategoryForm {
+		padding: 1rem 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		row-gap: 3rem;
+		font-size: 22px;
+
+		.catLabel {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			align-items: center;
+			min-width: 100%;
+			border-radius: 10px;
+			margin: 10px 0;
+
+			input {
+				border-bottom: 1px solid black;
+			}
+		}
+	}
+}
+
 .modalAddWord {
 	transform: translateY(-50px);
 	.newWordForm {
@@ -161,6 +189,37 @@
 		}
 		.select {
 			width: 150px;
+		}
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	.AdmHome {
+		main {
+			.soz-category {
+				transform: translate(400px, -65px);
+			}
+			.section {
+				.tables {
+					flex-direction: column;
+					.firstTable {
+						width: 100%;
+					}
+					.secondTable {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.AdmHome {
+		main {
+			.soz-category {
+				transform: translate(200px, -65px);
+			}
 		}
 	}
 }
