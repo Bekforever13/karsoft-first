@@ -22,9 +22,8 @@ const AdminHome = () => {
 		allCategory,
 		totalWords,
 	] = useContext(Context)
-	const navigate = useNavigate()
-	const [renderTable, setRenderTable] = useState({})
 	const [loading, setLoading] = useState(false)
+	const navigate = useNavigate()
 
 	// check have token or not
 	useEffect(() => {
@@ -67,10 +66,7 @@ const AdminHome = () => {
 											setIsModalAddWordOpen={setIsModalAddWordOpen}
 										/>
 									</div>
-									<Table
-										renderTable={renderTable}
-										setRenderTable={setRenderTable}
-									/>
+									<Table />
 								</article>
 								<article className='secondTable'>
 									<div className='tableTitle'>

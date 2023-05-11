@@ -24,6 +24,7 @@ function App() {
 	const [totalCategory, setTotalCategory] = useState(0)
 	const [allCategory, setAllCategory] = useState([])
 	const [totalWords, setTotalWords] = useState(0)
+	const [loading, setLoading] = useState(false)
 
 	// totalWords
 	useEffect(() => {

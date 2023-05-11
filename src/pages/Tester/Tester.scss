@@ -1,6 +1,7 @@
 .table-wrapper {
 	width: 100%;
 	padding: 0 5%;
+	margin: 30px 0;
 
 	.copywriterTable {
 		width: 100%;
@@ -31,7 +32,7 @@
 						justify-content: center;
 						color: #fff;
 						gap: 10px;
-						.editBtn {
+						.likeBtn {
 							background-color: #6d6df8;
 							border-radius: 10px;
 							padding: 6.5px 20px;
@@ -40,7 +41,7 @@
 							align-items: center;
 							justify-content: center;
 						}
-						.deleteBtn {
+						.dislikeBtn {
 							height: 30px;
 							border-radius: 10px;
 							padding: 6.5px 20px;
@@ -53,5 +54,18 @@
 				}
 			}
 		}
+	}
+}
+
+.logout {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 24px;
+	i {
+		font-size: 26px;
+	}
+	&:hover {
+		opacity: 0.9;
 	}
 }
