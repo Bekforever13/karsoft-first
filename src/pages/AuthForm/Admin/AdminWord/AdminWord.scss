@@ -31,3 +31,50 @@
 		}
 	}
 }
+
+.modalEdit {
+	transform: translateY(-50px);
+	&-wrapper {
+		background-color: #fff;
+		display: grid;
+		grid-template-columns: repeat(auto-full, minmax(200px, 1fr));
+		row-gap: 0;
+
+		label {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			border-radius: 10px;
+			padding: 5px 10px;
+			border: none;
+			h2 {
+				font-weight: 700;
+				font-size: 20px;
+			}
+			.textarea {
+				width: 100%;
+				resize: none;
+				border: 1px solid #adadad;
+				padding: 5px 10px;
+				resize: none;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.audio {
+				padding: 5px 10px;
+				width: 100%;
+			}
+			.input {
+				width: 100%;
+				padding: 0.2rem 0.5rem;
+				border-bottom: 1px solid #adadad;
+				font-size: 1rem;
+				outline: none;
+			}
+			.select {
+				width: 150px;
+			}
+		}
+	}
+}

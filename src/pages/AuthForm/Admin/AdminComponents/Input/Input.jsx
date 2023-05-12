@@ -3,6 +3,7 @@ import './Input.scss'
 import axiosClassic from '../../../../../api/axios'
 import { Link } from 'react-router-dom'
 import { Context } from '../../../../../App'
+import Search from 'antd/es/input/Search'
 
 const Input = () => {
 	const [
@@ -15,55 +16,51 @@ const Input = () => {
 		allCategory,
 		totalWords,
 	] = useContext(Context)
-	const [search, setSearch] = useState(undefined)
 	const [result, setResult] = useState([])
 
 	const inputSearch = value => {
 		axiosClassic
-			.get(`/api/search?search=${value}`, search, {
+			.get(`/api/search?search=${value}`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => setResult(res.data.data))
+			.then(res => {
+				setResult(res.data.data)
+			})
 	}
 
 	return (
 		<div className='input-wrapper'>
 			<div className='inputField'>
-				<div className='input'>
-					<input
-						onChange={e => {
-							setSearch(e.target.value)
-							inputSearch(e.target.value)
-						}}
-						type='text'
-					/>
-					<button>
-						<i className='bx bx-search'></i>
-					</button>
-				</div>
-				{search ? (
-					<div className='results'>
-						<ul>
-							{search
-								? result
-										.filter(i =>
-											i.latin.toLowerCase().includes(search.toLowerCase())
+				<Search
+					className='search'
+					placeholder='Search a word'
+					allowClear
+					onChange={e => inputSearch(e.target.value)}
+				/>
+				<div className='results'>
+					<ul>
+						{result.map(item => (
+							<li key={item.id}>
+								<Link to={`/words/${item.id}`}>{item.latin}</Link>
+							</li>
+						))}
+						{/* {search
+							? result
+									.filter(i =>
+										i.latin.toLowerCase().includes(search.toLowerCase())
+									)
+									.map((i, index) => {
+										return (
+											<li key={index}>
+												<Link to={`/words/${i.id}`}>{i.latin}</Link>
+											</li>
 										)
-										.map((i, index) => {
-											return (
-												<li key={index}>
-													<Link to={`/words/${i.id}`}>{i.latin}</Link>
-												</li>
-											)
-										})
-								: ''}
-						</ul>
-					</div>
-				) : (
-					''
-				)}
+									})
+							: ''} */}
+					</ul>
+				</div>
 			</div>
 			<article className='soz-category'>
 				<div className='soz'>

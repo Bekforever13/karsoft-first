@@ -62,25 +62,33 @@
 	&-wrapper {
 		background-color: #fff;
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		row-gap: 20px;
+		grid-template-columns: repeat(auto-full, minmax(200px, 1fr));
+		row-gap: 0;
 
 		label {
 			display: flex;
 			align-items: center;
 			justify-content: flex-start;
-			flex-direction: column;
 			border-radius: 10px;
 			padding: 5px 10px;
-			border: 1px solid #adadad;
+			gap: 20px;
+			border: none;
+			h2 {
+				font-weight: 700;
+				font-size: 20px;
+			}
 			.textarea {
 				width: 100%;
-				display: flex;
-				flex-direction: column;
 				resize: none;
+				border: 1px solid #adadad;
+				padding: 5px 10px;
+				resize: none;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.audio {
+				padding: 5px 10px;
 				width: 100%;
 			}
 			.input {

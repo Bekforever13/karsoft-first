@@ -1,6 +1,6 @@
 import { Pagination, Modal, Select, Spin } from 'antd'
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Copywriter.scss'
 import axiosClassic from '../../api/axios'
 import { Context } from '../../App'
@@ -17,6 +17,33 @@ const Copywriter = () => {
 		totalWords,
 		totalCategory,
 	] = useContext(Context)
+
+	// view modal start
+	const [isViewModalOpen, setIsViewModalOpen] = useState(false)
+	const [showItem, setShowItem] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories: [],
+		synonyms: [],
+		antonyms: [],
+		// audio: undefined,
+	})
+	const showViewModal = item => {
+		setIsViewModalOpen(true)
+		setShowItem(item)
+		console.log(item)
+	}
+	const handleOkView = () => {
+		setIsViewModalOpen(false)
+	}
+	const handleCancelView = () => {
+		setIsViewModalOpen(false)
+	}
+	// view modal end
+
+	const navigate = useNavigate()
 	const [newWord, setNewWord] = useState({
 		latin: '',
 		kiril: '',
@@ -97,28 +124,6 @@ const Copywriter = () => {
 		console.log(value)
 	}
 
-	// useeffect for get all word
-	// useEffect(() => {
-	// 	axiosClassic
-	// 		.get('', {
-	// 			headers: {
-	// 				Authorization: 'Bearer ' + localStorage.getItem('token'),
-	// 			},
-	// 		})
-	// 		.then(res => console.log(res))
-	// }, [])
-
-	// useeffect for get all pages
-	// useEffect(() => {
-	// 	axiosClassic
-	// 		.get('', {
-	// 			headers: {
-	// 				Authorization: 'Bearer ' + localStorage.getItem('token'),
-	// 			},
-	// 		})
-	// 		.then(res => console.log(res))
-	// }, [])
-
 	const [dataTable, setDataTable] = useState([])
 	const [currPage, setCurrPage] = useState(1)
 
@@ -132,14 +137,10 @@ const Copywriter = () => {
 			.then(res => setDataTable(res.data.data))
 	}, [currPage, wordsCount])
 
-	const logout = () => {
-		axiosClassic
-			.post('/api/logout', {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => localStorage.removeItem('token'))
+	const logout = e => {
+		e.preventDefault()
+		localStorage.removeItem('token')
+		navigate('/login', { replace: true })
 	}
 
 	return (
@@ -152,10 +153,10 @@ const Copywriter = () => {
 						</Link>
 					</div>
 					<div className='add-word'>
-						<button onClick={showModal}>Add word</button>
-						<Link className='logout' onClick={() => logout} to={'/login'}>
+						<button onClick={() => showViewModal}>Add word</button>
+						<div className='logout cursor-pointer' onClick={e => logout(e)}>
 							<i className='bx bx-log-out'></i> Logout
-						</Link>
+						</div>
 					</div>
 				</header>
 				<div className='table-wrapper'>
@@ -164,10 +165,9 @@ const Copywriter = () => {
 							<tr>
 								<th>Latin</th>
 								<th>Kiril</th>
-								<th>Description latin</th>
-								<th>Description kiril</th>
 								<th>Category</th>
 								<th>Status</th>
+								<th>View</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -177,10 +177,13 @@ const Copywriter = () => {
 									<tr key={item.id}>
 										<td>{item.latin}</td>
 										<td>{item.kiril}</td>
-										<td>{item.description_latin}</td>
-										<td>{item.description_kiril}</td>
 										<td>{item.categories[0].latin}</td>
 										<td>{item.status}</td>
+										<td>
+											<button onClick={() => showViewModal(item)}>
+												<i className='bx bxs-show text-xl'></i>
+											</button>
+										</td>
 										<td className='actions'>
 											<div className='btns-wrapper'>
 												<button className='editBtn'>
@@ -314,6 +317,69 @@ const Copywriter = () => {
 									options={sinonimOptions}
 								/>
 							</label>
+						</div>
+					</Modal>
+					<Modal
+						className='showItemModal'
+						open={isViewModalOpen}
+						onOk={handleOkView}
+						onCancel={handleCancelView}
+						okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
+						title={showItem.latin}
+					>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Latin:</span>{' '}
+								<span className='val'>{showItem.latin}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Kiril:</span>{' '}
+								<span className='val'>{showItem.kiril}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Description_latin:</span>{' '}
+								<span className='val'>{showItem.description_latin}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Description_kiril:</span>{' '}
+								<span className='val'>{showItem.description_kiril}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Category:</span>{' '}
+								<span className='val'>{showItem.categories[0]?.latin}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Status:</span>{' '}
+								<span className='val'>{showItem.status}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Antonim:</span>{' '}
+								<span className='val'>{showItem.antonyms}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Sinonim:</span>{' '}
+								<span className='val'>{showItem.synonyms}</span>
+							</h2>
+						</div>
+						<div className='modal-item'>
+							<h2>
+								<span className='info'>Audio:</span>{' '}
+								<span className='val'>{showItem.audio}</span>
+							</h2>
 						</div>
 					</Modal>
 				</div>

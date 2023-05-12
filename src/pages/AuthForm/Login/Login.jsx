@@ -12,20 +12,29 @@ const Login = () => {
 
 	const navigate = useNavigate()
 
+	// check
 	useEffect(() => {
-		axiosClassic
-			.get('/api/check', {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => {
-				console.log(res)
-				// res.data.data ? navigate('/admin', { replace: true }) : ''
-			})
-			.catch(err => console.log(err))
+		if (localStorage.getItem('token')) {
+			axiosClassic
+				.get('/api/check', {
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem('token'),
+					},
+				})
+				.then(res => {
+					if (res.data.data.user.role === 'admin') {
+						navigate('/admin', { replace: true })
+					} else if (res.data.data.user.role === 'copywriter') {
+						navigate('/copywriter', { replace: true })
+					} else if (res.data.data.user.role === 'tester') {
+						navigate('/tester', { replace: true })
+					}
+				})
+				.catch(err => console.log(err))
+		}
 	}, [])
 
+	// login
 	const login = e => {
 		e.preventDefault()
 		axiosClassic
@@ -50,7 +59,7 @@ const Login = () => {
 				<div className='form__wrapper'>
 					<input
 						className='form__wrapper-input'
-						placeholder='Login'
+						placeholder='Phone'
 						type='text'
 						onChange={e =>
 							setCurrentUser({ ...currentUser, phone: e.target.value })

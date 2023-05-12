@@ -69,3 +69,31 @@
 		opacity: 0.9;
 	}
 }
+
+.showItemModal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	.modal-item {
+		min-width: 500px;
+		display: flex;
+		align-items: flex-start;
+		flex-direction: column;
+
+		h2 {
+			padding: 10px 2rem;
+			display: flex;
+			gap: 30px;
+			font-size: 20px;
+			.info {
+			}
+			.val {
+				border: 1px solid #adadad;
+				padding: 7px 1rem;
+				border-radius: 7px;
+			}
+		}
+	}
+}

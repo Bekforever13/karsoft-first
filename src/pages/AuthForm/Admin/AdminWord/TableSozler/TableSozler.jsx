@@ -28,6 +28,7 @@ const Table = () => {
 		categories_id: null,
 		sinonims: [],
 		antonims: [],
+		status: '',
 		// audio: undefined,
 	})
 	const showModalEdit = data => {
@@ -40,6 +41,7 @@ const Table = () => {
 			categories_id: data.categories_id,
 			sinonims: data.sinonims,
 			antonims: data.antonims,
+			status: data.status,
 			// audio: undefined,
 		})
 		setIsModalEditOpen(true)
@@ -53,7 +55,7 @@ const Table = () => {
 			kiril: '',
 			description_latin: '',
 			description_kiril: '',
-			categories_id: null,
+			categories_id: undefined,
 			sinonims: [],
 			antonims: [],
 			// audio: undefined,
@@ -108,6 +110,13 @@ const Table = () => {
 		console.log(value)
 	}
 
+	const categoryOptions = [
+		allCategory.map(category => ({
+			label: category.latin,
+			value: category.latin,
+		})),
+	]
+
 	return (
 		<>
 			<Spin spinning={loading}>
@@ -159,7 +168,11 @@ const Table = () => {
 						})}
 					</tbody>
 				</table>
-				<Pagination onChange={e => setCurrentPage(e)} total={totalWords} />
+				<Pagination
+					showSizeChanger={false}
+					onChange={e => setCurrentPage(e)}
+					total={totalWords}
+				/>
 				<Modal
 					className='modalEdit'
 					mask={false}
@@ -177,7 +190,7 @@ const Table = () => {
 								onChange={e =>
 									setDataForEdit({ ...dataForEdit, latin: e.target.value })
 								}
-								defaultValue={dataForEdit.latin}
+								value={dataForEdit.latin}
 								type='text'
 							/>
 						</label>
@@ -188,7 +201,7 @@ const Table = () => {
 								onChange={e =>
 									setDataForEdit({ ...dataForEdit, kiril: e.target.value })
 								}
-								defaultValue={dataForEdit.kiril}
+								value={dataForEdit.kiril}
 								type='text'
 							/>
 						</label>
@@ -202,7 +215,7 @@ const Table = () => {
 										description_latin: e.target.value,
 									})
 								}
-								defaultValue={dataForEdit.description_latin}
+								value={dataForEdit.description_latin}
 								type='text'
 							/>
 						</label>
@@ -216,20 +229,23 @@ const Table = () => {
 										description_kiril: e.target.value,
 									})
 								}
-								defaultValue={dataForEdit.description_latin}
+								value={dataForEdit.description_latin}
 								type='text'
 							/>
 						</label>
 						<label>
+							<h2>Status</h2>
 							<Select
 								className='select'
 								title='Status'
+								value={dataForEdit?.status}
 								onChange={e => setDataForEdit({ ...dataForEdit, status: e })}
-							>
-								<Select.Option key={'approved'}>Approved</Select.Option>
-								<Select.Option key={'waiting'}>Waiting</Select.Option>
-								<Select.Option key={'canceled'}>Canceled</Select.Option>
-							</Select>
+								options={[
+									{ label: 'Approved', value: 'approved' },
+									{ label: 'Waiting', value: 'waiting' },
+									{ label: 'Canceled', value: 'canceled' },
+								]}
+							></Select>
 						</label>
 						<label>
 							<h2>Audio: </h2>
@@ -238,7 +254,7 @@ const Table = () => {
 								onChange={e =>
 									setDataForEdit({ ...dataForEdit, audio: e.target.files })
 								}
-								defaultValue={dataForEdit.audio}
+								value={dataForEdit.audio}
 								type='file'
 							/>
 						</label>
@@ -246,26 +262,15 @@ const Table = () => {
 							<h2>Category:</h2>
 							<Select
 								className={'select'}
-								defaultValue={'select'}
+								value={dataForEdit?.categories_id}
 								onChange={e => {
-									allCategory.map(item =>
-										item.latin === e
-											? setNewWord({ ...newWord, categories_id: item.id })
-											: ''
-									)
+									setDataForEdit({
+										...dataForEdit,
+										categories_id: e,
+									})
 								}}
-							>
-								{allCategory.map(category => {
-									return (
-										<Select.Option
-											key={category.id}
-											defaultValue={category.latin}
-										>
-											{category.latin}
-										</Select.Option>
-									)
-								})}
-							</Select>
+								options={categoryOptions[0]}
+							/>
 						</label>
 						<label>
 							<h2>Antonim</h2>

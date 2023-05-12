@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Pagination, Popconfirm, Spin } from 'antd'
+import { Modal, Pagination, Popconfirm, Spin } from 'antd'
 import axiosClassic from '../../api/axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Tester.scss'
 
 const Tester = () => {
@@ -10,7 +10,21 @@ const Tester = () => {
 	const [page, setPage] = useState(1)
 	const [isStatusChanged, setIsStatusChanged] = useState(0)
 	const [loading, setLoading] = useState(false)
+	const navigate = useNavigate()
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const showModal = item => {
+		setIsModalOpen(true)
+		setShowItem(item)
+		console.log(item)
+	}
+	const handleOk = () => {
+		setIsModalOpen(false)
+	}
+	const handleCancel = () => {
+		setIsModalOpen(false)
+	}
 
+	// check
 	useEffect(() => {
 		axiosClassic
 			.get('/api/check', {
@@ -68,15 +82,22 @@ const Tester = () => {
 			.finally(() => setIsStatusChanged(item.id))
 	}
 
-	const logout = () => {
-		axiosClassic
-			.post('/api/logout', {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => localStorage.removeItem('token'))
+	const logout = e => {
+		e.preventDefault()
+		localStorage.removeItem('token')
+		navigate('/login', { replace: true })
 	}
+
+	const [showItem, setShowItem] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories: [],
+		synonyms: [],
+		antonyms: [],
+		// audio: undefined,
+	})
 
 	return (
 		<>
@@ -88,7 +109,7 @@ const Tester = () => {
 						</Link>
 					</div>
 					<div className='nav'>
-						<Link className='logout' onClick={() => logout} to={'/login'}>
+						<Link className='logout' onClick={e => logout(e)} to={'/login'}>
 							<i className='bx bx-log-out'></i>
 							Logout
 						</Link>
@@ -100,27 +121,29 @@ const Tester = () => {
 							<tr>
 								<th>Latin</th>
 								<th>Kiril</th>
-								<th>Description latin</th>
-								<th>Description kiril</th>
 								<th>Category</th>
 								<th>Status</th>
+								<th>View</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
-							{dataTable.map(item => {
+							{dataTable?.map(item => {
 								return (
-									<tr key={item.id}>
+									<tr key={item.id} className='text-base'>
 										<td>{item.latin}</td>
 										<td>{item.kiril}</td>
-										<td>{item.description_latin}</td>
-										<td>{item.description_kiril}</td>
 										<td>{item.categories[0].latin}</td>
 										<td>{item.status}</td>
+										<td>
+											<button onClick={() => showModal(item)}>
+												<i className='bx bxs-show text-xl'></i>
+											</button>
+										</td>
 										<td className='actions'>
 											<div className='btns-wrapper'>
 												<Popconfirm
-													title='Taza soz unadima?'
+													title='Like basamizba?'
 													onConfirm={() => changeStatusOk(item)}
 													okButtonProps={{
 														style: { backgroundColor: '#6d6df8' },
@@ -154,6 +177,69 @@ const Tester = () => {
 						total={page}
 					/>
 				</div>
+				<Modal
+					className='showItemModal'
+					open={isModalOpen}
+					onOk={handleOk}
+					onCancel={handleCancel}
+					okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
+					title={showItem.latin}
+				>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Latin:</span>{' '}
+							<span className='val'>{showItem.latin}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Kiril:</span>{' '}
+							<span className='val'>{showItem.kiril}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Description_latin:</span>{' '}
+							<span className='val'>{showItem.description_latin}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Description_kiril:</span>{' '}
+							<span className='val'>{showItem.description_kiril}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Category:</span>{' '}
+							<span className='val'>{showItem.categories[0]?.latin}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Status:</span>{' '}
+							<span className='val'>{showItem.status}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Antonim:</span>{' '}
+							<span className='val'>{showItem.antonyms}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Sinonim:</span>{' '}
+							<span className='val'>{showItem.synonyms}</span>
+						</h2>
+					</div>
+					<div className='modal-item'>
+						<h2>
+							<span className='info'>Audio:</span>{' '}
+							<span className='val'>{showItem.audio}</span>
+						</h2>
+					</div>
+				</Modal>
 			</Spin>
 		</>
 	)
