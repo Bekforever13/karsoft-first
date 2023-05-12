@@ -22,7 +22,7 @@ const Login = () => {
 					},
 				})
 				.then(res => {
-					if (res.data.data.user.role === 'admin') {
+					if (res.data.data.user.role === 'super-admin') {
 						navigate('/admin', { replace: true })
 					} else if (res.data.data.user.role === 'copywriter') {
 						navigate('/copywriter', { replace: true })
@@ -41,7 +41,7 @@ const Login = () => {
 			.post('/api/authenticate', currentUser)
 			.then(res => {
 				localStorage.setItem('token', 'Bearer ' + res.data.data.token)
-				if (res.data.data.user.role === 'admin') {
+				if (res.data.data.user.role === 'super-admin') {
 					navigate('/admin', { replace: true })
 				} else if (res.data.data.user.role === 'copywriter') {
 					navigate('/copywriter', { replace: true })

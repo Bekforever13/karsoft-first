@@ -3,6 +3,7 @@ import { Modal, Pagination, Popconfirm, Spin } from 'antd'
 import axiosClassic from '../../api/axios'
 import { Link, useNavigate } from 'react-router-dom'
 import './Tester.scss'
+import moment from 'moment'
 
 const Tester = () => {
 	const [dataTable, setDataTable] = useState([])
@@ -31,6 +32,9 @@ const Tester = () => {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
+			})
+			.then(res => {
+				setCurrentUser(res.data.data.user)
 			})
 			.catch(err => {
 				navigate('/login', { replace: true })
@@ -96,17 +100,21 @@ const Tester = () => {
 		categories: [],
 		synonyms: [],
 		antonyms: [],
-		// audio: undefined,
 	})
+
+	const [currentUser, setCurrentUser] = useState([])
 
 	return (
 		<>
 			<Spin spinning={loading}>
 				<header className='copywriter-header'>
 					<div className='header-logo'>
-						<Link to={'/copywriter'}>
+						<Link to={'/tester'}>
 							<img src='../../../public/img/logo.svg' alt='' />
 						</Link>
+					</div>
+					<div className='user'>
+						<h1 className='text-xl'>{currentUser.name}</h1>
 					</div>
 					<div className='nav'>
 						<Link className='logout' onClick={e => logout(e)} to={'/login'}>
@@ -119,6 +127,8 @@ const Tester = () => {
 					<table className='copywriterTable'>
 						<thead>
 							<tr>
+								<th>ID</th>
+								<th>Created at</th>
 								<th>Latin</th>
 								<th>Kiril</th>
 								<th>Category</th>
@@ -131,6 +141,10 @@ const Tester = () => {
 							{dataTable?.map(item => {
 								return (
 									<tr key={item.id} className='text-base'>
+										<td>{item.id}</td>
+										<td>
+											{moment(item.created_at).format('MM-D-YYYY, h:mm:ss')}
+										</td>
 										<td>{item.latin}</td>
 										<td>{item.kiril}</td>
 										<td>{item.categories[0].latin}</td>
@@ -178,66 +192,48 @@ const Tester = () => {
 					/>
 				</div>
 				<Modal
-					className='showItemModal'
+					className={'showItemModal'}
 					open={isModalOpen}
 					onOk={handleOk}
 					onCancel={handleCancel}
+					width={'850px'}
+					height={'650px'}
 					okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 					title={showItem.latin}
 				>
-					<div className='modal-item'>
-						<h2>
+					<div className='modal-wrapper'>
+						<div className='modal-item'>
 							<span className='info'>Latin:</span>{' '}
 							<span className='val'>{showItem.latin}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Kiril:</span>{' '}
 							<span className='val'>{showItem.kiril}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Description_latin:</span>{' '}
 							<span className='val'>{showItem.description_latin}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Description_kiril:</span>{' '}
 							<span className='val'>{showItem.description_kiril}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Category:</span>{' '}
 							<span className='val'>{showItem.categories[0]?.latin}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Status:</span>{' '}
 							<span className='val'>{showItem.status}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Antonim:</span>{' '}
 							<span className='val'>{showItem.antonyms}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
+						</div>
+						<div className='modal-item'>
 							<span className='info'>Sinonim:</span>{' '}
 							<span className='val'>{showItem.synonyms}</span>
-						</h2>
-					</div>
-					<div className='modal-item'>
-						<h2>
-							<span className='info'>Audio:</span>{' '}
-							<span className='val'>{showItem.audio}</span>
-						</h2>
+						</div>
 					</div>
 				</Modal>
 			</Spin>

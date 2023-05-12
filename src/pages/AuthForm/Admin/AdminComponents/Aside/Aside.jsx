@@ -1,18 +1,15 @@
 import React from 'react'
 import './Aside.scss'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 // import Sidebar from './Sidebar/Sidebar'
 import axiosClassic from '../../../../../api/axios'
 
 const Aside = () => {
-	const logout = () => {
-		axiosClassic
-			.post('/api/logout', {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => localStorage.removeItem('token'))
+	const navigate = useNavigate()
+	const logout = e => {
+		e.preventDefault()
+		localStorage.removeItem('token')
+		navigate('/login', { replace: true })
 	}
 	return (
 		<aside>
@@ -67,7 +64,7 @@ const Aside = () => {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink className={'link'} onClick={() => logout} to={'/login'}>
+					<NavLink className={'link'} onClick={e => logout(e)}>
 						<span>
 							<i className='bx bx-log-out'></i>
 						</span>{' '}

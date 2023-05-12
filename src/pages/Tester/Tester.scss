@@ -71,28 +71,25 @@
 }
 
 .showItemModal {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translateY(-80px);
+	.modal-wrapper {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 
-	.modal-item {
-		min-width: 500px;
-		display: flex;
-		align-items: flex-start;
-		flex-direction: column;
-
-		h2 {
+		.modal-item {
 			padding: 10px 2rem;
 			display: flex;
+			align-items: center;
+			justify-content: flex-start;
 			gap: 30px;
 			font-size: 20px;
+			border-bottom: 1px solid #adadad;
 			.info {
 			}
 			.val {
-				border: 1px solid #adadad;
 				padding: 7px 1rem;
 				border-radius: 7px;
+				font-size: 1rem;
 			}
 		}
 	}
