@@ -11,6 +11,9 @@
 	}
 
 	.add-word {
+		display: flex;
+		align-items: center;
+		gap: 5rem;
 		button {
 			background-color: #fff;
 			color: #0b6df6;

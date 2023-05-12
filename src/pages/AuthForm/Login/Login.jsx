@@ -20,8 +20,10 @@ const Login = () => {
 				},
 			})
 			.then(res => {
-				res.data.data ? navigate('/admin', { replace: true }) : ''
+				console.log(res)
+				// res.data.data ? navigate('/admin', { replace: true }) : ''
 			})
+			.catch(err => console.log(err))
 	}, [])
 
 	const login = e => {
@@ -30,7 +32,13 @@ const Login = () => {
 			.post('/api/authenticate', currentUser)
 			.then(res => {
 				localStorage.setItem('token', 'Bearer ' + res.data.data.token)
-				navigate('/admin', { replace: true })
+				if (res.data.data.user.role === 'admin') {
+					navigate('/admin', { replace: true })
+				} else if (res.data.data.user.role === 'copywriter') {
+					navigate('/copywriter', { replace: true })
+				} else if (res.data.data.user.role === 'tester') {
+					navigate('/tester', { replace: true })
+				}
 			})
 			.catch(err => console.log(err))
 	}

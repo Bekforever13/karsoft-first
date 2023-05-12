@@ -132,6 +132,16 @@ const Copywriter = () => {
 			.then(res => setDataTable(res.data.data))
 	}, [currPage, wordsCount])
 
+	const logout = () => {
+		axiosClassic
+			.post('/api/logout', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => localStorage.removeItem('token'))
+	}
+
 	return (
 		<>
 			<Spin spinning={loading}>
@@ -143,6 +153,9 @@ const Copywriter = () => {
 					</div>
 					<div className='add-word'>
 						<button onClick={showModal}>Add word</button>
+						<Link className='logout' onClick={() => logout} to={'/login'}>
+							<i className='bx bx-log-out'></i> Logout
+						</Link>
 					</div>
 				</header>
 				<div className='table-wrapper'>

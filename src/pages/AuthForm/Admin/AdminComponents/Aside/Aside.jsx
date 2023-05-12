@@ -12,7 +12,7 @@ const Aside = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => console.log(res))
+			.then(res => localStorage.removeItem('token'))
 	}
 	return (
 		<aside>
@@ -67,13 +67,7 @@ const Aside = () => {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink
-						className={'link'}
-						onClick={() => {
-							logout, localStorage.removeItem('token')
-						}}
-						to={'/login'}
-					>
+					<NavLink className={'link'} onClick={() => logout} to={'/login'}>
 						<span>
 							<i className='bx bx-log-out'></i>
 						</span>{' '}
