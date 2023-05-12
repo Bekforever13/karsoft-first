@@ -33,7 +33,7 @@ const Table = () => {
 				setDataTable(res.data.data.map(e => e))
 			})
 			.finally(() => setLoading(false))
-	}, [currentPage])
+	}, [currentPage, totalWords])
 
 	return (
 		<>

@@ -13,6 +13,8 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 		lang,
 		setLang,
 		totalCategory,
+		totalWords,
+		setTotalWords,
 	] = useContext(Context)
 
 	const [hammeCategory, setHammeCategory] = useState([])
@@ -40,7 +42,7 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 					'Content-Type': 'multipart/form-data',
 				},
 			})
-			.then(res => console.log(res))
+			.then(res => setTotalWords(totalWords + 1))
 			.catch(err => console.log(err))
 	}
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useLayoutEffect } from 'react'
 import moment from 'moment'
 import axiosClassic from '../../../../../api/axios'
 import { Pagination, Spin, Modal } from 'antd'
@@ -24,6 +24,7 @@ const CategoryTable = ({ render, setRender }) => {
 		latin: '',
 		kiril: '',
 	})
+
 	const [newData, setNewData] = useState({
 		id: null,
 		latin: '',
