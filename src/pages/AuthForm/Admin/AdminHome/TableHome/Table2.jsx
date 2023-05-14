@@ -4,19 +4,21 @@ import axiosClassic from '../../../../../api/axios'
 import { Pagination, Spin } from 'antd'
 import { Context } from '../../../../../App'
 
-const Table2 = () => {
+const Table2 = ({ renderTable2, setRenderTable2 }) => {
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
 	const [loading, setLoading] = useState(false)
 
 	const [
-		allCategory,
 		allWordsArray,
 		page,
 		setPage,
 		lang,
 		setLang,
 		totalCategory,
+		allCategory,
+		totalWords,
+		setTotalWords,
 	] = useContext(Context)
 
 	//render table
@@ -32,7 +34,7 @@ const Table2 = () => {
 				setDataTable(res.data.data.map(e => e))
 			})
 			.finally(() => setLoading(false))
-	}, [currentPage])
+	}, [currentPage, renderTable2])
 
 	return (
 		<>

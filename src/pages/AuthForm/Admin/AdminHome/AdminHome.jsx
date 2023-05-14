@@ -39,6 +39,20 @@ const AdminHome = () => {
 			.finally(() => setLoading(false))
 	}, [])
 
+	const [renderTable2, setRenderTable2] = useState(0)
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/categoriesdate`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				// setDataTable(res.data.data.map(e => e))
+				setRenderTable2(res.data.total)
+			})
+	}, [renderTable2])
+
 	const [isModalAddWordOpen, setIsModalAddWordOpen] = useState(false)
 	const [isModalAddCategoryOpen, setIsModalAddCategoryOpen] = useState(false)
 	const showModalAddWord = () => {
@@ -73,11 +87,16 @@ const AdminHome = () => {
 										<h2>Kategoriya</h2>
 										<button onClick={showModalAddCategory}>Add category</button>
 										<AddCategory
+											renderTable2={renderTable2}
+											setRenderTable2={setRenderTable2}
 											setIsModalAddCategoryOpen={setIsModalAddCategoryOpen}
 											isModalAddCategoryOpen={isModalAddCategoryOpen}
 										/>
 									</div>
-									<Table2 />
+									<Table2
+										renderTable2={renderTable2}
+										setRenderTable2={setRenderTable2}
+									/>
 								</article>
 							</div>
 						</section>

@@ -69,6 +69,7 @@ function App() {
 				totalCategory,
 				allCategory,
 				totalWords,
+				setTotalWords,
 			]}
 		>
 			<Routes>

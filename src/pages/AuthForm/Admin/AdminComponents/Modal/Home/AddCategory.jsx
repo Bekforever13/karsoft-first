@@ -1,20 +1,29 @@
 import React, { useContext, useState } from 'react'
 import Modal from 'antd/es/modal/Modal'
 import axiosClassic from '../../../../../../api/axios'
+import { Context } from '../../../../../../App'
 
-const AddCategory = ({ isModalAddCategoryOpen, setIsModalAddCategoryOpen }) => {
+const AddCategory = ({
+	isModalAddCategoryOpen,
+	setIsModalAddCategoryOpen,
+	renderTable2,
+	setRenderTable2,
+}) => {
 	const [newCategory, setNewCategory] = useState({ latin: '', kiril: '' })
 
 	const handleOkAddCategory = () => {
 		setIsModalAddCategoryOpen(false)
-		console.log(newCategory)
 		axiosClassic
 			.post('/api/categories', newCategory, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => console.log(res))
+			.then(() => setRenderTable2(renderTable2 + 1))
+		setNewCategory({
+			latin: '',
+			kiril: '',
+		})
 	}
 	const handleCancelAddCategory = () => {
 		setIsModalAddCategoryOpen(false)

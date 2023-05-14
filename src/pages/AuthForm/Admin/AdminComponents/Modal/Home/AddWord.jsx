@@ -42,7 +42,18 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 					'Content-Type': 'multipart/form-data',
 				},
 			})
-			.then(res => setTotalWords(totalWords + 1))
+			.then(res => {
+				setNewWord({
+					latin: '',
+					kiril: '',
+					description_latin: '',
+					description_kiril: '',
+					categories_id: null,
+					sinonims: [],
+					antonims: [],
+				})
+				setTotalWords(1)
+			})
 			.catch(err => console.log(err))
 	}
 
@@ -57,9 +68,8 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 		description_latin: '',
 		description_kiril: '',
 		categories_id: null,
-		// sinonims: [],
-		// antonims: [],
-		audio: undefined,
+		sinonims: [],
+		antonims: [],
 	})
 
 	const [sinonimOptions, setSinonimOptions] = useState([])
@@ -135,16 +145,7 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 						type='text'
 					/>
 				</label>
-				<label>
-					<h2>Audio: </h2>
-					<input
-						className='audio'
-						onChange={e => {
-							setNewWord({ ...newWord, audio: e.target.files })
-						}}
-						type='file'
-					/>
-				</label>
+
 				<label>
 					<h2>Category:</h2>
 					<Select

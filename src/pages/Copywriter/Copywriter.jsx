@@ -92,8 +92,11 @@ const Copywriter = () => {
 		synonyms: [],
 		antonyms: [],
 	})
+
+	const [idOfWord, setIdOfWord] = useState(0)
 	const showModal = item => {
 		console.log(item)
+		setIdOfWord(item.id)
 		setDataForEdit({
 			latin: item.latin,
 			kiril: item.kiril,
@@ -108,14 +111,17 @@ const Copywriter = () => {
 	const handleOk = () => {
 		setIsModalOpen(false)
 		axiosClassic
-			.post('/api/words', newWord, {
+			.post(`/api/words/${idOfWord}`, dataForEdit, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 					'Content-Type': 'multipart/form-data',
 				},
 			})
-			.then(res => setWordsCount(wordsCount + 1))
-			.catch(err => console.log(err))
+			.then(() => setWordsCount(wordsCount + 1))
+			.catch(err => {
+				console.log('123', err)
+				console.log(idOfWord)
+			})
 	}
 	const handleCancel = () => {
 		setIsModalOpen(false)
@@ -147,10 +153,10 @@ const Copywriter = () => {
 	const [addWordModalOpen, setAddWordModalOpen] = useState(false)
 
 	const showAddWordModal = () => {
-		setIsModalOpen(true)
+		setAddWordModalOpen(true)
 	}
 	const handleAddWordOk = () => {
-		setIsModalOpen(false)
+		setAddWordModalOpen(false)
 		axiosClassic
 			.post('/api/words', newWord, {
 				headers: {
@@ -159,12 +165,13 @@ const Copywriter = () => {
 				},
 			})
 			.then(res => {
+				console.log(newWord)
 				setWordsCount(wordsCount + 1)
 			})
 			.catch(err => console.log(err))
 	}
 	const handleAddWordCancel = () => {
-		setIsModalOpen(false)
+		setAddWordModalOpen(false)
 		setNewWord({
 			latin: '',
 			kiril: '',
@@ -311,7 +318,7 @@ const Copywriter = () => {
 					{/* &&& modal for edit word starts here &&& */}
 					<Modal
 						className='copywriterModal'
-						title='Add new word'
+						title='Edit word'
 						open={isModalOpen}
 						width={'850px'}
 						height={'650px'}
@@ -488,6 +495,7 @@ const Copywriter = () => {
 								<Select
 									className='select'
 									defaultValue={'select'}
+									value={newWord.categories_id}
 									onChange={e => {
 										hammeCategory.map(item =>
 											item.latin === e

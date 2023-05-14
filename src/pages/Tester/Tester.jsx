@@ -53,6 +53,25 @@ const Tester = () => {
 	}, [])
 
 	// table
+	const [allDataForTable, setAllDataForTable] = useState([])
+	const [sortedData, setSortedData] = useState([])
+	const [pages, setPages] = useState(0)
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/words_copytest?limit=1000`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				// setAllDataForTable(res.data.data)
+				res.data.data.map(item =>
+					item.status !== 'approved' ? setSortedData(...sortedData, item) : ''
+				)
+			})
+	}, [])
+
+	// /////
 	useEffect(() => {
 		axiosClassic
 			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
@@ -60,7 +79,9 @@ const Tester = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => setDataTable(res.data.data))
+			.then(res => {
+				setDataTable(res.data.data)
+			})
 	}, [page, isStatusChanged, currPage])
 
 	const changeStatusOk = item => {
@@ -107,6 +128,7 @@ const Tester = () => {
 	return (
 		<>
 			<Spin spinning={loading}>
+				<button onClick={() => console.log(sortedData)}>click</button>
 				<header className='copywriter-header'>
 					<div className='header-logo'>
 						<Link to={'/tester'}>
@@ -196,8 +218,7 @@ const Tester = () => {
 					open={isModalOpen}
 					onOk={handleOk}
 					onCancel={handleCancel}
-					width={'850px'}
-					height={'650px'}
+					width={'1000px'}
 					okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 					title={showItem.latin}
 				>

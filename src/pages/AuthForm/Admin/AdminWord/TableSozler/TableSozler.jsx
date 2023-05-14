@@ -4,6 +4,7 @@ import { Context } from '../../../../../App'
 import { axiosClassic } from '../../../../../api/axios'
 import moment from 'moment'
 import { Pagination, Modal, Select, Spin } from 'antd'
+import { all } from 'axios'
 
 const Table = () => {
 	const [
@@ -21,6 +22,7 @@ const Table = () => {
 	const [isModalEditOpen, setIsModalEditOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [dataForEdit, setDataForEdit] = useState({
+		id: null,
 		latin: '',
 		kiril: '',
 		description_latin: '',
@@ -29,11 +31,10 @@ const Table = () => {
 		sinonims: [],
 		antonims: [],
 		status: '',
-		// audio: undefined,
 	})
 	const showModalEdit = data => {
-		console.log(data)
 		setDataForEdit({
+			id: data.id,
 			latin: data.latin,
 			kiril: data.kiril,
 			description_latin: data.description_latin,
@@ -42,13 +43,37 @@ const Table = () => {
 			sinonims: data.sinonims,
 			antonims: data.antonims,
 			status: data.status,
-			// audio: undefined,
 		})
 		setIsModalEditOpen(true)
 	}
+
 	const handleOk = () => {
 		setIsModalEditOpen(false)
+		console.log(dataForEdit)
+		axiosClassic
+			.post(`/api/words/${dataForEdit.id}`, dataForEdit, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setRenderTable(renderTable + 1)
+			})
 	}
+
+	const [hammeCategory, setHammeCategory] = useState([])
+	useEffect(() => {
+		axiosClassic
+			.get(`/api/categories`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setHammeCategory(res.data.data)
+			})
+	}, [])
+
 	const handleCancel = () => {
 		setDataForEdit({
 			latin: '',
@@ -58,7 +83,6 @@ const Table = () => {
 			categories_id: undefined,
 			sinonims: [],
 			antonims: [],
-			// audio: undefined,
 		})
 		setIsModalEditOpen(false)
 	}
@@ -70,9 +94,10 @@ const Table = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => console.log(res.data))
+			.then(res => setRenderTable(renderTable + 1))
 	}
 
+	const [renderTable, setRenderTable] = useState(0)
 	useEffect(() => {
 		setLoading(true)
 		axiosClassic
@@ -85,7 +110,7 @@ const Table = () => {
 				setDataTable(res.data.data.map(e => e))
 			})
 			.finally(() => setLoading(false))
-	}, [currentPage])
+	}, [currentPage, renderTable, totalWords])
 
 	const [sinonimOptions, setSinonimOptions] = useState([])
 	const [antonimOptions, setAntonimOptions] = useState([])
@@ -125,7 +150,6 @@ const Table = () => {
 						<tr className='thead__tr'>
 							<th className='thead__tr__th'>Sóz</th>
 							<th className='thead__tr__th'>Сөз</th>
-							<th className='thead__tr__th'>Audio</th>
 							<th className='thead__tr__th'>Kategoriya</th>
 							<th className='thead__tr__th'>Kún</th>
 							<th className='thead__tr__th'>Actions</th>
@@ -137,9 +161,7 @@ const Table = () => {
 								<tr className='tbody__tr' key={data.id}>
 									<th className='tbody__tr__th'>{data.latin}</th>
 									<th className='tbody__tr__th'>{data.kiril}</th>
-									<th className='tbody__tr__th'>
-										<i className='bx bxs-volume-full cursor-pointer'></i>
-									</th>
+
 									<th className='tbody__tr__th'>
 										{data.categories.map(i => i.latin)}
 									</th>
@@ -229,7 +251,7 @@ const Table = () => {
 										description_kiril: e.target.value,
 									})
 								}
-								value={dataForEdit.description_latin}
+								value={dataForEdit.description_kiril}
 								type='text'
 							/>
 						</label>
@@ -247,27 +269,21 @@ const Table = () => {
 								]}
 							></Select>
 						</label>
-						<label>
-							<h2>Audio: </h2>
-							<input
-								className='audio'
-								onChange={e =>
-									setDataForEdit({ ...dataForEdit, audio: e.target.files })
-								}
-								value={dataForEdit.audio}
-								type='file'
-							/>
-						</label>
+
 						<label>
 							<h2>Category:</h2>
 							<Select
 								className={'select'}
-								value={dataForEdit?.categories_id}
+								value={dataForEdit.categories_id}
 								onChange={e => {
-									setDataForEdit({
-										...dataForEdit,
-										categories_id: e,
-									})
+									hammeCategory.map(item =>
+										item.latin === e
+											? setDataForEdit({
+													...dataForEdit,
+													categories_id: item.id,
+											  })
+											: ''
+									)
 								}}
 								options={categoryOptions[0]}
 							/>

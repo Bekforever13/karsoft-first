@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Admins.scss'
 import Aside from '../AdminComponents/Aside/Aside'
 import Input from '../AdminComponents/Input/Input'
-import { Button, Spin, Table, Modal, Select } from 'antd'
+import { Button, Spin, Table, Modal, Select, Space } from 'antd'
 import axiosClassic from '../../../../api/axios'
 import Column from 'antd/es/table/Column'
 
@@ -42,7 +42,7 @@ const Admins = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => setTotalAdmins(totalAdmins + 1))
+			.then(() => setTotalAdmins(totalAdmins + 1))
 	}
 	const handleCancel = () => {
 		setIsModalOpen(false)
@@ -63,6 +63,17 @@ const Admins = () => {
 			.finally(() => setLoading(false))
 	}, [totalAdmins])
 
+	// delete admin
+	const deleteAdmin = id => {
+		axiosClassic
+			.delete(`/api/admins/${id}`, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(() => setTotalAdmins(totalAdmins - 1))
+	}
+
 	return (
 		<Spin spinning={loading}>
 			<div className='admins'>
@@ -77,6 +88,7 @@ const Admins = () => {
 							</Button>
 						</div>
 						<Table dataSource={dataSource}>
+							<Column title='ID' dataIndex='id' key='id' />
 							<Column title='Name' dataIndex='name' key='name' />
 							<Column title='Phone' dataIndex='phone' key='phone' />
 							<Column title='Role' dataIndex='role' key='role' />
@@ -84,15 +96,15 @@ const Admins = () => {
 								title='Actions'
 								dataIndex='actions'
 								key='actions'
-								render={() => (
-									<div className='adminsActionButtons'>
-										<button className='editBtn' onClick={e => console.log(e)}>
-											<i className='bx bx-pencil'></i>
-										</button>
-										<button className='deleteBtn' onClick={e => console.log(e)}>
+								render={(i, record) => (
+									<Space size='middle' className='adminsActionButtons'>
+										<button
+											className='deleteBtn'
+											onClick={() => deleteAdmin(record.id)}
+										>
 											<i className='bx bx-trash'></i>
 										</button>
-									</div>
+									</Space>
 								)}
 							/>
 						</Table>
