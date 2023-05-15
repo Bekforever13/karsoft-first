@@ -13,6 +13,16 @@ const Tester = () => {
 	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate()
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [showItem, setShowItem] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories: [],
+		synonyms: [],
+		antonyms: [],
+	})
+	const [currentUser, setCurrentUser] = useState([])
 	const showModal = item => {
 		setIsModalOpen(true)
 		setShowItem(item)
@@ -27,6 +37,7 @@ const Tester = () => {
 
 	// check
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get('/api/check', {
 				headers: {
@@ -36,9 +47,10 @@ const Tester = () => {
 			.then(res => {
 				setCurrentUser(res.data.data.user)
 			})
-			.catch(err => {
+			.catch(() => {
 				navigate('/login', { replace: true })
 			})
+			.finally(() => setLoading(false))
 	}, [])
 
 	// get total number of words for pagination
@@ -50,29 +62,12 @@ const Tester = () => {
 				},
 			})
 			.then(res => setPage(res.data.total))
-	}, [])
-
-	// table
-	const [allDataForTable, setAllDataForTable] = useState([])
-	const [sortedData, setSortedData] = useState([])
-	const [pages, setPages] = useState(0)
-	useEffect(() => {
-		axiosClassic
-			.get(`/api/words_copytest?limit=1000`, {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => {
-				// setAllDataForTable(res.data.data)
-				res.data.data.map(item =>
-					item.status !== 'approved' ? setSortedData(...sortedData, item) : ''
-				)
-			})
+			.finally(() => setLoading(false))
 	}, [])
 
 	// /////
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
 				headers: {
@@ -82,9 +77,11 @@ const Tester = () => {
 			.then(res => {
 				setDataTable(res.data.data)
 			})
+			.finally(() => setLoading(false))
 	}, [page, isStatusChanged, currPage])
 
 	const changeStatusOk = item => {
+		setLoading(true)
 		fetch(`https://sozlik.abbc.uz/api/wordconfirm/${item.id}?status=1`, {
 			method: 'PUT',
 			headers: {
@@ -93,9 +90,14 @@ const Tester = () => {
 		})
 			.then(res => res.json())
 			.then(data => setIsStatusChanged(item.id))
-			.finally(() => setIsStatusChanged(item.id))
+			.finally(() => {
+				setIsStatusChanged(item.id)
+				setLoading(false)
+			})
 	}
 	const changeStatusError = item => {
+		setLoading(true)
+
 		fetch(`https://sozlik.abbc.uz/api/wordconfirm/${item.id}?status=0`, {
 			method: 'PUT',
 			headers: {
@@ -104,7 +106,10 @@ const Tester = () => {
 		})
 			.then(res => res.json())
 			.then(data => setIsStatusChanged(item.id))
-			.finally(() => setIsStatusChanged(item.id))
+			.finally(() => {
+				setIsStatusChanged(item.id)
+				setLoading(false)
+			})
 	}
 
 	const logout = e => {
@@ -113,22 +118,9 @@ const Tester = () => {
 		navigate('/login', { replace: true })
 	}
 
-	const [showItem, setShowItem] = useState({
-		latin: '',
-		kiril: '',
-		description_latin: '',
-		description_kiril: '',
-		categories: [],
-		synonyms: [],
-		antonyms: [],
-	})
-
-	const [currentUser, setCurrentUser] = useState([])
-
 	return (
 		<>
 			<Spin spinning={loading}>
-				<button onClick={() => console.log(sortedData)}>click</button>
 				<header className='copywriter-header'>
 					<div className='header-logo'>
 						<Link to={'/tester'}>
@@ -160,51 +152,53 @@ const Tester = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{dataTable?.map(item => {
-								return (
-									<tr key={item.id} className='text-base'>
-										<td>{item.id}</td>
-										<td>
-											{moment(item.created_at).format('MM-D-YYYY, h:mm:ss')}
-										</td>
-										<td>{item.latin}</td>
-										<td>{item.kiril}</td>
-										<td>{item.categories[0].latin}</td>
-										<td>{item.status}</td>
-										<td>
-											<button onClick={() => showModal(item)}>
-												<i className='bx bxs-show text-xl'></i>
-											</button>
-										</td>
-										<td className='actions'>
-											<div className='btns-wrapper'>
-												<Popconfirm
-													title='Like basamizba?'
-													onConfirm={() => changeStatusOk(item)}
-													okButtonProps={{
-														style: { backgroundColor: '#6d6df8' },
-													}}
-												>
-													<button className='likeBtn'>
-														<i className='bx bxs-like'></i>
-													</button>
-												</Popconfirm>
-												<Popconfirm
-													title='Qayta korip shigiw kerekpa?'
-													onConfirm={() => changeStatusError(item)}
-													okButtonProps={{
-														style: { backgroundColor: '#fc7a7a' },
-													}}
-												>
-													<button className='dislikeBtn'>
-														<i className='bx bxs-dislike'></i>
-													</button>
-												</Popconfirm>
-											</div>
-										</td>
-									</tr>
-								)
-							})}
+							{dataTable
+								?.filter(x => x.status !== 'approved')
+								.map(item => {
+									return (
+										<tr key={item.id} className='text-base'>
+											<td>{item.id}</td>
+											<td>
+												{moment(item.created_at).format('MM-D-YYYY, h:mm:ss')}
+											</td>
+											<td>{item.latin}</td>
+											<td>{item.kiril}</td>
+											<td>{item.categories[0].latin}</td>
+											<td>{item.status}</td>
+											<td>
+												<button onClick={() => showModal(item)}>
+													<i className='bx bxs-show text-xl'></i>
+												</button>
+											</td>
+											<td className='actions'>
+												<div className='btns-wrapper'>
+													<Popconfirm
+														title='Like basamizba?'
+														onConfirm={() => changeStatusOk(item)}
+														okButtonProps={{
+															style: { backgroundColor: '#6d6df8' },
+														}}
+													>
+														<button className='likeBtn'>
+															<i className='bx bxs-like'></i>
+														</button>
+													</Popconfirm>
+													<Popconfirm
+														title='Qayta korip shigiw kerekpa?'
+														onConfirm={() => changeStatusError(item)}
+														okButtonProps={{
+															style: { backgroundColor: '#fc7a7a' },
+														}}
+													>
+														<button className='dislikeBtn'>
+															<i className='bx bxs-dislike'></i>
+														</button>
+													</Popconfirm>
+												</div>
+											</td>
+										</tr>
+									)
+								})}
 						</tbody>
 					</table>
 					<Pagination

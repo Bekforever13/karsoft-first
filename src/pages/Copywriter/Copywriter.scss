@@ -69,15 +69,14 @@
 							display: flex;
 							align-items: center;
 							justify-content: center;
-						}
-						.deleteBtn {
-							height: 30px;
-							border-radius: 10px;
-							padding: 6.5px 20px;
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							background: #fc7a7a;
+							transition: 0.2s ease-in;
+							&:disabled {
+								opacity: 0.3;
+							}
+							&:enabled:hover {
+								opacity: 0.9;
+								border: 2px solid #4545da;
+							}
 						}
 					}
 				}

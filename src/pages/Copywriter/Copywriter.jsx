@@ -93,38 +93,48 @@ const Copywriter = () => {
 		antonyms: [],
 	})
 
-	const [idOfWord, setIdOfWord] = useState(0)
 	const showModal = item => {
 		console.log(item)
-		setIdOfWord(item.id)
 		setDataForEdit({
+			id: item.id,
 			latin: item.latin,
 			kiril: item.kiril,
 			description_latin: item.description_latin,
 			description_kiril: item.description_kiril,
-			categories: item.categories[0].kiril,
-			synonyms: [],
-			antonyms: [],
+			categories: item.categories_id,
+			synonyms: item.synonyms,
+			antonyms: item.antonyms,
+			status: item.status,
 		})
 		setIsModalOpen(true)
 	}
 	const handleOk = () => {
 		setIsModalOpen(false)
+		setLoading(true)
 		axiosClassic
-			.post(`/api/words/${idOfWord}`, dataForEdit, {
+			.post(`/api/words/${dataForEdit.id}`, dataForEdit, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
-					'Content-Type': 'multipart/form-data',
 				},
 			})
 			.then(() => setWordsCount(wordsCount + 1))
 			.catch(err => {
-				console.log('123', err)
-				console.log(idOfWord)
+				console.log(err)
 			})
+			.finally(() => setLoading(false))
 	}
+
 	const handleCancel = () => {
 		setIsModalOpen(false)
+		setDataForEdit({
+			latin: '',
+			kiril: '',
+			description_latin: '',
+			description_kiril: '',
+			categories: [],
+			synonyms: [],
+			antonyms: [],
+		})
 	}
 	// edit modal end
 
@@ -141,6 +151,7 @@ const Copywriter = () => {
 	const [wordsCount, setWordsCount] = useState(0)
 	//words count effect
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get('/api/wordsdate?limit=1000', {
 				headers: {
@@ -148,6 +159,7 @@ const Copywriter = () => {
 				},
 			})
 			.then(res => setWordsCount(res.data.total))
+			.finally(() => setLoading(false))
 	}, [wordsCount])
 
 	const [addWordModalOpen, setAddWordModalOpen] = useState(false)
@@ -156,6 +168,7 @@ const Copywriter = () => {
 		setAddWordModalOpen(true)
 	}
 	const handleAddWordOk = () => {
+		setLoading(true)
 		setAddWordModalOpen(false)
 		axiosClassic
 			.post('/api/words', newWord, {
@@ -169,6 +182,7 @@ const Copywriter = () => {
 				setWordsCount(wordsCount + 1)
 			})
 			.catch(err => console.log(err))
+			.finally(() => setLoading(false))
 	}
 	const handleAddWordCancel = () => {
 		setAddWordModalOpen(false)
@@ -213,6 +227,7 @@ const Copywriter = () => {
 
 	// table render
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
 				headers: {
@@ -220,6 +235,7 @@ const Copywriter = () => {
 				},
 			})
 			.then(res => setDataTable(res.data.data))
+			.finally(() => setLoading(false))
 	}, [currPage, wordsCount])
 
 	const logout = e => {
@@ -232,6 +248,7 @@ const Copywriter = () => {
 
 	//check
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get('/api/check', {
 				headers: {
@@ -244,6 +261,7 @@ const Copywriter = () => {
 			.catch(err => {
 				navigate('/login', { replace: true })
 			})
+			.finally(() => setLoading(false))
 	}, [])
 
 	return (
@@ -278,35 +296,38 @@ const Copywriter = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{dataTable.map(item => {
-								return (
-									<tr key={item.id}>
-										<td>{item.id}</td>
-										<td>
-											{moment(item.created_at).format('MM-D-YYYY, h:mm:ss')}
-										</td>
-										<td>{item.latin}</td>
-										<td>{item.kiril}</td>
-										<td>{item.categories[0].latin}</td>
-										<td>{item.status}</td>
-										<td>
-											<button onClick={() => showViewModal(item)}>
-												<i className='bx bxs-show text-xl'></i>
-											</button>
-										</td>
-										<td className='actions'>
-											<div className='btns-wrapper'>
-												<button
-													onClick={() => showModal(item)}
-													className='editBtn'
-												>
-													<i className='bx bx-pencil'></i>
+							{dataTable
+								?.filter(x => x.status !== 'approved')
+								.map(item => {
+									return (
+										<tr key={item.id}>
+											<td>{item.id}</td>
+											<td>
+												{moment(item.created_at).format('MM-D-YYYY, h:mm:ss')}
+											</td>
+											<td>{item.latin}</td>
+											<td>{item.kiril}</td>
+											<td>{item.categories[0].latin}</td>
+											<td>{item.status}</td>
+											<td>
+												<button onClick={() => showViewModal(item)}>
+													<i className='bx bxs-show text-xl'></i>
 												</button>
-											</div>
-										</td>
-									</tr>
-								)
-							})}
+											</td>
+											<td className='actions'>
+												<div className='btns-wrapper'>
+													<button
+														disabled={item.status !== 'canceled'}
+														onClick={() => showModal(item)}
+														className='editBtn'
+													>
+														<i className='bx bx-pencil'></i>
+													</button>
+												</div>
+											</td>
+										</tr>
+									)
+								})}
 						</tbody>
 					</table>
 					<Pagination
@@ -379,7 +400,7 @@ const Copywriter = () => {
 								<h2>Category:</h2>
 								<Select
 									className='select'
-									value={dataForEdit.categories[0]} ///////////need update
+									value={dataForEdit.categories_id}
 									onChange={e => {
 										hammeCategory.map(item =>
 											item.latin === e
@@ -548,7 +569,7 @@ const Copywriter = () => {
 						className='showItemModal'
 						open={isViewModalOpen}
 						onOk={handleOkView}
-						width={'850px'}
+						width={'1000px'}
 						onCancel={handleCancelView}
 						okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 						title={showItem.latin}

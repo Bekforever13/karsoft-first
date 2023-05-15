@@ -19,6 +19,10 @@ const Table = () => {
 	] = useContext(Context)
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
+	const [renderTable, setRenderTable] = useState(0)
+	const [hammeCategory, setHammeCategory] = useState([])
+	const [sinonimOptions, setSinonimOptions] = useState([])
+	const [antonimOptions, setAntonimOptions] = useState([])
 	const [isModalEditOpen, setIsModalEditOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [dataForEdit, setDataForEdit] = useState({
@@ -48,21 +52,22 @@ const Table = () => {
 	}
 
 	const handleOk = () => {
+		setLoading(true)
 		setIsModalEditOpen(false)
-		console.log(dataForEdit)
 		axiosClassic
 			.post(`/api/words/${dataForEdit.id}`, dataForEdit, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => {
+			.then(() => {
 				setRenderTable(renderTable + 1)
 			})
+			.finally(() => setLoading(false))
 	}
 
-	const [hammeCategory, setHammeCategory] = useState([])
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get(`/api/categories`, {
 				headers: {
@@ -72,6 +77,7 @@ const Table = () => {
 			.then(res => {
 				setHammeCategory(res.data.data)
 			})
+			.finally(() => setLoading(false))
 	}, [])
 
 	const handleCancel = () => {
@@ -97,7 +103,7 @@ const Table = () => {
 			.then(res => setRenderTable(renderTable + 1))
 	}
 
-	const [renderTable, setRenderTable] = useState(0)
+	// table
 	useEffect(() => {
 		setLoading(true)
 		axiosClassic
@@ -111,9 +117,6 @@ const Table = () => {
 			})
 			.finally(() => setLoading(false))
 	}, [currentPage, renderTable, totalWords])
-
-	const [sinonimOptions, setSinonimOptions] = useState([])
-	const [antonimOptions, setAntonimOptions] = useState([])
 
 	useEffect(() => {
 		axiosClassic.get(`/api/words?limit=500&`).then(res => {
