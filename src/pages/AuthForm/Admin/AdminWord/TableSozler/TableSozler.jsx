@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import './TableSozler.scss'
+import './Tablesozler.scss'
 import { Context } from '../../../../../App'
 import { axiosClassic } from '../../../../../api/axios'
 import moment from 'moment'
