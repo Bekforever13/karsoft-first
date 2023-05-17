@@ -55,7 +55,7 @@ const Login = () => {
 	return (
 		<div className='wrapper'>
 			<form className='form' onSubmit={e => login(e)}>
-				<img src='../../../public/img/logo-form.svg' alt='' />
+				<img src='/img/logo-form.svg' alt='' />
 				<div className='form__wrapper'>
 					<input
 						className='form__wrapper-input'

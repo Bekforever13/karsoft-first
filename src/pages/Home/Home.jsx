@@ -25,16 +25,8 @@ const Home = () => {
 			<main>
 				<div className='container'>
 					<div className='first'>
-						<img
-							className='bg-a-big'
-							src='../../../public/img/A-big.svg'
-							alt=''
-						/>
-						<img
-							className='bg-b-big'
-							src='../../../public/img/B-big.svg'
-							alt=''
-						/>
+						<img className='bg-a-big' src='/img/A-big.svg' alt='' />
+						<img className='bg-b-big' src='/img/B-big.svg' alt='' />
 						<KunSozi />
 						<FrameDesc />
 					</div>

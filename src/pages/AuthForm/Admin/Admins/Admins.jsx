@@ -115,7 +115,11 @@ const Admins = () => {
 								dataIndex='actions'
 								key='actions'
 								render={(i, record) => (
-									<Space size='middle' className='adminsActionButtons'>
+									<Space
+										key={record.id}
+										size='middle'
+										className='adminsActionButtons'
+									>
 										<button
 											className='deleteBtn'
 											onClick={() => deleteAdmin(record.id)}

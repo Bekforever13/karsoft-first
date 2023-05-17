@@ -13,12 +13,7 @@ const Footer = () => {
 				<div className='footer-wrapper'>
 					<div className='footer-logo-sm'>
 						<div className='footer-logo'>
-							<img
-								width={48}
-								height={48}
-								src='../../../public/img/logo.svg'
-								alt=''
-							/>
+							<img width={48} height={48} src='/img/logo.svg' alt='' />
 						</div>
 						<div className='footer-social-media'>
 							<h4>

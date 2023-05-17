@@ -124,7 +124,7 @@ const Tester = () => {
 				<header className='copywriter-header'>
 					<div className='header-logo'>
 						<Link to={'/tester'}>
-							<img src='../../../public/img/logo.svg' alt='' />
+							<img src='/img/logo.svg' alt='' />
 						</Link>
 					</div>
 					<div className='user'>

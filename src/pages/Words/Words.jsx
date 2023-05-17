@@ -16,14 +16,14 @@ const Words = () => {
 					width={250}
 					height={500}
 					className='bg-a-big'
-					src='../../../public/img/A-big.svg'
+					src='/img/A-big.svg'
 					alt=''
 				/>
 				<img
 					width={250}
 					height={500}
 					className='bg-b-big'
-					src='../../../public/img/B-big.svg'
+					src='/img/B-big.svg'
 					alt=''
 				/>
 				<SozlerDizimi />

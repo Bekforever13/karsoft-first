@@ -148,30 +148,14 @@ const Alphabet = () => {
 				</div>
 			</div>
 			<div className='bg-img'>
-				<img
-					className='bg-img-b-dark'
-					src='../../../public/img/b-dark.svg'
-					alt=''
-				/>
-				<img
-					className='bg-img-c1-dark'
-					src='../../../public/img/c-dark.svg'
-					alt=''
-				/>
-				<img
-					className='bg-img-c2-dark'
-					src='../../../public/img/c-dark.svg'
-					alt=''
-				/>
-				<img
-					className='bg-img-a-dark'
-					src='../../../public/img/a-dark.svg'
-					alt=''
-				/>
+				<img className='bg-img-b-dark' src='/img/b-dark.svg' alt='' />
+				<img className='bg-img-c1-dark' src='/img/c-dark.svg' alt='' />
+				<img className='bg-img-c2-dark' src='/img/c-dark.svg' alt='' />
+				<img className='bg-img-a-dark' src='/img/a-dark.svg' alt='' />
 				<span className='bg-img-a-big'>A</span>
 				{/* <img
 					className='bg-img-a-big'
-					src='../../../public/img/a-big.svg'
+					src='/img/a-big.svg'
 					alt=''
 				/> */}
 			</div>

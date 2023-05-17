@@ -15,7 +15,7 @@ const Aside = () => {
 		<aside>
 			{/* <Sidebar /> */}
 			<div className='img'>
-				<img src='../../../../public/img/logo.svg' alt='' />
+				<img src='/img/logo.svg' alt='' />
 			</div>
 			<ul>
 				<li>

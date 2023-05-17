@@ -15,12 +15,7 @@ const Header = () => {
 					<div className='logo-nav'>
 						<div className='logo'>
 							<Link to='/'>
-								<img
-									width={35}
-									height={35}
-									src='../../../public/img/logo.svg'
-									alt=''
-								/>
+								<img width={35} height={35} src='/img/logo.svg' alt='' />
 							</Link>
 						</div>
 						<nav>
@@ -57,16 +52,8 @@ const Header = () => {
 							: 'Бир сөзди излең, оны үйрениң'}
 					</h3>
 					<div className='circle-bg'>
-						<img
-							className='circle-img'
-							src='../../../public/img/circle.svg'
-							alt='circle'
-						/>
-						<img
-							className='circle-img2'
-							src='../../../public/img/circle1.svg'
-							alt='circle'
-						/>
+						<img className='circle-img' src='/img/circle.svg' alt='circle' />
+						<img className='circle-img2' src='/img/circle1.svg' alt='circle' />
 						<input
 							type='text'
 							onChange={e => setSearchValue(e.target.value)}
@@ -82,20 +69,12 @@ const Header = () => {
 					</div>
 				</div>
 				<div className='bg-words'>
-					<img className='img-a' src='../../../public/img/a.svg' alt='a' />
-					<img className='img-b' src='../../../public/img/b.svg' alt='b' />
-					<img className='img-c' src='../../../public/img/c.svg' alt='c' />
-					<img className='img-w' src='../../../public/img/w.svg' alt='w' />
-					<img
-						className='img-lugat'
-						src='../../../public/img/lugat.svg'
-						alt='lugat'
-					/>
-					<img
-						className='img-sozlar'
-						src='../../../public/img/sozlar.svg'
-						alt='sozlar'
-					/>
+					<img className='img-a' src='/img/a.svg' alt='a' />
+					<img className='img-b' src='/img/b.svg' alt='b' />
+					<img className='img-c' src='/img/c.svg' alt='c' />
+					<img className='img-w' src='/img/w.svg' alt='w' />
+					<img className='img-lugat' src='/img/lugat.svg' alt='lugat' />
+					<img className='img-sozlar' src='/img/sozlar.svg' alt='sozlar' />
 				</div>
 			</div>
 			<div className='container'>
