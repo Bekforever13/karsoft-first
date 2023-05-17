@@ -28,13 +28,15 @@ function App() {
 
 	// totalWords
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
-			.get('/api/wordsdate?limit=1000', {
+			.get('/api/wordsdate?limit=10000', {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
 			.then(res => setTotalWords(res.data.total))
+			.finally(() => setLoading(false))
 	}, [totalWords])
 
 	// allwordsarray
@@ -46,6 +48,7 @@ function App() {
 
 	//all category
 	useEffect(() => {
+		setLoading(true)
 		axiosClassic
 			.get(`/api/categories`, {
 				headers: {
@@ -56,6 +59,7 @@ function App() {
 				setTotalCategory(res.data.data.length)
 				setAllCategory(res.data.data)
 			})
+			.finally(() => setLoading(false))
 	}, [])
 
 	return (

@@ -33,6 +33,15 @@ const AdminHome = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
+			.then(res => {
+				if (res.data.data.user.role === 'super-admin') {
+					navigate('/admin', { replace: true })
+				} else if (res.data.data.user.role === 'copywriter') {
+					navigate('/copywriter', { replace: true })
+				} else if (res.data.data.user.role === 'tester') {
+					navigate('/tester', { replace: true })
+				}
+			})
 			.catch(err => {
 				navigate('/login', { replace: true })
 			})

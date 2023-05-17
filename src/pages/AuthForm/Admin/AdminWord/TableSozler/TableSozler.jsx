@@ -3,10 +3,21 @@ import './TableSozler.scss'
 import { Context } from '../../../../../App'
 import { axiosClassic } from '../../../../../api/axios'
 import moment from 'moment'
-import { Pagination, Modal, Select, Spin } from 'antd'
-import { all } from 'axios'
+import { Pagination, Modal, Select, Spin, Button } from 'antd'
 
 const Table = () => {
+	const [kirilToLatinWord, setKirilToLatinWord] = useState({
+		kiril: '',
+	})
+	const [convertedWord, setConvertedWord] = useState({
+		latin: '',
+	})
+	const [description, setDescription] = useState({
+		kiril: '',
+	})
+	const [convertedDescription, setConvertedDescription] = useState({
+		latin: '',
+	})
 	const [
 		allWordsArray,
 		page,
@@ -16,6 +27,7 @@ const Table = () => {
 		totalCategory,
 		allCategory,
 		totalWords,
+		setTotalWords,
 	] = useContext(Context)
 	const [dataTable, setDataTable] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
@@ -62,8 +74,47 @@ const Table = () => {
 			})
 			.then(() => {
 				setRenderTable(renderTable + 1)
+				setDataForEdit({
+					latin: '',
+					kiril: '',
+					description_latin: '',
+					description_kiril: '',
+					categories_id: 0,
+					sinonims: [],
+					antonims: [],
+				})
 			})
-			.finally(() => setLoading(false))
+			.finally(() => {
+				setLoading(false)
+			})
+	}
+
+	const kirilToLatin = () => {
+		axiosClassic
+			.post('/api/kiriltolatin', kirilToLatinWord, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setConvertedWord({
+					kiril: res.data.kiril,
+					latin: res.data.latin,
+				})
+				setDataForEdit({ ...dataForEdit, latin: res.data.latin })
+			})
+	}
+	const convertDescription = () => {
+		axiosClassic
+			.post('/api/kiriltolatin', description, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setConvertedDescription({ latin: res.data.latin })
+				setDataForEdit({ ...dataForEdit, description_latin: res.data.latin })
+			})
 	}
 
 	useEffect(() => {
@@ -77,7 +128,6 @@ const Table = () => {
 			.then(res => {
 				setHammeCategory(res.data.data)
 			})
-			.finally(() => setLoading(false))
 	}, [])
 
 	const handleCancel = () => {
@@ -100,7 +150,10 @@ const Table = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(res => setRenderTable(renderTable + 1))
+			.then(() => {
+				setRenderTable(renderTable - 1)
+				setTotalWords(totalWords - 1)
+			})
 	}
 
 	// table
@@ -202,60 +255,103 @@ const Table = () => {
 					className='modalEdit'
 					mask={false}
 					title='Edit Word'
+					width={'850px'}
 					open={isModalEditOpen}
-					onOk={handleOk}
 					onCancel={handleCancel}
+					footer={[
+						<div key={'btns'} className='btns'>
+							<div className='left-btns'>
+								<Button
+									key={'kirilToLatin'}
+									className='convert-btn'
+									onClick={kirilToLatin}
+								>
+									Convert Word
+								</Button>
+								<Button
+									key={'convertDescription'}
+									className='convert-btn'
+									onClick={convertDescription}
+								>
+									Convert Description
+								</Button>
+							</div>
+							<div className='right-btns'>
+								<Button
+									key={'cancel'}
+									className='cancel-btn'
+									onClick={handleCancel}
+								>
+									Cancel
+								</Button>
+
+								<Button
+									key={'ok'}
+									type='primary'
+									className='ok-btn'
+									onClick={handleOk}
+								>
+									Ok
+								</Button>
+							</div>
+						</div>,
+					]}
 					okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 				>
 					<div className='modalEdit-wrapper'>
 						<label>
-							<h2>Latin:</h2>
+							<h2>Kiril:</h2>
 							<input
 								className='input'
-								onChange={e =>
-									setDataForEdit({ ...dataForEdit, latin: e.target.value })
-								}
-								value={dataForEdit.latin}
+								value={dataForEdit?.kiril || kirilToLatinWord.kiril}
+								onChange={e => {
+									setKirilToLatinWord({
+										kiril: e.target.value,
+									})
+									setDataForEdit({ ...dataForEdit, kiril: e.target.value })
+								}}
 								type='text'
 							/>
 						</label>
 						<label>
-							<h2>Kiril:</h2>
+							<h2>Latin:</h2>
 							<input
 								className='input'
+								value={dataForEdit?.latin || convertedWord?.latin}
 								onChange={e =>
-									setDataForEdit({ ...dataForEdit, kiril: e.target.value })
+									setDataForEdit({ ...dataForEdit, latin: e.target.value })
 								}
-								value={dataForEdit.kiril}
 								type='text'
+							/>
+						</label>
+
+						<label>
+							<h2>Description_kiril:</h2>
+							<textarea
+								className='textarea'
+								value={dataForEdit?.description_kiril || description.kiril}
+								onChange={e => {
+									setDescription({ kiril: e.target.value })
+									setDataForEdit({
+										...dataForEdit,
+										description_kiril: e.target.value,
+									})
+								}}
 							/>
 						</label>
 						<label>
 							<h2>Description_latin:</h2>
 							<textarea
 								className='textarea'
+								value={
+									dataForEdit?.description_latin || convertedDescription?.latin
+								}
 								onChange={e =>
 									setDataForEdit({
 										...dataForEdit,
 										description_latin: e.target.value,
 									})
 								}
-								value={dataForEdit.description_latin}
-								type='text'
-							/>
-						</label>
-						<label>
-							<h2>Description_kiril:</h2>
-							<textarea
-								className='textarea'
-								onChange={e =>
-									setDataForEdit({
-										...dataForEdit,
-										description_kiril: e.target.value,
-									})
-								}
-								value={dataForEdit.description_kiril}
-								type='text'
 							/>
 						</label>
 						<label>
@@ -277,7 +373,7 @@ const Table = () => {
 							<h2>Category:</h2>
 							<Select
 								className={'select'}
-								value={dataForEdit.categories_id}
+								defaultValue={dataForEdit.categories?.map(item => item.latin)}
 								onChange={e => {
 									hammeCategory.map(item =>
 										item.latin === e

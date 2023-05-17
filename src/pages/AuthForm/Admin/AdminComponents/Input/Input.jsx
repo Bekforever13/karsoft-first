@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './Input.scss'
 import axiosClassic from '../../../../../api/axios'
 import { Link } from 'react-router-dom'
@@ -17,6 +17,13 @@ const Input = () => {
 		totalWords,
 	] = useContext(Context)
 	const [result, setResult] = useState([])
+	const resultsRef = useRef()
+
+	useEffect(() => {
+		result
+			? (resultsRef.className = 'results flex')
+			: (resultsRef.className = 'results hidden')
+	}, [result])
 
 	const inputSearch = value => {
 		axiosClassic
@@ -39,26 +46,13 @@ const Input = () => {
 					allowClear
 					onChange={e => inputSearch(e.target.value)}
 				/>
-				<div className='results'>
+				<div ref={resultsRef}>
 					<ul>
-						{result.map(item => (
+						{result?.map(item => (
 							<li key={item.id}>
 								<Link to={`/words/${item.id}`}>{item.latin}</Link>
 							</li>
 						))}
-						{/* {search
-							? result
-									.filter(i =>
-										i.latin.toLowerCase().includes(search.toLowerCase())
-									)
-									.map((i, index) => {
-										return (
-											<li key={index}>
-												<Link to={`/words/${i.id}`}>{i.latin}</Link>
-											</li>
-										)
-									})
-							: ''} */}
 					</ul>
 				</div>
 			</div>

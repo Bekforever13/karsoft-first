@@ -56,7 +56,7 @@ const Tester = () => {
 	// get total number of words for pagination
 	useEffect(() => {
 		axiosClassic
-			.get(`/api/words_copytest`, {
+			.get(`/api/words_copytest?status=approved`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
@@ -65,11 +65,11 @@ const Tester = () => {
 			.finally(() => setLoading(false))
 	}, [])
 
-	// /////
+	// table
 	useEffect(() => {
 		setLoading(true)
 		axiosClassic
-			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
+			.get(`/api/words_copytest?page=${currPage}&limit=10&status=approved`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
@@ -173,24 +173,34 @@ const Tester = () => {
 											<td className='actions'>
 												<div className='btns-wrapper'>
 													<Popconfirm
+														className='conf'
+														disabled={item.status === 'canceled'}
 														title='Like basamizba?'
 														onConfirm={() => changeStatusOk(item)}
 														okButtonProps={{
 															style: { backgroundColor: '#6d6df8' },
 														}}
 													>
-														<button className='likeBtn'>
+														<button
+															disabled={item.status === 'canceled'}
+															className='likeBtn'
+														>
 															<i className='bx bxs-like'></i>
 														</button>
 													</Popconfirm>
 													<Popconfirm
+														className='conf'
 														title='Qayta korip shigiw kerekpa?'
+														disabled={item.status === 'canceled'}
 														onConfirm={() => changeStatusError(item)}
 														okButtonProps={{
 															style: { backgroundColor: '#fc7a7a' },
 														}}
 													>
-														<button className='dislikeBtn'>
+														<button
+															disabled={item.status === 'canceled'}
+															className='dislikeBtn'
+														>
 															<i className='bx bxs-dislike'></i>
 														</button>
 													</Popconfirm>

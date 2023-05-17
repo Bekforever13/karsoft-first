@@ -65,6 +65,7 @@ const Table = () => {
 					</tbody>
 				</table>
 				<Pagination
+					defaultCurrent={1}
 					defaultPageSize={10}
 					onChange={e => setCurrentPage(e)}
 					total={totalWords}

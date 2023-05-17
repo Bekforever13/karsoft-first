@@ -1,4 +1,4 @@
-import { Pagination, Modal, Select, Spin } from 'antd'
+import { Pagination, Modal, Select, Spin, Button } from 'antd'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Copywriter.scss'
@@ -7,6 +7,57 @@ import { Context } from '../../App'
 import moment from 'moment'
 
 const Copywriter = () => {
+	const [kirilToLatinWord, setKirilToLatinWord] = useState({
+		kiril: '',
+	})
+	const [convertedWord, setConvertedWord] = useState({
+		latin: '',
+	})
+	const [description, setDescription] = useState({
+		kiril: '',
+	})
+	const [convertedDescription, setConvertedDescription] = useState({
+		latin: '',
+	})
+	const [hammeCategory, setHammeCategory] = useState([])
+	const [sinOptions, setSinOptions] = useState([])
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [dataForEdit, setDataForEdit] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories: [],
+		synonyms: [],
+		antonyms: [],
+	})
+	const [antOptions, setAntOptions] = useState([])
+	const navigate = useNavigate()
+	const [sinonimOptions, setSinonimOptions] = useState([])
+	const [antonimOptions, setAntonimOptions] = useState([])
+	const [newWord, setNewWord] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories_id: null,
+		sinonims: [],
+		antonims: [],
+	})
+	const [wordsCount, setWordsCount] = useState(0)
+	const [addWordModalOpen, setAddWordModalOpen] = useState(false)
+	const [isViewModalOpen, setIsViewModalOpen] = useState(false)
+	const [dataTable, setDataTable] = useState([])
+	const [currPage, setCurrPage] = useState(1)
+	const [showItem, setShowItem] = useState({
+		latin: '',
+		kiril: '',
+		description_latin: '',
+		description_kiril: '',
+		categories: [],
+		synonyms: [],
+		antonyms: [],
+	})
 	const [loading, setLoading] = useState(false)
 	const [
 		allWordsArray,
@@ -18,18 +69,10 @@ const Copywriter = () => {
 		totalWords,
 		totalCategory,
 	] = useContext(Context)
+	const [currentUser, setCurrentUser] = useState([])
 
 	// view modal start
-	const [isViewModalOpen, setIsViewModalOpen] = useState(false)
-	const [showItem, setShowItem] = useState({
-		latin: '',
-		kiril: '',
-		description_latin: '',
-		description_kiril: '',
-		categories: [],
-		synonyms: [],
-		antonyms: [],
-	})
+
 	const showViewModal = item => {
 		setIsViewModalOpen(true)
 		setShowItem(item)
@@ -43,9 +86,7 @@ const Copywriter = () => {
 	}
 	// view modal end
 
-	const navigate = useNavigate()
-
-	const [hammeCategory, setHammeCategory] = useState([])
+	// hamme category
 	useEffect(() => {
 		axiosClassic
 			.get(`/api/categories`, {
@@ -57,9 +98,6 @@ const Copywriter = () => {
 				setHammeCategory(res.data.data)
 			})
 	}, [])
-
-	const [sinOptions, setSinOptions] = useState([])
-	const [antOptions, setAntOptions] = useState([])
 
 	useEffect(() => {
 		axiosClassic.get(`/api/words?limit=500&`).then(res => {
@@ -82,16 +120,6 @@ const Copywriter = () => {
 	}
 
 	//  ------>>>>>  edit modal start <<<<< -------
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	const [dataForEdit, setDataForEdit] = useState({
-		latin: '',
-		kiril: '',
-		description_latin: '',
-		description_kiril: '',
-		categories: [],
-		synonyms: [],
-		antonyms: [],
-	})
 
 	const showModal = item => {
 		console.log(item)
@@ -106,6 +134,8 @@ const Copywriter = () => {
 			antonyms: item.antonyms,
 			status: item.status,
 		})
+		setConvertedWord({ latin: item.latin })
+		setConvertedWord({ latin: item.latin })
 		setIsModalOpen(true)
 	}
 	const handleOk = () => {
@@ -139,21 +169,12 @@ const Copywriter = () => {
 	// edit modal end
 
 	// ------>>>>> add word modal start <<<<< -------
-	const [newWord, setNewWord] = useState({
-		latin: '',
-		kiril: '',
-		description_latin: '',
-		description_kiril: '',
-		categories_id: null,
-		sinonims: [],
-		antonims: [],
-	})
-	const [wordsCount, setWordsCount] = useState(0)
+
 	//words count effect
 	useEffect(() => {
 		setLoading(true)
 		axiosClassic
-			.get('/api/wordsdate?limit=1000', {
+			.get('/api/words_copytest?status=approved', {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
@@ -161,8 +182,6 @@ const Copywriter = () => {
 			.then(res => setWordsCount(res.data.total))
 			.finally(() => setLoading(false))
 	}, [wordsCount])
-
-	const [addWordModalOpen, setAddWordModalOpen] = useState(false)
 
 	const showAddWordModal = () => {
 		setAddWordModalOpen(true)
@@ -198,8 +217,6 @@ const Copywriter = () => {
 	}
 	// add word modal end
 	// antonim sinonim for ADD NEW WORD  start
-	const [sinonimOptions, setSinonimOptions] = useState([])
-	const [antonimOptions, setAntonimOptions] = useState([])
 
 	useEffect(() => {
 		axiosClassic.get(`/api/words?limit=500&`).then(res => {
@@ -214,6 +231,36 @@ const Copywriter = () => {
 		})
 	}, [])
 
+	const kirilToLatin = () => {
+		axiosClassic
+			.post('/api/kiriltolatin', kirilToLatinWord, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setConvertedWord({
+					kiril: res.data.kiril,
+					latin: res.data.latin,
+				})
+				setNewWord({ ...newWord, latin: res.data.latin })
+				setDataForEdit({ ...dataForEdit, latin: res.data.latin })
+			})
+	}
+	const convertDescription = () => {
+		axiosClassic
+			.post('/api/kiriltolatin', description, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setConvertedDescription({ latin: res.data.latin })
+				setNewWord({ ...newWord, description_latin: res.data.latin })
+				setDataForEdit({ ...dataForEdit, description_latin: res.data.latin })
+			})
+	}
+
 	const handleAntonimChange = value => {
 		setNewWord({ ...newWord, antonims: value })
 	}
@@ -222,14 +269,11 @@ const Copywriter = () => {
 	}
 	// antonim sinonim things end
 
-	const [dataTable, setDataTable] = useState([])
-	const [currPage, setCurrPage] = useState(1)
-
 	// table render
 	useEffect(() => {
 		setLoading(true)
 		axiosClassic
-			.get(`/api/words_copytest?page=${currPage}&limit=10`, {
+			.get(`/api/words_copytest?page=${currPage}&limit=10&status=approved`, {
 				headers: {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
@@ -243,8 +287,6 @@ const Copywriter = () => {
 		localStorage.removeItem('token')
 		navigate('/login', { replace: true })
 	}
-
-	const [currentUser, setCurrentUser] = useState([])
 
 	//check
 	useEffect(() => {
@@ -285,14 +327,14 @@ const Copywriter = () => {
 					<table className='copywriterTable'>
 						<thead>
 							<tr>
-								<th>ID</th>
-								<th>Created at</th>
-								<th>Latin</th>
-								<th>Kiril</th>
-								<th>Category</th>
-								<th>Status</th>
-								<th>View</th>
-								<th>Actions</th>
+								<th className='th'>ID</th>
+								<th className='th'>Created at</th>
+								<th className='th'>Latin</th>
+								<th className='th'>Kiril</th>
+								<th className='th'>Category</th>
+								<th className='th'>Status</th>
+								<th className='th'>View</th>
+								<th className='th'>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -343,55 +385,100 @@ const Copywriter = () => {
 						open={isModalOpen}
 						width={'850px'}
 						height={'650px'}
-						onOk={handleOk}
+						footer={[
+							<div key={'btns'} className='btns'>
+								<div className='left-btns'>
+									<Button
+										key={'kirilToLatin'}
+										className='convert-btn'
+										onClick={kirilToLatin}
+									>
+										Convert Word
+									</Button>
+									<Button
+										key={'convertDescription'}
+										className='convert-btn'
+										onClick={convertDescription}
+									>
+										Convert Description
+									</Button>
+								</div>
+								<div className='right-btns'>
+									<Button
+										key={'cancel'}
+										className='cancel-btn'
+										onClick={handleCancel}
+									>
+										Cancel
+									</Button>
+
+									<Button
+										key={'ok'}
+										type='primary'
+										className='ok-btn'
+										onClick={handleOk}
+									>
+										Ok
+									</Button>
+								</div>
+							</div>,
+						]}
 						onCancel={handleCancel}
 						okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 					>
 						<div className='newWordForm'>
 							<label>
+								<h2>Kiril:</h2>
+								<input
+									className='input'
+									value={dataForEdit?.kiril || kirilToLatinWord.kiril}
+									onChange={e => {
+										setKirilToLatinWord({
+											kiril: e.target.value,
+										})
+										setDataForEdit({ ...dataForEdit, kiril: e.target.value })
+									}}
+									type='text'
+								/>
+							</label>
+							<label>
 								<h2>Latin:</h2>
 								<input
 									className='input'
-									value={dataForEdit.latin}
+									value={dataForEdit?.latin || convertedWord?.latin}
 									onChange={e =>
 										setDataForEdit({ ...dataForEdit, latin: e.target.value })
 									}
 									type='text'
 								/>
 							</label>
+
 							<label>
-								<h2>Kiril:</h2>
-								<input
-									className='input'
-									value={dataForEdit.kiril}
-									onChange={e =>
-										setDataForEdit({ ...dataForEdit, kiril: e.target.value })
-									}
-									type='text'
+								<h2>Description_kiril:</h2>
+								<textarea
+									className='textarea'
+									value={dataForEdit?.description_kiril || description.kiril}
+									onChange={e => {
+										setDescription({ kiril: e.target.value })
+										setDataForEdit({
+											...dataForEdit,
+											description_kiril: e.target.value,
+										})
+									}}
 								/>
 							</label>
 							<label>
 								<h2>Description_latin:</h2>
 								<textarea
 									className='textarea'
-									value={dataForEdit.description_latin}
+									value={
+										dataForEdit?.description_latin ||
+										convertedDescription?.latin
+									}
 									onChange={e =>
 										setDataForEdit({
 											...dataForEdit,
 											description_latin: e.target.value,
-										})
-									}
-								/>
-							</label>
-							<label>
-								<h2>Description_kiril:</h2>
-								<textarea
-									className='textarea'
-									value={dataForEdit.description_kiril}
-									onChange={e =>
-										setDataForEdit({
-											...dataForEdit,
-											description_kiril: e.target.value,
 										})
 									}
 								/>
@@ -456,57 +543,106 @@ const Copywriter = () => {
 						className='copywriterModal'
 						title='Add new word'
 						open={addWordModalOpen}
+						centered={true}
 						width={'850px'}
 						height={'650px'}
-						onOk={handleAddWordOk}
+						footer={[
+							<div key={'btns'} className='btns'>
+								<div className='left-btns'>
+									<Button
+										key={'kirilToLatin'}
+										className='convert-btn'
+										onClick={kirilToLatin}
+									>
+										Convert Word
+									</Button>
+									<Button
+										key={'convertDescription'}
+										className='convert-btn'
+										onClick={convertDescription}
+									>
+										Convert Description
+									</Button>
+								</div>
+
+								<div className='right-btns'>
+									<Button
+										key={'cancel'}
+										className='cancel-btn'
+										onClick={handleAddWordCancel}
+									>
+										Cancel
+									</Button>
+
+									<Button
+										key={'ok'}
+										type='primary'
+										className='ok-btn'
+										onClick={handleAddWordOk}
+									>
+										Ok
+									</Button>
+								</div>
+							</div>,
+						]}
 						onCancel={handleAddWordCancel}
 						okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 					>
 						<div className='newWordForm'>
 							<label>
-								<h2>Latin:</h2>
+								<h2>Kiril:</h2>
 								<input
 									className='input'
-									value={newWord.latin}
-									onChange={e =>
-										setNewWord({ ...newWord, latin: e.target.value })
-									}
+									value={kirilToLatinWord.kiril}
+									onChange={e => {
+										setKirilToLatinWord({
+											kiril: e.target.value,
+										})
+										setNewWord({ ...newWord, kiril: e.target.value })
+									}}
 									type='text'
 								/>
 							</label>
 							<label>
-								<h2>Kiril:</h2>
+								<h2>Latin:</h2>
 								<input
 									className='input'
-									value={newWord.kiril}
-									onChange={e =>
-										setNewWord({ ...newWord, kiril: e.target.value })
-									}
+									value={convertedWord?.latin}
+									onChange={e => {
+										setNewWord({
+											...newWord,
+											latin: e.target.value,
+										})
+									}}
 									type='text'
+								/>
+							</label>
+
+							<label>
+								<h2>Description_kiril:</h2>
+								<textarea
+									className='textarea'
+									value={description.kiril}
+									onChange={e => {
+										setDescription({
+											kiril: e.target.value,
+										})
+										setNewWord({
+											...newWord,
+											description_kiril: e.target.value,
+										})
+									}}
 								/>
 							</label>
 							<label>
 								<h2>Description_latin:</h2>
 								<textarea
 									className='textarea'
-									value={newWord.description_latin}
+									value={convertedDescription?.latin}
 									onChange={e =>
 										setNewWord({
 											...newWord,
 											description_latin: e.target.value,
-										})
-									}
-								/>
-							</label>
-							<label>
-								<h2>Description_kiril:</h2>
-								<textarea
-									className='textarea'
-									value={newWord.description_kiril}
-									onChange={e =>
-										setNewWord({
-											...newWord,
-											description_kiril: e.target.value,
 										})
 									}
 								/>

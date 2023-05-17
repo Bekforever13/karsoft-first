@@ -17,7 +17,6 @@
 			font-weight: 400;
 		}
 		.results {
-			display: none;
 			align-items: center;
 			justify-content: center;
 			position: fixed;
@@ -36,7 +35,7 @@
 				flex-direction: column;
 				justify-content: flex-start;
 				align-items: flex-start;
-				padding: 1rem 2rem;
+				padding: 0.5rem 1rem;
 				overflow: hidden;
 				gap: 5px;
 				font-size: 18px;

@@ -63,8 +63,9 @@ const Table2 = ({ renderTable2, setRenderTable2 }) => {
 				</table>
 				<Pagination
 					onChange={e => setCurrentPage(e)}
-					total={totalCategory.length}
+					total={totalCategory}
 					defaultPageSize={10}
+					defaultCurrent={1}
 				/>
 			</Spin>
 		</>

@@ -42,10 +42,28 @@ const Admins = () => {
 					Authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
 			})
-			.then(() => setTotalAdmins(totalAdmins + 1))
+			.then(() => {
+				setTotalAdmins(totalAdmins + 1)
+			})
+			.finally(() => {
+				setNewAdmin({
+					name: '',
+					phone: '',
+					password: '',
+					confirm_password: '',
+					role_name: '',
+				})
+			})
 	}
 	const handleCancel = () => {
 		setIsModalOpen(false)
+		setNewAdmin({
+			name: '',
+			phone: '',
+			password: '',
+			confirm_password: '',
+			role_name: '',
+		})
 	}
 
 	useEffect(() => {
@@ -91,7 +109,7 @@ const Admins = () => {
 							<Column title='ID' dataIndex='id' key='id' />
 							<Column title='Name' dataIndex='name' key='name' />
 							<Column title='Phone' dataIndex='phone' key='phone' />
-							<Column title='Role' dataIndex='role' key='role' />
+							<Column title='Role' dataIndex='role' key='id' />
 							<Column
 								title='Actions'
 								dataIndex='actions'

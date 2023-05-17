@@ -1,10 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Modal from 'antd/es/modal/Modal'
-import { Select } from 'antd'
+import { Select, Button } from 'antd'
 import axiosClassic from '../../../../../../api/axios'
 import { Context } from '../../../../../../App'
 
 const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
+	const [kirilToLatinWord, setKirilToLatinWord] = useState({
+		kiril: '',
+	})
+	const [convertedWord, setConvertedWord] = useState({
+		latin: '',
+	})
+	const [description, setDescription] = useState({
+		kiril: '',
+	})
+	const [convertedDescription, setConvertedDescription] = useState({
+		latin: '',
+	})
 	const [
 		allCategory,
 		allWordsArray,
@@ -95,42 +107,110 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 		console.log(value)
 	}
 
+	const kirilToLatin = () => {
+		axiosClassic
+			.post('/api/kiriltolatin', kirilToLatinWord, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setConvertedWord({
+					kiril: res.data.kiril,
+					latin: res.data.latin,
+				})
+				setNewWord({ ...newWord, latin: res.data.latin })
+				setDataForEdit({ ...dataForEdit, latin: res.data.latin })
+			})
+	}
+	const convertDescription = () => {
+		axiosClassic
+			.post('/api/kiriltolatin', description, {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			})
+			.then(res => {
+				setConvertedDescription({ latin: res.data.latin })
+				setNewWord({ ...newWord, description_latin: res.data.latin })
+				setDataForEdit({ ...dataForEdit, description_latin: res.data.latin })
+			})
+	}
+
 	return (
 		<Modal
 			className='modalAddWord'
 			title='Add new word'
 			open={isModalAddWordOpen}
-			onOk={handleOkAddWord}
+			centered={true}
+			width={'850px'}
+			footer={[
+				<div key={'btns'} className='btns'>
+					<div className='left-btns'>
+						<Button
+							key={'kirilToLatin'}
+							className='convert-btn'
+							onClick={kirilToLatin}
+						>
+							Convert Word
+						</Button>
+						<Button
+							key={'convertDescription'}
+							className='convert-btn'
+							onClick={convertDescription}
+						>
+							Convert Description
+						</Button>
+					</div>
+					<div className='right-btns'>
+						<Button
+							key={'cancel'}
+							className='cancel-btn'
+							onClick={handleCancelAddWord}
+						>
+							Cancel
+						</Button>
+
+						<Button
+							key={'ok'}
+							type='primary'
+							className='ok-btn'
+							onClick={handleOkAddWord}
+						>
+							Ok
+						</Button>
+					</div>
+				</div>,
+			]}
 			onCancel={handleCancelAddWord}
 			okButtonProps={{ style: { backgroundColor: '#6d6df8' } }}
 		>
 			<div className='newWordForm'>
 				<label>
-					<h2>Latin:</h2>
-					<input
-						className='input'
-						value={newWord.latin}
-						onChange={e => setNewWord({ ...newWord, latin: e.target.value })}
-						type='text'
-					/>
-				</label>
-				<label>
 					<h2>Kiril:</h2>
 					<input
 						className='input'
-						value={newWord.kiril}
-						onChange={e => setNewWord({ ...newWord, kiril: e.target.value })}
+						value={kirilToLatinWord.kiril}
+						onChange={e => {
+							setKirilToLatinWord({
+								kiril: e.target.value,
+							})
+							setNewWord({ ...newWord, kiril: e.target.value })
+						}}
 						type='text'
 					/>
 				</label>
 				<label>
-					<h2>Description_latin:</h2>
-					<textarea
-						className='textarea'
-						value={newWord.description_latin}
-						onChange={e =>
-							setNewWord({ ...newWord, description_latin: e.target.value })
-						}
+					<h2>Latin:</h2>
+					<input
+						className='input'
+						value={convertedWord?.latin}
+						onChange={e => {
+							setNewWord({
+								...newWord,
+								latin: e.target.value,
+							})
+						}}
 						type='text'
 					/>
 				</label>
@@ -138,14 +218,33 @@ const AddWord = ({ setIsModalAddWordOpen, isModalAddWordOpen }) => {
 					<h2>Description_kiril:</h2>
 					<textarea
 						className='textarea'
-						value={newWord.description_kiril}
+						value={description.kiril}
+						onChange={e => {
+							setDescription({
+								kiril: e.target.value,
+							})
+							setNewWord({
+								...newWord,
+								description_kiril: e.target.value,
+							})
+						}}
+						type='text'
+					/>
+				</label>
+				<label>
+					<h2>Description_latin:</h2>
+					<textarea
+						className='textarea'
+						value={convertedDescription?.latin}
 						onChange={e =>
-							setNewWord({ ...newWord, description_kiril: e.target.value })
+							setNewWord({
+								...newWord,
+								description_latin: e.target.value,
+							})
 						}
 						type='text'
 					/>
 				</label>
-
 				<label>
 					<h2>Category:</h2>
 					<Select
