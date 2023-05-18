@@ -1,6 +1,10 @@
 import React, { useContext } from 'react'
 import { Context } from '../App'
 import { Link } from 'react-router-dom'
+import bDark from '../../assets/img/B-dark.svg'
+import c1Dark from '../../assets/img/C-dark.svg'
+import c2Dark from '../../assets/img/C-dark.svg'
+import aDark from '../../assets/img/A-dark.svg'
 
 export const kirilAlphabet = [
 	'А',
@@ -148,16 +152,11 @@ const Alphabet = () => {
 				</div>
 			</div>
 			<div className='bg-img'>
-				<img className='bg-img-b-dark' src='/img/b-dark.svg' alt='' />
-				<img className='bg-img-c1-dark' src='/img/c-dark.svg' alt='' />
-				<img className='bg-img-c2-dark' src='/img/c-dark.svg' alt='' />
-				<img className='bg-img-a-dark' src='/img/a-dark.svg' alt='' />
+				<img className='bg-img-b-dark' src={bDark} alt='' />
+				<img className='bg-img-c1-dark' src={c1Dark} alt='' />
+				<img className='bg-img-c2-dark' src={c2Dark} alt='' />
+				<img className='bg-img-a-dark' src={aDark} alt='' />
 				<span className='bg-img-a-big'>A</span>
-				{/* <img
-					className='bg-img-a-big'
-					src='/img/a-big.svg'
-					alt=''
-				/> */}
 			</div>
 		</div>
 	)
