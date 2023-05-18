@@ -3,6 +3,7 @@ import './Footer.scss'
 import 'boxicons'
 import { useContext } from 'react'
 import { Context } from '../../App'
+import googlePlayImg from '../../assets/img/google-play.png'
 
 const Footer = () => {
 	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
@@ -52,8 +53,9 @@ const Footer = () => {
 								href='https://play.google.com/store/apps/details?id=com.karsoft.tusindirmesozlik'
 								target={'_blank'}
 							>
-								<img src='../../../public/img/google-play.png' alt='' />
+								<img src={googlePlayImg} alt='' />
 							</a>
+							<Link to={'/login'}>Login</Link>
 						</div>
 					</div>
 				</div>
