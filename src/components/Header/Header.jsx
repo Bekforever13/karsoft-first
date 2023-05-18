@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { Context } from '../../App'
 import SearchResult from '../SearchResult/SearchResult'
 import './Header.scss'
+import a from '../../assets/img/a.svg'
 
 const Header = () => {
 	const [searchValue, setSearchValue] = useState('')
@@ -69,7 +70,7 @@ const Header = () => {
 					</div>
 				</div>
 				<div className='bg-words'>
-					<img className='img-a' src='/img/a.svg' alt='a' />
+					<img className='img-a' src={a} alt='a' />
 					<img className='img-b' src='/img/b.svg' alt='b' />
 					<img className='img-c' src='/img/c.svg' alt='c' />
 					<img className='img-w' src='/img/w.svg' alt='w' />
