@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { Context } from '../../App'
 import SearchResult from '../SearchResult/SearchResult'
 import './Header.scss'
-import a from '../../assets/img/a.svg'
+import a from '../../assets/img/A.svg'
 
 const Header = () => {
 	const [searchValue, setSearchValue] = useState('')
