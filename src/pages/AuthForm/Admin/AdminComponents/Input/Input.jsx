@@ -4,7 +4,8 @@ import axiosClassic from '../../../../../api/axios'
 import { Link } from 'react-router-dom'
 import { Context } from '../../../../../App'
 import Search from 'antd/es/input/Search'
-
+import useDebounce from '../../../../../hooks/useDebounce'
+import { Spin } from 'antd'
 const Input = () => {
 	const [
 		allWordsArray,
@@ -19,42 +20,55 @@ const Input = () => {
 	const [result, setResult] = useState([])
 	const resultsRef = useRef()
 
-	useEffect(() => {
-		result
-			? (resultsRef.className = 'results flex')
-			: (resultsRef.className = 'results hidden')
-	}, [result])
+	const [search, setSearch] = useState('')
 
-	const inputSearch = value => {
-		axiosClassic
-			.get(`/api/search?search=${value}`, {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token'),
-				},
-			})
-			.then(res => {
-				setResult(res.data.data)
-			})
-	}
+	const debouncedValue = useDebounce(search, 500)
+	const [loading, setLoading] = useState(false)
+	useEffect(() => {
+		if (debouncedValue.length !== 0) {
+			setLoading(true)
+			axiosClassic
+				.get(`/api/search?search=${debouncedValue}`, {
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem('token'),
+					},
+				})
+				.then(res => {
+					setResult(res.data.data)
+				})
+				.finally(() => setLoading(false))
+		} else {
+			setResult([])
+			setSearch('')
+		}
+	}, [debouncedValue])
 
 	return (
 		<div className='input-wrapper'>
-			<div className='inputField'>
+			<div className='inputField relative'>
 				<Search
 					className='search'
 					placeholder='Search a word'
 					allowClear
-					onChange={e => inputSearch(e.target.value)}
+					size='large'
+					onChange={e => setSearch(e.target.value)}
 				/>
-				<div ref={resultsRef}>
-					<ul>
-						{result?.map(item => (
-							<li key={item.id}>
-								<Link to={`/words/${item.id}`}>{item.latin}</Link>
-							</li>
-						))}
-					</ul>
-				</div>
+				{result && search ? (
+					<div
+						ref={resultsRef}
+						className='absolute top-[50px] bg-white p-6 rounded-md shadow-lg w-full max-h-[450px] overflow-y-auto z-[9999]'
+					>
+						<Spin spinning={loading}>
+							<ul>
+								{result?.map(item => (
+									<li key={item.id}>
+										<Link to={`/words/${item.id}`}>{item.latin}</Link>
+									</li>
+								))}
+							</ul>
+						</Spin>
+					</div>
+				) : null}
 			</div>
 			<article className='soz-category'>
 				<div className='soz'>

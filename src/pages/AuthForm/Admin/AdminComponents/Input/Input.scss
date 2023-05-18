@@ -4,6 +4,7 @@
 	justify-content: space-between;
 	padding: 0 10%;
 	width: 100%;
+	font-size: 1.4vw;
 
 	.inputField {
 		display: flex;
@@ -13,7 +14,6 @@
 		.search {
 			width: 400px;
 			border-radius: 13px;
-			font-size: 18px;
 			font-weight: 400;
 		}
 		.results {
