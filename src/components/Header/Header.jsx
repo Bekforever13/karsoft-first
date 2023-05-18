@@ -4,6 +4,14 @@ import { Context } from '../../App'
 import SearchResult from '../SearchResult/SearchResult'
 import './Header.scss'
 import a from '../../assets/img/A.svg'
+import b from '../../assets/img/B.svg'
+import c from '../../assets/img/C.svg'
+import w from '../../assets/img/W.svg'
+import Lugat from '../../assets/img/Lugat.svg'
+import Sozlar from '../../assets/img/Sozlar.svg'
+import circle from '../../assets/img/circle.svg'
+import circle1 from '../../assets/img/circle1.svg'
+import logo from '../../assets/img/logo.svg'
 
 const Header = () => {
 	const [searchValue, setSearchValue] = useState('')
@@ -16,7 +24,7 @@ const Header = () => {
 					<div className='logo-nav'>
 						<div className='logo'>
 							<Link to='/'>
-								<img width={35} height={35} src='/img/logo.svg' alt='' />
+								<img width={35} height={35} src={logo} alt='' />
 							</Link>
 						</div>
 						<nav>
@@ -53,8 +61,8 @@ const Header = () => {
 							: 'Бир сөзди излең, оны үйрениң'}
 					</h3>
 					<div className='circle-bg'>
-						<img className='circle-img' src='/img/circle.svg' alt='circle' />
-						<img className='circle-img2' src='/img/circle1.svg' alt='circle' />
+						<img className='circle-img' src={circle} alt='circle' />
+						<img className='circle-img2' src={circle1} alt='circle' />
 						<input
 							type='text'
 							onChange={e => setSearchValue(e.target.value)}
@@ -71,11 +79,11 @@ const Header = () => {
 				</div>
 				<div className='bg-words'>
 					<img className='img-a' src={a} alt='a' />
-					<img className='img-b' src='/img/b.svg' alt='b' />
-					<img className='img-c' src='/img/c.svg' alt='c' />
-					<img className='img-w' src='/img/w.svg' alt='w' />
-					<img className='img-lugat' src='/img/lugat.svg' alt='lugat' />
-					<img className='img-sozlar' src='/img/sozlar.svg' alt='sozlar' />
+					<img className='img-b' src={b} alt='b' />
+					<img className='img-c' src={c} alt='c' />
+					<img className='img-w' src={w} alt='w' />
+					<img className='img-lugat' src={Lugat} alt='lugat' />
+					<img className='img-sozlar' src={Sozlar} alt='sozlar' />
 				</div>
 			</div>
 			<div className='container'>
