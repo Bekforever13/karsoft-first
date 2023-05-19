@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { axiosClassic } from '../../../api/axios'
-import { Context } from '../../../App'
+import logoForm from '../../../assets/img/logo-form.svg'
 import './Login.scss'
-
 const Login = () => {
 	const [currentUser, setCurrentUser] = useState({
 		phone: null,
@@ -55,7 +54,7 @@ const Login = () => {
 	return (
 		<div className='wrapper'>
 			<form className='form' onSubmit={e => login(e)}>
-				<img src='/img/logo-form.svg' alt='' />
+				<img src={logoForm} alt='' />
 				<div className='form__wrapper'>
 					<input
 						className='form__wrapper-input'

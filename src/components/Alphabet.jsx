@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
-import { Context } from '../App'
 import { Link } from 'react-router-dom'
-import bDark from '../../assets/img/bDark.svg'
-import c1Dark from '../../assets/img/cDark.svg'
-import c2Dark from '../../assets/img/cDark.svg'
-import aDark from '../../assets/img/aDark.svg'
+import { Context } from '../App'
+import aDark from '../assets/img/aDark.svg'
+import bDark from '../assets/img/bDark.svg'
+import { default as c1Dark, default as c2Dark } from '../assets/img/cDark.svg'
 
 export const kirilAlphabet = [
 	'А',

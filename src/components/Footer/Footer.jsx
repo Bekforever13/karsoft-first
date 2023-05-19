@@ -1,9 +1,9 @@
-import React from 'react'
-import './Footer.scss'
 import 'boxicons'
-import { useContext } from 'react'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { Context } from '../../App'
 import googlePlayImg from '../../assets/img/google-play.png'
+import './Footer.scss'
 
 const Footer = () => {
 	const [allWordsArray, page, setPage, lang, setLang] = useContext(Context)
